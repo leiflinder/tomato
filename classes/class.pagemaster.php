@@ -6,13 +6,19 @@ class pagemaster extends clean {
          switch ($get_page) {
 
             case "index":
+                // uses file class.changedtoday.php
                $frank = new changed_today;
                $newtoday = $frank->query_table_for_tomdate_today();
+               // uses file class.tomato.show.php
                 $page_display = new showtomatoes;
-                print('<h3>TODAY</h3>');
+               print('<h3>TODAY</h3>');
+                 if(isset($_POST['change_tomato_on_the_fly'])){
+                     print('<pre>');
+                     print_r($_POST);
+                     print('</pre>');
+                 }                     
                 $page_display->show_tomatoes($newtoday);
-                // show norwegian for week
-                include('../classes/class.pagefunctions.index.php');
+                // uses file class.pagefunctions.index.php
                 $page_functions = new index_page_functions;
                 print('<br/>');
                 print('<h3>WEEK</h3>');

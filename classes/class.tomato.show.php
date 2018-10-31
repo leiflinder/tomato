@@ -43,11 +43,17 @@ class showtomatoes extends conn{
                         <h4 class="modal-title">'.$tomato_id.'</h4>
                       </div>
                       <div class="modal-body">
+                      <form method="post" action="refresh.tomcount.php">
+                      <input type="hidden" name="change_tomato_on_the_fly" value="hexon8"/>
+                      <input type="hidden" name="tomid" value="'.$tomato_id.'"/>
                        <p>Category: '.$dbase_resource[$i]['category'].'</p>
                         <p>Notes: '.$dbase_resource[$i]['notes'].'</p>
                         <p>Tomato ID: '.$tomato_id.'</p>
-                        <p>Count: '.$dbase_resource[$i]['count'].'</p>
+                        <p>Tomato Count '.$dbase_resource[$i]['count'].'</p>
+                        <p>Update Count? <input type="text" name="tomcount"></input></p>
                         <p>Keywords: '.$this->show_keywords_by_link_id($keywords_by_tom_id).'</p>
+                        <p><input type="submit" value="Update"/></p>
+                        </form>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

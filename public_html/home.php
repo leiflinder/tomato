@@ -15,6 +15,7 @@ include ('../classes/class.changedtoday.php');
 include ('../classes/class.tomato.show.php');
 include ('../classes/class.pagemaster.php');
 include ('../classes/class.form_elements.php');
+include ('../classes/class.stats.php');
 include ('../classes/class.upload.php');
 include ('../classes/class.set_week.php');
 include ('../classes/class.keywords_and_categories.php');
@@ -26,9 +27,9 @@ include ('../classes/class.keyword.link_to_category.php');
 include ('../classes/class.category.create.php');
 include ('../classes/class.category.show.php');
 include ('../classes/class.category.edit.php');
-include ('../classes/class.stats.php');
-include ('../classes/class.add.tomato.php');
-
+include ('../classes/class.tomato.add.php');
+include ('../classes/class.tomato.edit.php');
+include('../classes/class.pagefunctions.index.php');
 include('./includes/header.php');
 include ('./includes/navigation.php');
 
