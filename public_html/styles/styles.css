@@ -202,3 +202,12 @@ body.modal-open-noscroll
     margin-right: 0!important;
 }
 
+.bigandbad{
+  font-weight:bold;
+  font-size:120%;
+  color:777;
+}
+
+.marginleft {
+  padding-left:20px;
+}

@@ -104,7 +104,7 @@ function URL(){
 				FROM tomato220.link_cat_to_keywords 
 				JOIN tomato220.keywords 
 				ON tomato220.link_cat_to_keywords.keyword_id = tomato220.keywords.id
-				WHERE tomato220.link_cat_to_keywords.cat_id = ".$this->category."");
+				WHERE tomato220.link_cat_to_keywords.cat_id = ".$this->category." ORDER BY `keywords`.`keyword` ASC");
 			$sth->execute();
 			$table = $sth->fetchAll();
 			foreach($table as $value){

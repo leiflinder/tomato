@@ -6,18 +6,11 @@ class pagemaster extends clean {
          switch ($get_page) {
 
             case "index":
-                // uses file class.changedtoday.php
-               $frank = new changed_today;
-               $newtoday = $frank->query_table_for_tomdate_today();
                // uses file class.tomato.show.php
                 $page_display = new showtomatoes;
                print('<h3>TODAY</h3>');
-                 if(isset($_POST['change_tomato_on_the_fly'])){
-                     print('<pre>');
-                     print_r($_POST);
-                     print('</pre>');
-                 }                     
-                $page_display->show_tomatoes($newtoday);
+               $debase_resource_today_changed = $page_display->query_table_for_tomdate_today();                  
+                $page_display->show_tomatoes($debase_resource_today_changed);
                 // uses file class.pagefunctions.index.php
                 $page_functions = new index_page_functions;
                 print('<br/>');
@@ -51,15 +44,14 @@ class pagemaster extends clean {
             break;
 
             case "stats":
-                echo "<h3>View Tomatoes</h3>";
-                print('<pre>');
-                print_r($_GET);  
-                print('</pre>');
+                echo "<h3>Stats</h3>";
             break;
 
             case "addtomato":
-                echo "<h3>Add</h3>";
-                $this->add();
+                print('<div class="alert alert-warning" role="alert">Add Tomato</div>');
+                // file: class.tomato.add.php
+                $tomato_add_object = new addtomato;
+                $tomato_add_object->upload_form_tomato();
                 break;
 
             case "keywords":
@@ -85,16 +77,20 @@ class pagemaster extends clean {
                         if(isset($_POST['edit_keyword'])){
                             $edit->upload_edited_keyword($_POST['keywordid'], $_POST['edit_keyword']);
                         }
-                        print('<pre>');
-                        print_r($_POST);
-                        print('</pre>');
-                    
+
                         $edit->show_all_keywords_with_edit_delete_links();
                         
                     }elseif($_GET['function']=='keyworddelete'){
                         print('<div class="alert alert-info">Function Delete Keyword</div>');
+                         if(isset($_GET['deletemessage'])){
+                             print("<p><span class='success'>Keyword Deleted</span></p>");
+                         }
+                        $delete = new keyworddelete;
+                        $delete->show_keywords_with_delete_button();
+
                     }elseif($_GET['function']=='keywordtree'){
-                        print('<div class="alert alert-info">Function Keyword Tree</div>');
+                        $keywordtree = new keywordtree;
+                        $keywordtree->show_categories_with_associated_keywords();
                     }elseif($_GET['function']=='keywordlinktocategory'){
                         print('<div class="alert alert-info">Function Keyword Link To Category</div>');
                         $categories = new link_to_category;
@@ -106,33 +102,49 @@ class pagemaster extends clean {
                             }
                          $categories->print_all_keywords();
                     }else{
-                        print('<div class="alert alert-warning">Keyword Links</div>');
-                        print('<p><a href="home.php?page=keywords&function=keywordcreate">Keyword Create</a></p>');
-                        print('<p><a href="home.php?page=keywords&function=keywordedit">Keyword Edit</a></p>');
-                        print('<p><a href="home.php?page=keywords&function=keyworddelete">Keyword Delete</a></p>');
-                        print('<p><a href="home.php?page=keywords&function=keywordlinktocategory">Link To Category</a></p>');
+                    include('includes/menu.keyword.functions.html');
                     }
                 }else{
-                    print('<div class="alert alert-warning">Keyword Links</div>');
-                    print('<p><a href="home.php?page=keywords&function=keywordcreate">Keyword Create</a></p>');
-                    print('<p><a href="home.php?page=keywords&function=keywordedit">Keyword Edit</a></p>');
-                    print('<p><a href="home.php?page=keywords&function=keyworddelete">Keyword Delete</a></p>');
-                    print('<p><a href="home.php?page=keywords&function=keywordlinktocategory">Link To Category</a></p>');
+                    include('includes/menu.keyword.functions.html');
                 }
-
             break;
 
             case "categories":
                 $categoryCreatClass = new createCategory;
-                // if create category form is submitted
-                if(isset($_POST['new_category']))
-                {
-                    print('<p>New Category Submitted</p>');
-                    $categoryCreatClass->upload_new_category($_POST['new_category']);
-                }
-                // if &function=create show create form
-                if(isset($_GET['function']) & $_GET['function']=="create"){
-                    $categoryCreatClass->form_create_category();
+                    if(isset($_GET['message'])){
+                        print('<p><span style="color:green;">'.$_GET['message'].'</span></p>');
+                    }
+                if(isset($_GET['function'])){
+                    if($_GET['function']=="categorycreate"){
+                        print('<h2>Category Create</h2>');
+                        $create = new createCategory;
+                        $create->form_create_category();
+                        $show = new show_categories;
+                        $show->show_categories_no_extras();
+                        // $categoryCreatClass->form_create_category();
+                    }elseif($_GET['function']=="categorydedit"){
+                        print('<h2>Category Edit</h2>');
+                        $edit = new editCategory;
+                        $edit->show_categories_with_edit();
+                        if(isset($_POST['edit_category_new_value'])){
+                            $edit->upload_edited_category($_POST['edit_category_new_value'], $_POST['edit_category_id']);
+                            $edit->show_categories_with_edit();
+                         }
+                    }elseif($_GET['function']=="categorydelete"){
+                        $delete = new categorydelete;
+                        $delete->show_categories_with_delete_button();
+                    }elseif($_GET['function']=="categorytree"){
+                        $showcategytree = new categorytree;
+                        $showcategytree->show_categories_with_associated_keywords();
+                    }else{
+                        print('<h2>No Function Defined</h2>');
+                        $edit = new editCategory;
+                        $edit->show_categories_with_edit();
+                    }
+                }else{
+                    include('includes/menu.category.functions.html');
+                    $show = new show_categories;
+                    $show->show_categories_no_extras();
                 }
                 // Upload Edited Category POST value exists
                 if (isset($_POST['edit_category_new_value'])){ 
@@ -141,46 +153,21 @@ class pagemaster extends clean {
                 }
                 // show all categories
                 $categoryShowClass = new show_categories;
-                $categoryShowClass->show_all_categories();
+               // $categoryShowClass->show_all_categories();
             break;
 
             case "tomatoshow":
-            $tomato_add_object = new addtomato;
-                echo "<h3>Show single tomato</h3>";
-                if(isset($_POST['tomato_submit'])){
-                    $userid=$_POST['userid'];
-                    $title=$_POST['title'];
-                    $date=$_POST['date'];
-                    $week=$_POST['week'];
-                    $count=$_POST['count'];
-                    $category=$_POST['categories'];
-                    $notes=$_POST['notes'];
-                    $url=$_POST['url'];
-                        if(!(isset($_POST['keywords']))){
-                            $keywords = array();
-                        }else{
-                            $keywords = $_POST['keywords']; 
-                        }
-                    print('<p>Tomato Submitted</p>');
-                    $created_tomato_id = $tomato_add_object->upload_tomato_with_keyword_array(
-                        $userid,
-                        $title,
-                        $date,
-                        $week,
-                        $count,
-                        $category,
-                        $notes,
-                        $url,
-                        $keywords);
-                }
-                print('<p>Created Tomato ID: '.$created_tomato_id.'</p>');
-               $single_tomato =  new showtomatoes;
-               $test= $single_tomato->show_tomato_by_tomid($created_tomato_id);
-               print('<pre>');
-               print_r($test);
-               print('</pre>');
-                break;
+                print('<p>Edit Single Tomato</p>');
+             break;
 
+             case "findtomato":
+             print('<p>Find Tomato</p>');
+             $findtomato= new findtomato;
+             //$findtomato->fix_null_titles();
+             //$findtomato->fix_null_dates();
+            // $findtomato->fix_null_week_number();
+             $findtomato->find_tomato_form();
+            break;
 
             case "linkkeywords":
                 echo "<h3>Now link Keywords</h3>";
@@ -207,16 +194,6 @@ class pagemaster extends clean {
         }       
     }
 
-
-    function add(){
-        // start switching to dedicated 
-        // add tomato class
-        $tomato_add_object = new addtomato;
-        print('<p><a href="http://localhost/tomato220.com/public_html/home.php?page=addtomato">Reset</a></p>');
-        $tomato_add_object->upload_form_tomato();
-    }
-
-
     function tomatoshow(){
         print('<p>Tomato Show Functions</p>');
         if(isset($_POST['keywords'])){
@@ -242,14 +219,6 @@ class pagemaster extends clean {
                 }
             }
 
-  function keywords(){
-    $create_keyword = new createKeyword;
-    $show_all_and_edit = new keywordedit;
-    echo '<p class="function_description">Create new keyword.</p>';
-    $create_keyword->form_create_keyword();
-    // show all keywords with edit and delete links
-  $show_all_and_edit->show_all_keywords_with_edit_delete_links();
-  }  
     function setup(){
         $create_keyword = new createKeyword;
         echo '<p class="function_description">Create new keyword.</p>';

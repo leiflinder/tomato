@@ -157,7 +157,7 @@ public $array_of_categories_indexes_with_catid_as_value = array();
 
 
     function print_all_keywords(){
-        $sth = $this->conn->prepare("SELECT `keywords`.`keyword`, `keywords`.`id` FROM `tomato220`.`keywords` ORDER BY `keywords`.`keyword` ASC");
+        $sth = $this->conn->prepare("SELECT `keywords`.`keyword`, `keywords`.`id` FROM `tomato220`.`keywords` ORDER BY `keywords`.`keyword` DESC");
         $sth->execute();
         $resource= $sth->fetchall(PDO::FETCH_ASSOC);
       //  $resource = $sth->fetchall();

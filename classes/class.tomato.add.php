@@ -30,8 +30,10 @@ function set_week(){
     public function upload_form_tomato(){
         // set default "week" and send upstairs
         $this->default_week_setting();
+        // reset link below to empty form fields
+        print('<p><a href="home.php?page=addtomato">Reset</a></p>');
 
-        print('<form method="post" id="upload_form_tomato" action="http://localhost/tomato220.com/public_html/home.php?page=tomatoshow">');
+        print('<form method="post" id="upload_form_tomato" action="http://localhost/tomato220.com/public_html/refresh.tomato.create.php">');
         print('<input type="hidden" name="userid" value="1001">');
         print('<input type="hidden" name="tomato_submit" value="yes">');
 

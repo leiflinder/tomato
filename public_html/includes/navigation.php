@@ -109,7 +109,9 @@ switch ($_GET['page']) {
 
 <div style="float:left; width:300px;">
               <ul>     
-              <li><a href="home.php?page=addtomato">Add</a></li>
+              <li><a href="home.php?page=addtomato">Add Tomato</a></li>
+              <li><a href="home.php?page=findtomato">Find Tomato</a></li>
+              <li><a href="home.php?page=stats">Stats</a></li>
               <li><a href="home.php?page=stats">Stats</a></li>
               <ul>
               <li><a href="home.php?page=keywords&function=keywordmenu">Keywords</a>
@@ -118,14 +120,15 @@ switch ($_GET['page']) {
                   <li><a href="home.php?page=keywords&function=keywordedit">Keyword Edit</a></li>
                   <li><a href="home.php?page=keywords&function=keyworddelete">Keyword Delete</a></li>
                   <li><a href="home.php?page=keywords&function=keywordlinktocategory">Link To Category</a></li>
-                  <li><a href="home.php?page=keywords">Keyword Tree</a></li>
+                  <li><a href="home.php?page=keywords&function=keywordtree">Keyword Tree</a></li>
                 </ul>
               </li>
               <li><a href="home.php?page=categories">Categories</a>
                 <ul>
-                  <li><a href="home.php?page=categories&function=create">Category Create</a></li>
-                  <li><a href="home.php?page=categories&function=edit">Category Edit</a></li>
-                  <li><a href="home.php?page=categories&function=delete">Category Delete</a></li>
+                <li><a href="home.php?page=categories&function=categorycreate">Category Create</a></li>
+                  <li><a href="home.php?page=categories&function=categorydedit">Category Edit</a></li>
+                  <li><a href="home.php?page=categories&function=categorydelete">Category Delete</a></li>
+                  <li><a href="home.php?page=categories&function=categorytree">Category Tree</a></li>
                 </ul>
               </li>
               <li><a href="home.php?page=tomatoshow">Show single tomato</a></li>

@@ -3,16 +3,16 @@
 	require_once("../classes/class.user.php");
 	$auth_user = new USER();
 	$user_id = $_SESSION['user_session'];
+	$_SESSION['userid']=1001; // change this for each user
 	$stmt = $auth_user->runQuery("SELECT * FROM users WHERE user_id=:user_id");
 	$stmt->execute(array(":user_id"=>$user_id));
 	$userRow=$stmt->fetch(PDO::FETCH_ASSOC);
+
 ?>
 <?php
 include("./includes/clean.php");
 include ("../classes/config/class.conn.php");
 include ("../classes/class.clean.php");
-include ('../classes/class.changedtoday.php');
-include ('../classes/class.tomato.show.php');
 include ('../classes/class.pagemaster.php');
 include ('../classes/class.form_elements.php');
 include ('../classes/class.stats.php');
@@ -20,15 +20,20 @@ include ('../classes/class.upload.php');
 include ('../classes/class.set_week.php');
 include ('../classes/class.keywords_and_categories.php');
 include ('../classes/class.keyword.create.php');
+include ('../classes/class.keyword.delete.php');
 include ('../classes/class.keyword.edit.php');
 include ('../classes/class.keyword.show.php');
-include ('../classes/class.keyword.delete.php');
 include ('../classes/class.keyword.link_to_category.php');
+include ('../classes/class.keyword.tree.php');
 include ('../classes/class.category.create.php');
-include ('../classes/class.category.show.php');
+include ('../classes/class.category.delete.php');
 include ('../classes/class.category.edit.php');
+include ('../classes/class.category.show.php');
+include ('../classes/class.category.tree.php');
+include ('../classes/class.tomato.show.php');
 include ('../classes/class.tomato.add.php');
 include ('../classes/class.tomato.edit.php');
+include ('../classes/class.tomato.find.php');
 include('../classes/class.pagefunctions.index.php');
 include('./includes/header.php');
 include ('./includes/navigation.php');

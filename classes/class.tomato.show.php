@@ -1,6 +1,9 @@
 <?PHP
 class showtomatoes extends conn{
-  
+
+  function todaydate(){
+    return date("Y-m-d");
+}  
 
     function get_keywords_for_tom_id($tom_id){
         $sth = $this->conn->prepare("SELECT tomato220.keywords.keyword 
@@ -104,7 +107,7 @@ class showtomatoes extends conn{
         // good place to 
         return $value;
     }
-
+/*
         function query_table_for_tomdate_today(){
           $sth = $this->conn->prepare("SELECT tomato220.category.id, tomato220.category.category, tomato220.tomato.count, tomato220.tomato.notes, tomato220.tomato.id AS 'tom_id', tomato220.tomato.timestamp
           FROM tomato220.category
@@ -117,6 +120,31 @@ class showtomatoes extends conn{
             //$result = $sth->fetch(PDO::FETCH_ASSOC);
             return $result;
       }
+*/
+      function query_table_for_tomdate_today(){
+        
+        $sth = $this->conn->prepare("SELECT tomato220.category.id, tomato220.category.category, tomato220.tomato.count, tomato220.tomato.notes, tomato220.tomato.id AS 'tom_id', tomato220.tomato.timestamp
+        FROM tomato220.category
+        JOIN tomato220.tomato
+        ON tomato220.category.id = tomato220.tomato.category
+        WHERE tomato220.tomato.tomdate
+        LIKE '".$this->todaydate()."%'");
+        
+        /*
+        $sth = $this->conn->prepare("SELECT *
+        FROM tomato220.category
+        JOIN tomato220.tomato
+        ON tomato220.category.id = tomato220.tomato.category
+        WHERE tomato220.tomato.tomdate
+        LIKE '2018-11-09'");
+        */   
+        
+        
+      $sth->execute();
+      $result = $sth->fetchAll();
+          //$result = $sth->fetch(PDO::FETCH_ASSOC);
+         return $result;
+    }
 }
 
 ?>

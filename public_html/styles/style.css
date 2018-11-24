@@ -53,3 +53,10 @@ body{
 h1{
 	font-family:Verdana, Geneva, sans-serif;
 }
+
+.bigandbad{
+    font-weight:bold;
+    font-size:120%;
+    color:green;
+    color:777;
+  }
