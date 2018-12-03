@@ -1,139 +1,61 @@
-<?PHP
-if(isset($_GET['page'])){
-  $_GET['page']=$_GET['page'];
-}else{
-  $_GET['page']='index';
-}
-switch ($_GET['page']) {
-  case "home":
-  $chosen_index="active";
-  $chosen_addtomato="notactive";
-  $chosen_view="notactive";
-  $chosen_set="notactive";
-  break;
-	case "index":
-		$chosen_index="active";
-		$chosen_addtomato="notactive";
-		$chosen_view="notactive";
-    $chosen_set="notactive";
-        break;
-    case "addtomato":
-		$chosen_index="notactive";
-		$chosen_addtomato="active";
-		$chosen_view="notactive";
-    $chosen_set="notactive";
-    break;
-    case "setup":
-		$chosen_index="notactive";
-		$chosen_addtomato="notactive";
-		$chosen_view="notactive";
-    $chosen_set="active";
-    break;
-    case "view":
-		$chosen_index="notactive";
-		$chosen_addtomato="notactive";
-		$chosen_view="active";
-    $chosen_set="notactive";
-    break;
-    default:
-		$chosen_index="active";
-		$chosen_addtomato="notactive";
-		$chosen_view="notactive";
-		$chosen_set="notactive";
-}
-?>
-	<style>
-	#chosen{
-		background-color:black;
-	}
-	#not_chosen{
-		text-decoration: initial;
-	}
-	</style>
-
-
-
-
-
-<nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="index.php">Home </a>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Features</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Pricing</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Dropdown link
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <a class="dropdown-item" href="#">Something else here</a>
         </div>
-
-        <div id="navbar" class="navbar-collapse collapse">
-
-          <!--
-          <ul class="nav navbar-nav">
-            <li class="<?php 	print($chosen_addtomato); ?>"><a href="home.php?page=addtomato">Add</a></li>
-            <li class="<?php 	print($chosen_set); ?>"><a href="home.php?page=setup">Set Up</a></li>
-          </ul>
-          -->
-          <ul class="nav navbar-nav navbar-left">     
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Page Functions<span class="caret"></span></a>
-              <ul class="dropdown-menu">
-              <li class="<?php 	print($chosen_addtomato); ?>"><a href="home.php?page=addtomato">Add</a></li>
-              <li class="<?php 	print($chosen_set); ?>"><a href="home.php?page=setup">Set Up</a></li>
-              <li><a href="home.php?page=stats">Stats</a></li>
-              <li><a href="home.php?page=keywords">Keywords</a></li>
-              <li><a href="home.php?page=tomatoshow">Show single tomato</a></li>
-              <li><a href="home.php?page=linkkeywords">Now link Keywords</a></li>
-              <li><a href="home.php?page=setup">Set Up</a></li> 
-              <li><a href="home.php">Default</a></li>       
-              </ul>
-            </li>
-          </ul>
-
-
-          <ul class="nav navbar-nav navbar-right">     
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-			  <span class="glyphicon glyphicon-user"></span>&nbsp;Hi' <?php echo $userRow['user_email']; ?>&nbsp;<span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="profile.php"><span class="glyphicon glyphicon-user"></span>&nbsp;View Profile</a></li>
-                <li><a href="logout.php?logout=true"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Sign Out</a></li>
-              </ul>
-            </li>
-          </ul>
-
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
-
-<div style="float:left; width:300px;">
-              <ul>     
-              <li><a href="home.php?page=addtomato">Add Tomato</a></li>
-              <li><a href="home.php?page=findtomato">Find Tomato</a></li>
-              <li><a href="home.php?page=stats">Stats</a></li>
-              <li><a href="home.php?page=stats">Stats</a></li>
-              <ul>
-              <li><a href="home.php?page=keywords&function=keywordmenu">Keywords</a>
-                <ul>
-                <li><a href="home.php?page=keywords&function=keywordcreate">Keyword Create</a></li>
-                  <li><a href="home.php?page=keywords&function=keywordedit">Keyword Edit</a></li>
-                  <li><a href="home.php?page=keywords&function=keyworddelete">Keyword Delete</a></li>
-                  <li><a href="home.php?page=keywords&function=keywordlinktocategory">Link To Category</a></li>
-                  <li><a href="home.php?page=keywords&function=keywordtree">Keyword Tree</a></li>
-                </ul>
-              </li>
-              <li><a href="home.php?page=categories">Categories</a>
-                <ul>
-                <li><a href="home.php?page=categories&function=categorycreate">Category Create</a></li>
-                  <li><a href="home.php?page=categories&function=categorydedit">Category Edit</a></li>
-                  <li><a href="home.php?page=categories&function=categorydelete">Category Delete</a></li>
-                  <li><a href="home.php?page=categories&function=categorytree">Category Tree</a></li>
-                </ul>
-              </li>
-              <li><a href="home.php?page=tomatoshow">Show single tomato</a></li>
-              <li><a href="home.php?page=linkkeywords">Now link Keywords</a></li>
-              <li><a href="home.php?page=setup">Set Up</a></li> 
-              <li><a href="home.php">Default</a></li>       
-              </ul>
+      </li>
+    </ul>
   </div>
+</nav>
+
+
+<div class="nav_div_left">
+   <ul>
+      <!--
+      <li><a href="home.php?page=tomatoes">Tomatoes</a>
+         <?php // include ('menu_tomatoes.php');?>
+      </li>
+      -->
+      <li><a href="home.php?page=tomato">Tomatoes</a>
+         <?php
+            $tomato_section_menu = new tomatoaux;
+            print($tomato_section_menu->tomato_section_menu());
+         ?>
+      </li>
+      <li><a href="home.php?page=keywords&function=keywordmenu">Keywords</a>
+         <?php include ('menu_keywords.php');?>
+      </li>
+      <li><a href="home.php?page=categories">Categories</a>
+         <?php include ('menu_categories.php');?>
+      </li>
+      <li><a href="home.php?page=views">Views</a>
+         <?php
+            $view_section_menu = new viewaux;
+            print($view_section_menu->view_section_menu());
+         ?>
+      </li>
+      <li><a href="home.php?page=setup">Set Up</a>
+         <?php include ('menu_setup.php');?>
+      </li>
+   </ul>
+</div>

@@ -10,7 +10,7 @@
 
 ?>
 <?php
-include("./includes/clean.php");
+//include("./includes/clean.php");
 include ("../classes/config/class.conn.php");
 include ("../classes/class.clean.php");
 include ('../classes/class.pagemaster.php');
@@ -30,10 +30,14 @@ include ('../classes/class.category.delete.php');
 include ('../classes/class.category.edit.php');
 include ('../classes/class.category.show.php');
 include ('../classes/class.category.tree.php');
+include ('../classes/class.tomato.aux.php');
 include ('../classes/class.tomato.show.php');
 include ('../classes/class.tomato.add.php');
 include ('../classes/class.tomato.edit.php');
 include ('../classes/class.tomato.find.php');
+include ('../classes/class.view.aux.php');
+include ('../classes/class.view.abstract.php');
+include ('../classes/class.view.today.php');
 include('../classes/class.pagefunctions.index.php');
 include('./includes/header.php');
 include ('./includes/navigation.php');
@@ -41,7 +45,9 @@ include ('./includes/navigation.php');
 print('<div id="content">'); // open content
 
 $zombie = new pagemaster;
-$zombie->pagefinder($clean['get']);
+/* shorthand if isset else index */
+$_GET['page'] = isset($_GET['page']) ? $_GET['page'] : 'index';
+$zombie->pagefinder($_GET['page']);
 
 print('</div>'); // close content
 ?>

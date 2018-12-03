@@ -4,7 +4,12 @@ class pagemaster extends clean {
 
     function pagefinder($get_page){
          switch ($get_page) {
-
+            case "views":
+            print('<h3>VIEWS</h3>');
+            // prints views menu
+            $today = new viewtoday;
+            print($today);
+            break;
             case "index":
                // uses file class.tomato.show.php
                 $page_display = new showtomatoes;
@@ -52,6 +57,32 @@ class pagemaster extends clean {
                 // file: class.tomato.add.php
                 $tomato_add_object = new addtomato;
                 $tomato_add_object->upload_form_tomato();
+                break;
+
+            case "tomato":
+            if(isset($_GET['function'])){
+                    if($_GET['function']=='tomatoadd'){
+                        print('<div class="alert alert-warning" role="alert">Add Tomato</div>');
+                    }
+                    elseif($_GET['function']=='tomatoedit'){
+                        print('<div class="alert alert-warning" role="alert">Edit Tomato</div>');
+                    }                   
+                    elseif($_GET['function']=='tomatodelete'){
+                        print('<div class="alert alert-warning" role="alert">Delete Tomato</div>');
+                    } 
+                    elseif($_GET['function']=='tomatofind'){
+                        print('<div class="alert alert-warning" role="alert">Find Tomato</div>');
+                    }
+                    else{
+                        print('<p>No Function Inner</p>');
+                    }  
+                }else{
+                    // if section landing page show section menu
+                    print('<div class="alert alert-warning" role="alert">Tomato Functions</div>');
+                    $tomato_section_menu = new tomatoaux;
+                    print($tomato_section_menu->tomato_section_menu());
+
+                }
                 break;
 
             case "keywords":

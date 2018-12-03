@@ -21,7 +21,7 @@ class createCategory extends conn{
             $stm->bindParam(':NEWCATEGORY',$new_category);
             $stm->bindParam(':FAVORITE',$favorite);
             $stm->execute();
-            $stm->execute();
+           // $stm->execute();
             $count = $stm->rowCount();  
             if($count > 0){
                 $message='ID: '.$categoryid.' Created';

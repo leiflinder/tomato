@@ -211,3 +211,7 @@ body.modal-open-noscroll
 .marginleft {
   padding-left:20px;
 }
+.nav_div_left {
+  float:left;
+  margin-right:30px;
+}

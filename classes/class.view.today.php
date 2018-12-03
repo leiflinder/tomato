@@ -1,6 +1,6 @@
 <?PHP
 
-class index_page_functions extends conn{
+class viewtoday extends viewsabstract{
 
     private $current_week;
     private $dbase_resource_current_week_category;
@@ -13,6 +13,14 @@ class index_page_functions extends conn{
      * it populates the class member variable, $dbase_resource_current_week_category property
      * with returned database resource.
     **/ 
+
+    public function __toString(){
+        $section_menu=$this->sectmenu();
+        $return = $section_menu;
+        return $return;
+    }
+
+
 
     private function todaydate(){
         return date("Y-m-d");

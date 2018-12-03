@@ -75,6 +75,10 @@ function words_in_title_column(){
   $statment = $this->conn->prepare("SELECT `tomato`.`title` FROM `tomato220`.`tomato`");
 }
 
+function search_categories(){
+  $statement = $this->conn->prepare("");
+}
+
 public function find_tomato_form(){
     // set default "week" and send upstairs
     $this->default_week_setting();
