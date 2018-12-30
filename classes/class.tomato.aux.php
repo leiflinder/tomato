@@ -11,5 +11,15 @@ class tomatoaux extends conn{
             </ul>';
             return $sectionmenu;
     }
+    public function tomato_section_menu_anchors(){
+        $sectionmenu ='
+        <a class="dropdown-item" href="home.php?page=tomato&function=tomatoadd">Add</a>
+        <a class="dropdown-item" href="home.php?page=tomato&function=tomatoedit">Edit</a>
+        <a class="dropdown-item" href="home.php?page=tomato&function=tomatodelete">Delete</a>
+        <a class="dropdown-item" href="home.php?page=tomato&function=tomatofind">Find</a>
+        <a class="dropdown-item" href="home.php?page=tomato&function=linktocategory">Link To Category</a>
+        ';
+        return $sectionmenu;
+}
 }
 ?>

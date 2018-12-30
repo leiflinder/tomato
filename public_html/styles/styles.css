@@ -1,9 +1,6 @@
 @charset "utf-8";
 /* CSS Document */
 
-body{
-	background:#f1f9f9;
-}
 
 .form-signin {
     max-width: 500px;
@@ -59,12 +56,19 @@ h1{
         }
 
         body {
-          padding:5px;
           font-family: 'Roboto', sans-serif;
           font-size: 20px;
-          padding-top:65px;
           background-color:white;
         }
+
+        /*
+         USE THIS FOR FIXED TOP NAV
+        body {
+          min-height: 2000px;
+          padding-top: 70px;
+        }
+        */
+
 .menu_div{
            width:260px;
            padding:20px 12px 12px 12px;
@@ -80,11 +84,7 @@ h1{
        #content {
         min-height:400px;
         width:300px;
-        padding:12px 12px 20px 12px;
         margin:0px auto;
-        background-color:white;
-        font-size:90%;
-        border:solid #ccc 1px;
        }   
 .zeon{
   border:solid 1px #ccc;
@@ -214,4 +214,33 @@ body.modal-open-noscroll
 .nav_div_left {
   float:left;
   margin-right:30px;
+}
+.list-group .list-group-item {
+  margin:0px;
+  padding:1px;
+}
+html #content .list-group{
+  margin-bottom:10px;
+}
+.no-padding {
+  margin:0px;
+  padding:0px;
+}
+table .hrstd {
+  border:solid white 1px;
+  background-color:red;
+  padding: .75rem;
+  padding-top: 0.75rem;
+  padding-right: 0.75rem;
+  padding-bottom: 0.75rem;
+  padding-left: 0.75rem;
+  vertical-align: top;
+}
+
+.i-circle {
+  color: #ff0000;
+  background: #fff;
+  padding: 0px 12px 3px 12px;
+  border-radius: 50%;
+  font-size: 24px;
 }

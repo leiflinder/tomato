@@ -18,7 +18,9 @@ class showtomatoes extends conn{
         }
 
     function show_tomatoes($dbase_resource){
+        print('<br/>');
         print('<table class="table">');
+        print('<tr><th>Title</th><th>Count</th><th>Cat</th></tr>');
 
         for($i=0; $i < sizeof($dbase_resource); $i++ ){
             // first lets get the tomato id
@@ -27,23 +29,33 @@ class showtomatoes extends conn{
             // keywords associated with the tom id
 
             $keywords_by_tom_id = $this->get_keywords_for_tom_id($tomato_id);
+            /*
             print('<tr>
-                        <td valign="top">'.$dbase_resource[$i]['category'].' hours</td> 
-                        <td valign="top">'.(.5)*($dbase_resource[$i]['count']).'</td> 
-                        <td valign="top">
-                        <button type="button" class="btn btn-light" data-toggle="modal" data-target="#'.$dbase_resource[$i]['id'].'">Open</button>
+                        <td valign="top"><a href data-toggle="modal" data-target="#'.$dbase_resource[$i]['tom_id'].'">'.$dbase_resource[$i]['title'].'</a></td> 
+                        <td valign="top" align="center" class="hrstd"><span class="i-circle">'.(.5)*($dbase_resource[$i]['count']).'</span></td> 
+                        <td valign="top" class="categorytd">
+                        '.$dbase_resource[$i]['category'].'
                         </td>
                 </tr>');
-
+                */
+            
+            print('<tr>
+                        <td valign="top"><a href data-toggle="modal" data-target="#'.$dbase_resource[$i]['tom_id'].'">'.$dbase_resource[$i]['title'].'</a></td> 
+                        <td valign="top" align="center"><button type="button" class="btn btn-primary">'.(.5)*($dbase_resource[$i]['count']).'</button></td> 
+                        <td valign="top" class="categorytd">
+                        '.$dbase_resource[$i]['category'].'
+                        </td>
+                </tr>');
+/*
             print('
-                <div id="'.$dbase_resource[$i]['id'].'" class="modal fade" role="dialog">
+                <div id="'.$dbase_resource[$i]['tom_id'].'" class="modal fade" role="dialog">
                   <div class="modal-dialog">
                 
                     <!-- Modal content-->
                     <div class="modal-content">
                       <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">'.$tomato_id.'</h4>
+                        <h4 class="modal-title">'.$dbase_resource[$i]['tom_id'].'</h4>
                       </div>
                       <div class="modal-body">
                       <form method="post" action="refresh.tomcount.php">
@@ -66,13 +78,13 @@ class showtomatoes extends conn{
                 </div>');
 
                 print('
-                <div id="Edit'.$dbase_resource[$i]['id'].'" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="Edit'.$tomato_id.'Label">
+                <div id="Edit'.$tomato_id.'" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="Edit'.$tomato_id.'Label">
                   <div class="modal-dialog">
                 
                     <!-- Modal content-->
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="Edit'.$tomato_id.'Label">Edit '.$dbase_resource[$i]['id'].'</h5>
+                        <h5 class="modal-title" id="Edit'.$tomato_id.'Label">Edit '.$tomato_id.'</h5>
                       </div>
                       <div class="modal-body">
                         <p>'.$dbase_resource[$i]['notes'].'</p>
@@ -84,9 +96,43 @@ class showtomatoes extends conn{
                 
                   </div>
                 </div>');
+                */
+                print('<div id="'.$dbase_resource[$i]['tom_id'].'" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+              
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">'.$dbase_resource[$i]['tom_id'].'</h4>
+                    </div>
+                    <div class="modal-body">');
+                $edit_single_tomato = new edittomato;
+                $edit_single_tomato->edit_single_tomato_form(
+                  $dbase_resource[$i]['tom_id'], 
+                  'userid', 
+                  'title', 
+                  'tomdate', 
+                  'tomweek',
+                  'count', 
+                  'categorytitle', 
+                  '4', 
+                  'Notes', 
+                  'URL'
+                );
+                
+              
+                print('<pre>');
+                print_r($dbase_resource[$i]);
+                print('</pre>');
+                
+                print('<div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>');
             }
 
-
+            
 
        print("</table>");   
     }
@@ -107,38 +153,16 @@ class showtomatoes extends conn{
         // good place to 
         return $value;
     }
-/*
-        function query_table_for_tomdate_today(){
-          $sth = $this->conn->prepare("SELECT tomato220.category.id, tomato220.category.category, tomato220.tomato.count, tomato220.tomato.notes, tomato220.tomato.id AS 'tom_id', tomato220.tomato.timestamp
-          FROM tomato220.category
-          JOIN tomato220.tomato
-          ON tomato220.category.id = tomato220.tomato.category
-          WHERE tomato220.tomato.tomdate
-          LIKE '".$this->todaydate()."%'");
-          $sth->execute();
-          $result = $sth->fetchAll();
-            //$result = $sth->fetch(PDO::FETCH_ASSOC);
-            return $result;
-      }
-*/
+
       function query_table_for_tomdate_today(){
         
-        $sth = $this->conn->prepare("SELECT tomato220.category.id, tomato220.category.category, tomato220.tomato.count, tomato220.tomato.notes, tomato220.tomato.id AS 'tom_id', tomato220.tomato.timestamp
+        $sth = $this->conn->prepare("SELECT tomato220.tomato.title AS 'title', tomato220.category.category, tomato220.tomato.count, tomato220.tomato.notes, tomato220.tomato.id AS 'tom_id', tomato220.tomato.timestamp
         FROM tomato220.category
         JOIN tomato220.tomato
         ON tomato220.category.id = tomato220.tomato.category
         WHERE tomato220.tomato.tomdate
         LIKE '".$this->todaydate()."%'");
-        
-        /*
-        $sth = $this->conn->prepare("SELECT *
-        FROM tomato220.category
-        JOIN tomato220.tomato
-        ON tomato220.category.id = tomato220.tomato.category
-        WHERE tomato220.tomato.tomdate
-        LIKE '2018-11-09'");
-        */   
-        
+
         
       $sth->execute();
       $result = $sth->fetchAll();

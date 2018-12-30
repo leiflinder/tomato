@@ -70,7 +70,7 @@ class index_page_functions extends conn{
            // use this function to find out
            // target hours
            $this->target_hours_for_category($cat_id);
-            if($hours_from_tomatoes > $this->target_hours_for_category){
+            if($hours_from_tomatoes >= $this->target_hours_for_category){
                 $butt_style = "btn-info";
             }else{
                 $butt_style = "btn-secondary";

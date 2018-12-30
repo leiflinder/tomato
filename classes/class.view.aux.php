@@ -13,5 +13,16 @@ class viewaux extends conn{
             </ul>';
             return $viewmenu;
     }
+    
+    public function view_section_menu_achors(){
+        $viewmenu ='
+        <a class="dropdown-item" href="home.php?page=views&function=viewtoday">Today</a>
+        <a class="dropdown-item" href="home.php?page=views&function=viewyesterday">Yesterday</a>
+        <a class="dropdown-item" href="home.php?page=views&function=viewweeks">Weeks</a>
+        <a class="dropdown-item" href="home.php?page=views&function=viewcomparisons">Comparisons</a>
+        <a class="dropdown-item" href="home.php?page=views&function=viewcustomviews">Custom Views</a>
+        ';
+        return $viewmenu;
+}
 }
 ?>
