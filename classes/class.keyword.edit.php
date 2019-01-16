@@ -73,5 +73,32 @@ class keywordedit extends conn{
         print('<br/>');
     }
 
+   
+    function keywords_edit_with_current_selected($category_param=1){   
+        if($category_param){
+        	$this->category=$category_param;
+        }else{
+			$this->category=1;
+		}
+		$sth = $this->conn->prepare("SELECT tomato220.keywords.keyword AS keyword, tomato220.keywords.id AS id 
+				FROM tomato220.link_cat_to_keywords 
+				JOIN tomato220.keywords 
+				ON tomato220.link_cat_to_keywords.keyword_id = tomato220.keywords.id
+				WHERE tomato220.link_cat_to_keywords.cat_id = ".$this->category." ORDER BY `keywords`.`keyword` ASC");
+			$sth->execute();
+			$table = $sth->fetchAll();
+			foreach($table as $value){
+				print('<div class="form-check">
+				<input class="form-check-input" name="keywords[]" type="checkbox" value="'.$value['id'].'" id="'.$value['id'].'">
+				<label class="form-check-label" for="'.$value['id'].'">
+				'.$value['keyword'].'</label>
+			  </div>');
+			  /*
+			print('<div class="keywords"><input id="'.$value['id'].'" type="checkbox" value="'.$value['id'].'"  name="keywords[]"><label for="'.$value['id'].'">'.$value['keyword'].'</label></div>');  
+			*/   
+			}
+    }
+
+
 }
 ?>

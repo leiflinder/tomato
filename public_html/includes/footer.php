@@ -30,7 +30,7 @@ function showKeywords(str) {
         xmlhttp.send();
     }
 }
-function showKeywordsEdit(str) {
+function showKeywordsEdit(str, tomidkeywords=3) {
     if (str.length == 0) { 
         document.getElementById("ajaxKeywordsEdit").innerHTML = "";
         return;

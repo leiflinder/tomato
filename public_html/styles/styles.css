@@ -244,3 +244,8 @@ table .hrstd {
   border-radius: 50%;
   font-size: 24px;
 }
+.circuit{
+  padding:10px;
+  border:solid #ccc 1px;
+  margin:10px 0 10px 0;
+}

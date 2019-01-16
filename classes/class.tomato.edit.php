@@ -68,6 +68,16 @@
             return $categorytitle;
         }
 
+        function return_name_of_current_category($tomatoid){
+            $sth = $this->conn->prepare("SELECT `category` FROM `tomato` WHERE `id` = :TOMID ORDER BY `id` DESC");
+            $sth->bindParam(':TOMID', $tomatoid);
+            $sth->execute();
+            $resource= $sth->fetchall(PDO::FETCH_ASSOC);
+            $categoryid = $resource[0]['category'];
+            $categorytitle=$this->return_category_name_from_catid($categoryid);
+            return $categorytitle;
+        }
+
     function return_single_tomato_based_on_tomid($tomid){
         $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`tomato` WHERE `tomato`.`id` = :TOMID");
         $sth->bindParam(':TOMID', $tomid);
@@ -133,7 +143,7 @@
 
     function edit_single_tomato_form($tomid, $userid, $title, $tomdate, $tomweek,$count, $category_title, $category_id, $notes, $url, $keywords){
 
-            print('<form method="post" id="edit_single_tomato" action="http://localhost/tomato220.com/public_html/refresh.tomato.edit.php">
+            print('<form method="post" id="edit_single_tomato" action="http://localhost/tomato220.com/public_html/bounce.tomato.edit.php">
             <input type=hidden name="tomid" id="tomid" value="'.$tomid.'"/>');
             
             print('<input type=hidden name="userid" id="userid" value="'.$userid.'"/>');
@@ -145,11 +155,18 @@
                 <input type="text" name="title" class="form-control" id="title" value="'.$title.'"/>
             </div>');
 
-                // Tomdate
+                // Current Tomdate
                 print('<div class="form-group">
-                <label for="tomdate">Tomdate</label>
+                <label for="tomdate">Current Tomdate</label>
                 <input type="text" name="tomdate" class="form-control" id="tomdate" value="'.$tomdate.'"/>
             </div>');
+
+                // Update Date
+                echo'<div class="form-group">
+                <label for="tomatoDate_FormElement">Update Date</label>
+                <input type="date" name="date" class="form-control" id="tomatoDate_FormElement" aria-describedby="dateHelp" placeholder="Date">
+                <small id="dateHelp" class="form-text text-muted">Enter date of tomato.</small>
+            </div>';
 
             // Tomweek
          print('<div class="form-group">
@@ -164,17 +181,19 @@
             </div>');
 
             // Category Title
+            /*
             print('<div class="form-group">
             <label for="category_title">Category Title</label>
             <input type="text" name="category_title" class="form-control" id="category_title" value="'.$category_title.'"/>
             </div>');
-
+            */
+            /*
             // Category id
             print('<div class="form-group">
             <label for="category_id">Category ID</label>
             <input type="text" name="category_id" class="form-control" id="category_id" value="'.$category_id.'"/>
             </div>');
-
+            */
 
             // Notes
             print('<div class="form-group">
@@ -193,6 +212,11 @@
             print_r($keywords);
             print('</pre>');
            */
+           print('<div class="circuit">');
+           print('<p>Current Category</p>');
+           print('<p>'.$this->return_name_of_current_category($tomid).'</p>');
+           print('</div>');
+
 
             // Select List of Categories
             $this->categories($category_id, $category_title, $tomid);
