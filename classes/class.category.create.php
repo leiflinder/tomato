@@ -8,37 +8,40 @@ class createCategory extends conn{
         $stm->bindParam(':USERID',$userid);
         $stm->execute();
         if ($stm->rowCount() > 0){
-           // print('<p>Keyword "'.$new_category.'" already exists in dBase.</p>');
             $message="Redundant";
             } else {
 
             $stm = $this->conn->prepare("INSERT INTO `tomato220`.`category` (`category`.`id`, `category`.`userid`, `category`.`category`, `category`.`favorite`, `category`.`timestamp`) VALUES (NULL, :USERID, :NEWCATEGORY, :FAVORITE, CURRENT_TIMESTAMP)"); 
-/*
-            INSERT INTO `category` (`id`, `userid`, `category`, `favorite`, `timestamp`) VALUES (NULL, '1001', 'test-wwww', '0', CURRENT_TIMESTAMP);
-*/
-
             $stm->bindParam(':USERID',$userid);
             $stm->bindParam(':NEWCATEGORY',$new_category);
             $stm->bindParam(':FAVORITE',$favorite);
             $stm->execute();
-           // $stm->execute();
+            $lastid = $this->conn->lastInsertId(); 
+            // create a tomato220.goal entry for the new category
+            $this->create_goal_for_new_category($lastid, $new_category, 1001);
             $count = $stm->rowCount();  
             if($count > 0){
                 $message='ID: '.$categoryid.' Created';
             }else{
                 $message="Problem";
             }
+
+
         }
 
         $this->conn=NULL;
         return $message;
     }
 
+    function create_goal_for_new_category($categoryid, $catname, $userid){
+        $stm = $this->conn->prepare("INSERT INTO `tomato220`.`goals` (`goals`.`id`, `goals`.`userid`, `goals`.`categoryid`, `goals`.`catname`,`goals`.`hours`, `goals`.`active`, `goals`.`timeperiod`, `goals`.`timestamp`) VALUES (NULL, :USERID, :CATID, :CATNAME, '0', '1', 'week', CURRENT_TIMESTAMP)"); 
+        $stm->bindParam(':CATID',$categoryid);
+        $stm->bindParam(':CATNAME',$catname);
+        $stm->bindParam(':USERID',$userid);
+        $stm->execute();       
+    }
+
     function form_create_category(){ 
-        // $_POST['category_submit']
-        // $_SESSION['userid']
-        //  $_POST['new_category']
-        // $_POST['favorite']
         print('<form method="post" action="refresh.category.create.php">');
         print('<input type="hidden" name="category_submit" value="1"/>');
         print('<input type="hidden" name="userid" value="'.$_SESSION['userid'].'"/>');

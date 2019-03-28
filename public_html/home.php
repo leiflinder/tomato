@@ -33,6 +33,7 @@ include ('../classes/class.category.edit.php');
 include ('../classes/class.category.show.php');
 include ('../classes/class.category.tree.php');
 include ('../classes/class.setup.aux.php');
+include ('../classes/class.setup.goals.php');
 include ('../classes/class.tomato.aux.php');
 include ('../classes/class.tomato.show.php');
 include ('../classes/class.tomato.add.php');

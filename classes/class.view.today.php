@@ -15,7 +15,7 @@ class viewtoday extends viewsabstract{
     **/ 
 
     public function __toString(){
-        $section_menu=$this->sectmenu();
+        $section_menu = $this->sectmenu();
         $return = $section_menu;
         return $return;
     }
@@ -44,7 +44,7 @@ class viewtoday extends viewsabstract{
     }
     
     private function category_hours_this_week($category){
-        // (1) Populate $this->current_week member variable with value of private currentweek() function.
+        // (1) Populate $this->current_week variable with value of currentweek() function.
         // (2) Populate $this->dbase_resource_current_week_category with dbase resource query on accumulative tomotatoes on a specific category (like Norsk, ID 2).
         $this->current_week = $this->currentweek();
         $sth = $this->conn->prepare("SELECT sum(`tomato`.`count`) AS 'toms' FROM `tomato220`.`tomato` WHERE `tomato`.`tomweek` LIKE :CURRENTWEEK AND `tomato`.`category` = :CATEGORYID");
@@ -59,7 +59,10 @@ class viewtoday extends viewsabstract{
 
     protected function target_hours_for_category($categoryid){
         // What is the target amount? 
-        $sth = $this->conn->prepare("SELECT `weeklygoals`.`targethours` FROM `tomato220`.`weeklygoals` WHERE `weeklygoals`.`categoryid` = :CATEGORYID");
+        /** because target goals change choose we will have multiple entries for 
+         * specific categories. Therefore choose the goal that has active = 1 
+         */
+        $sth = $this->conn->prepare("SELECT `weeklygoals`.`targethours` FROM `tomato220`.`weeklygoals` WHERE `weeklygoals`.`categoryid` = :CATEGORYID AND `weeklygoals`.`active`=1");
         $sth->bindParam(':CATEGORYID', $categoryid);
         $sth->execute();
         $result = $sth->fetch(PDO::FETCH_ASSOC);

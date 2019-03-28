@@ -80,10 +80,16 @@ class pagemaster
             case "index":
                 // uses file class.tomato.show.php
                 $page_display = new showtomatoes;
-                print('<h3>TODAY</h3>');
-                $debase_resource_today_changed = $page_display->query_table_for_tomdate_today();
-               // $page_display->show_tomatoes($debase_resource_today_changed);
-                // uses file class.pagefunctions.index.php
+                print('<h3>RECENT</h3>');
+                $edit_tomatos = new edittomato;
+                if (isset($_GET['tomid'])) {
+                    $tomato = $edit_tomatos->return_single_tomato_based_on_tomid($_GET['tomid']);
+                    $edit_tomatos->edit_single_tomato_form($tomato['id'], $tomato['userid'], $tomato['title'], $tomato['tomdate'], $tomato['tomweek'], $tomato['count'], $tomato['category_title'], $tomato['category_id'], $tomato['notes'], $tomato['url'], $tomato['keywords']);                   
+                }
+                $edit_tomatos->pull_tomatos_by_default_this_week();
+        // $debase_resource_today_changed = $page_display->query_table_for_tomdate_today();
+        // $page_display->show_tomatoes($debase_resource_today_changed);
+        // uses file class.pagefunctions.index.php
                 
                 $page_functions = new index_page_functions;
                 print('<br/>');
@@ -250,17 +256,17 @@ class pagemaster
             
             
             case "setup":
-                if (isset($_POST['new_keyword'])) {
-                    print('<p>New Keyword Submitted</p>');
-                    $keywordclass = new createKeyword;
-                    $keywordclass->upload_new_keyword($_POST['new_keyword']);
-                }
-                if (isset($_POST['keyid'])) {
-                    $process = new keywords_and_categories;
-                    $process->update_assoc_between_keyword_and_categories($_POST['keyid'], $_POST['cats']);
-                }
-                
-                $this->setup();
+               // $this->setup();
+               if (isset($_GET['function'])) {
+                   print('<p>Function used in URL parameter</p>');
+                   print('<p>'.$_GET['function'].'</p>');
+                   if($_GET['function']=="setupweeklygoals"){
+                       $setup = new setupgoals;
+                       $setup->form_set_weekly_goals();
+                   }else{
+                       print('<p>function not defined</p>');
+                   }
+               }
                 break;
             default:
                 echo "page has not been defined";
@@ -298,7 +304,7 @@ class pagemaster
     function setup()
     {
         $create_keyword = new createKeyword;
-        echo '<p class="function_description">Create new keyword.</p>';
+        echo '<p class="function_description">Create Weekly Goal</p>';
         $create_keyword->form_create_keyword();
         $categories = new keywords_and_categories;
         echo '<p class="function_description">Assign categories to keywords.</p>';
