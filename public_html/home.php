@@ -10,13 +10,10 @@
 
 ?>
 <?php
-//include("./includes/clean.php");
 include ("../classes/config/class.conn.php");
-//include ("../classes/class.clean.php");
 include ('../classes/class.pagemaster.php');
 include ('../classes/class.form_elements.php');
 include ('../classes/class.stats.php');
-//include ('../classes/class.upload.php');
 include ('../classes/class.set_week.php');
 include ('../classes/class.keywords_and_categories.php');
 include ('../classes/class.keyword.aux.php');
@@ -25,6 +22,7 @@ include ('../classes/class.keyword.delete.php');
 include ('../classes/class.keyword.edit.php');
 include ('../classes/class.keyword.show.php');
 include ('../classes/class.keyword.link_to_category.php');
+include ('../classes/class.keyword.link_category.php');
 include ('../classes/class.keyword.tree.php');
 include ('../classes/class.category.aux.php');
 include ('../classes/class.category.create.php');
@@ -38,14 +36,13 @@ include ('../classes/class.tomato.aux.php');
 include ('../classes/class.tomato.show.php');
 include ('../classes/class.tomato.add.php');
 include ('../classes/class.tomato.edit.php');
-include ('../classes/class.tomato.find.php');
 include ('../classes/class.view.aux.php');
 include ('../classes/class.view.abstract.php');
 include ('../classes/class.view.today.php');
 include ('../classes/class.view.weeks.php');
-include('../classes/class.pagefunctions.index.php');
-include('./includes/header.php');
+include ('./includes/header.php');
 include ('./includes/navigation.php');
+
 
 print('<div id="content">'); // open content
 

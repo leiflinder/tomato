@@ -15,6 +15,7 @@ if(isset($_POST['updategoals'])){
     [Exercise] => 2
     [Job_Search] => 14
    */
+ // $Norsk = $_POST['Norsk'];
     /*
     $tomid = $_POST['tomid'];
     $userid=$_POST['userid'];
@@ -30,8 +31,32 @@ if(isset($_POST['updategoals'])){
     */
 // header("Location: home.php?page=tomato&function=tomatoedit&tomid=$tomid");
 }
-
-print('<pre>');
-print_r($_POST);
-print('</pre>');
+/*
+if(isset($_POST)){
+  print('<p>POST has values</p>');
+  print('<p>POST has '.sizeof($_POST).' values</p>');
+  print('<ul>');
+  print('<pre>');
+  print_r($_POST);
+  print('</pre>');
+  */
+/*
+  foreach($_POST AS $key => $value){
+    print('<hr/>');
+    print('<p>'.$key.' => '.$value.'</p>');
+    $goals_edit_object->check_goal_if_changed($key, $value);
+    print('<hr/>');
+  }
+  print('</ul>');
+  */
+  for($i=0;$i<sizeof($_POST['catnames']);$i++){
+   // print('<p>'.$_POST['catnames'][$i].'</p>');
+   // print('<p>'.$_POST['catids'][$i].'</p>');
+   // print('<p>'.$_POST['goals'][$i].'</p>');
+    $update = $goals_edit_object->check_goal_if_changed($_POST['catids'][$i], $_POST['goals'][$i]);
+    if($update == 0){
+      $goals_edit_object->create_new_goal($_POST['catids'][$i], $_POST['goals'][$i], $_POST['catnames'][$i], '1001');
+    }
+  }
+//}
 ?>

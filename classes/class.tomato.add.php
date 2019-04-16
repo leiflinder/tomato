@@ -5,13 +5,17 @@ class addtomato extends conn{
     private $existing_categories;
     private $defaultWeekNumber;
     private $week_value_from_db;
+    private $todaydate;
 
 private function default_week_setting(){
         $currentWeekNumber = date('Y')."-W".date('W');
         $this->defaultWeekNumber=$currentWeekNumber;
 }
 
-
+private function todaydate(){
+    $today = '2019-04-15';
+    return $today;
+}
 
 function week_value_from_week_table(){
 	$sth = $this->conn->prepare("SELECT `week`.`week` FROM `tomato220`.`week` WHERE `week`.`id` = 1 LIMIT 1");
@@ -19,6 +23,7 @@ function week_value_from_week_table(){
 	$week = $sth->fetchColumn();
     $this->week_value_from_db = $week;
 }
+
 function set_week(){
 	echo '<form method="POST" id="set_week_form" action="">
 	<input type="week" name="week" id="week">
@@ -34,7 +39,7 @@ function set_week(){
         print('<p><a href="home.php?page=addtomato">Reset</a></p>');
 
         print('<form method="post" id="upload_form_tomato" action="http://localhost/tomato220.com/public_html/refresh.tomato.create.php">');
-        print('<input type="hidden" name="userid" value="1001">');
+        print('<input type="hidden" name="userid" value="'.$_SESSION['userid'].'">');
         print('<input type="hidden" name="tomato_submit" value="yes">');
 
     // Title
@@ -61,7 +66,7 @@ function set_week(){
     // Date
         echo'<div class="form-group">
         <label for="tomatoDate_FormElement">Date</label>
-        <input type="date" name="date" class="form-control" id="tomatoDate_FormElement" aria-describedby="dateHelp" placeholder="Date">
+        <input type="date" name="date" class="form-control" id="tomatoDate_FormElement" aria-describedby="dateHelp" placeholder="Date" value="'.date('Y-m-d').'">
         <small id="dateHelp" class="form-text text-muted">Enter date of tomato.</small>
       </div>';
 
