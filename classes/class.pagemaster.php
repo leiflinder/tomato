@@ -90,7 +90,7 @@ class pagemaster
                             print('<div class="alert alert-info">Function Keyword Link To Category</div>');
 
                             $link_categories = new link_category;
-                            $link_categories->linkcategory();
+                            $link_categories->show_all_keywords();
                             /*
                             $categories = new link_to_category;
                             if (!isset($_POST['cats'])) {
@@ -220,7 +220,11 @@ class pagemaster
                    if($_GET['function']=="setupweeklygoals"){
                        $setup = new setupgoals;
                      // $setup->form_set_weekly_goals();
-                     $setup->testform();
+                    // $goals_array = $setup->make_goals_array();
+                    // print('<pre>');
+                   //  print_r($goals_array);
+                    // print('</pre>');
+                    $setup->make_goals_array();
                    }else{
                        print('<p>function not defined</p>');
                    }

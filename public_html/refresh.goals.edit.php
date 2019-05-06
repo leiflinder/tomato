@@ -1,8 +1,20 @@
 <?PHP
+SESSION_START();
 include ("../classes/config/class.conn.php");
 include ('../classes/class.setup.goals.php');
 //check_goal_if_changed($catid, $goal)
 $goals_edit_object = new setupgoals;
+/*
+print('<pre>');
+print_r($_POST);
+print('</pre>');
+*/
+$update = $goals_edit_object->check_goal_if_changed($_POST['categoryid'], $_POST['hours']);
+if($update == 0){
+  $goals_edit_object->create_new_goal($_POST['categoryid'], $_POST['hours'], $_POST['categoryname'], $_SESSION['userid']);
+}
+header('Location: home.php?page=setup&function=setupweeklygoals');
+/*
 if(isset($_POST['updategoals'])){
     /*
     [updategoals] => updategoals
@@ -30,7 +42,8 @@ if(isset($_POST['updategoals'])){
     $tomato_edit_object->upload_edit_query($tomid, $title, $tomdate, $tomcount, $categoryid, $notes);
     */
 // header("Location: home.php?page=tomato&function=tomatoedit&tomid=$tomid");
-}
+//}
+
 /*
 if(isset($_POST)){
   print('<p>POST has values</p>');
@@ -49,14 +62,17 @@ if(isset($_POST)){
   }
   print('</ul>');
   */
+  /*
   for($i=0;$i<sizeof($_POST['catnames']);$i++){
-   // print('<p>'.$_POST['catnames'][$i].'</p>');
-   // print('<p>'.$_POST['catids'][$i].'</p>');
-   // print('<p>'.$_POST['goals'][$i].'</p>');
+    print('<p>'.$_POST['catnames'][$i].'</p>');
+   print('<p>'.$_POST['catids'][$i].'</p>');
+   print('<p>'.$_POST['goals'][$i].'</p>');
+   print('<p>'.$_POST['active'][$i].'</p>');
     $update = $goals_edit_object->check_goal_if_changed($_POST['catids'][$i], $_POST['goals'][$i]);
     if($update == 0){
       $goals_edit_object->create_new_goal($_POST['catids'][$i], $_POST['goals'][$i], $_POST['catnames'][$i], '1001');
     }
-  }
+    */
+  //}
 //}
 ?>

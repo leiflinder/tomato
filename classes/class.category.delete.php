@@ -107,5 +107,19 @@ UPDATE `tomato220`.`tomato` SET `tomato`.`category`= 22 WHERE `tomato`.`category
         }
         return $message;      
     }
+
+    function delete_actual_goals($categoryid, $userid=1001){
+        $stm =$this->conn->prepare("DELETE FROM `tomato220`.`goals` WHERE `goals`.`categoryid` = :CATEGORYID AND `goals`.`userid`=:USERID");
+        $stm->bindParam(':CATEGORYID',$categoryid);
+        $stm->bindParam(':USERID',$userid);
+        $stm->execute();
+        $count = $stm->rowCount();  
+        if($count > 0){
+            $message2='GOAL: '.$categoryid.' Deleted';
+        }else{
+            $message2="Problem";
+        }
+        return $message2;      
+    }
 }
 ?>

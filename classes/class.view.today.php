@@ -1,6 +1,6 @@
 <?PHP
 
-class viewtoday extends viewsabstract{
+class viewtoday {
 
     private $current_week;
     private $dbase_resource_current_week_category;

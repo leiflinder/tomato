@@ -20,7 +20,8 @@ if(isset($_POST['tomid'])){
 */
    // upload_edit_query($userid, $tomid, $title, $tomdate, $tomweek, $tomcount, $notes, $url)
 
-header("Location: home.php?page=tomato&function=tomatoedit&tomid=$tomid");
+// header("Location: home.php?page=tomato&function=tomatoedit&tomid=$tomid");
+header("Location: home.php");
 }
 
 /*

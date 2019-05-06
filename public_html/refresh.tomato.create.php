@@ -28,5 +28,6 @@ if(isset($_POST['tomato_submit'])){
         $keywords);
 }
 
-header("Location: home.php?newkeyid=$created_tomato_id");
+//header("Location: home.php?newkeyid=$created_tomato_id");
+header("Location: home.php");
 ?>
