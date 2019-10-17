@@ -12,6 +12,25 @@ class setupgoals extends conn{
 
   }
 
+  function get_catid_by_catname($catname){
+    $sth = $this->conn->prepare("SELECT `category`.`id` FROM `tomato220`.`category` WHERE `category`.`category` LIKE :CATNAME LIMIT 1");
+    $sth->bindParam(':CATNAME',$catname);
+    $sth->execute();
+    $value = $sth->fetch(PDO::FETCH_ASSOC);
+    return ($value['id']);
+  }
+ function check_hours_this_week_by_category($categryname){
+    $week = date('Y')."-W".date('W');
+    $catid = $this->get_catid_by_catname($categryname);
+    $sth = $this->conn->prepare("SELECT sum(`tomato`.`count`) AS `hours` FROM `tomato220`.`tomato` WHERE `tomato`.`category` = :CATID AND `tomato`.`tomweek` LIKE :WEEK LIMIT 1");
+    $sth->bindParam(':CATID',$catid);
+    $sth->bindParam(':WEEK',$week);
+    $sth->execute();
+    $value = $sth->fetch(PDO::FETCH_ASSOC);
+    $toms_in_hours= (.5)*$value['hours'];
+    return ($toms_in_hours);
+  }
+
   // helper function
   // What is happening? Use this function to help build multi dimensional array
   // make_goals_array() creates array that has categories and their 'latest' hours
@@ -26,7 +45,7 @@ class setupgoals extends conn{
   }
 
   function make_goals_array(){
-    $sth = $this->conn->prepare("SELECT DISTINCT(`tomato220`.`goals`.`categoryid`),`tomato220`.`goals`.`catname` FROM `tomato220`.`goals`");
+    $sth = $this->conn->prepare("SELECT DISTINCT(`tomato220`.`goals`.`categoryid`),`tomato220`.`goals`.`catname`, `tomato220`.`goals`.`active` FROM `tomato220`.`goals`");
     $sth->execute();
     $value = $sth->fetchall(PDO::FETCH_ASSOC);
     $category_goals = array();
@@ -44,6 +63,10 @@ class setupgoals extends conn{
         print('<div class="form-group">');
           print('<label for="WeeklyGoal'.$category_goals[$i][1].'">'.$category_goals[$i][1].'</label>');
           print('<input type="text" class="form-control" id="WeeklyGoal'.$category_goals[$i][1].'" value="'.$category_goals[$i][2].'" name="hours">');
+/*
+          print('<label for="Active'.$category_goals[$i][1].'">Active</label>');
+          print('<input type="text" class="form-control" id="Active'.$category_goals[$i][1].'" value="'.$value[$i]['active'].'" name="active">');
+*/
           print('<input type="hidden" value="'.$category_goals[$i][0].'" name="categoryid">');
           print('<input type="hidden" value="'.$category_goals[$i][1].'" name="categoryname">');
         print('</div>');
@@ -63,20 +86,38 @@ class setupgoals extends conn{
     */
       return $category_goals;
   }
-/*
-  function array_of_latest_goals(){
+
+
+  // helper function
+  private function array_of_latest_goals(){
     $sth = $this->conn->prepare("SELECT DISTINCT(`tomato220`.`goals`.`catname`) FROM `tomato220`.`goals`");
     $sth->execute();
     $value = $sth->fetchall(PDO::FETCH_ASSOC);
     $category_goals = array();
     for($i=0;$i<sizeof($value);$i++){
-      $q= $this->conn->query("SELECT `hours` FROM `goals` WHERE `catname` LIKE ".$value[$i]," ORDER BY (`timestamp`) DESC LIMIT 1");
+      $q = $this->conn->query('SELECT `tomato220`.`goals`.`hours` FROM `tomato220`.`goals` WHERE `goals`.`catname` LIKE "'.$value[$i]['catname'].'" ORDER BY (`timestamp`) DESC LIMIT 1');
       $hours = $q->fetchColumn();
-      $category_goals[$value[$i]]=$hours;
+      $category_goals[$value[$i]['catname']]=$hours;
     }
     return $category_goals;
   }
-*/
+
+
+  public function show_goals(){
+  $weekly_goals = $this->array_of_latest_goals();
+ // for($i=0;$i<(sizeof($weekly_goals));$i++){
+   foreach($weekly_goals AS $index => $value){
+    $thisweek = $this->check_hours_this_week_by_category($index);
+    if($thisweek >= $value){
+      $message = 'Success';
+    }else{
+      $message = 'Not Yet';
+    }
+      if($value > 1){
+        print('<p>'.$index.' '.$value.' ('.$thisweek.') <span class='.$message.'>'.$message.'</span></p>');
+      }
+  }
+}
 
     function form_set_weekly_goals(){
         print('<form action="refresh.goals.edit.php" method="post">');
@@ -88,39 +129,13 @@ class setupgoals extends conn{
         print('<form>');
         for($i=0; $i < sizeof($value); $i++){
           print('<p>Lexicon</p>');
-/*
-          print('<div class="form-group" id="weeklygoalsform">
-          <label for="weeklyGoal">'.$value[$i]['catname'].'</label>
-          <input type="hidden" name="catnames[]" value="'.$value[$i]['catname'].'"/>
-          <input type="hidden" name="catids[]" value="'.$value[$i]['categoryid'].'"/>
-          <input type="hidden" name="active[]" value="'.$value[$i]['active'].'"/>
-            <input type="weeklyGoal" name="goals[]" value="'.$value[$i]['hours'].'" class="form-control" id="Goals" aria-describedby="Weekly Goal" placeholder="Weekly Gal">
-          </div>
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="active">
-            <label class="form-check-label" for="active">Active</label>
-          </div><br/>');
-    */
+
         }
         print('<button type="submit" class="btn btn-primary">Submit</button>');
         print('</form>');
         print('<p>&nbsp;<br/>&nbsp;<br/></p>');
     }
 
-    public function show_goals($timeperiod){
-        /*
-        $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`weeklygoals` WHERE `weeklygoals`.`timeperiod` = :TIMEPERIOD");
-        */
-
-        $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`goals` WHERE `goals`.`timeperiod` = 'week' GROUP BY(`categoryid`)
-        ");
-        $sth->bindParam(':TIMEPERIOD',$timeperiod);
-        $sth->execute();
-        $value = $sth->fetchall(PDO::FETCH_ASSOC);
-        for($i=0;$i<sizeof($value);$i++){
-            print('<p>'.$value[$i]['catname'].' '.$value[$i]['hours'].'</p>');
-        }
-    }
 
    function check_goal_if_changed($catid, $goal){
     $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`goals` WHERE `goals`.`categoryid` = :CATID AND `goals`.`hours` = :GOAL");

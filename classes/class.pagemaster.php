@@ -151,7 +151,7 @@ class pagemaster
 
                 print('<h3>Weekly Goals</h3>');
                 $goals = new setupgoals;
-                $goals->show_goals('week');
+                $goals->show_goals();
                 break;
 
             //// ***** CATEGORIES PAGES ***** ////
@@ -235,17 +235,7 @@ class pagemaster
                 // $this->index_page();                             
         }
     }
-/*
-    function setup()
-    {
-        $create_keyword = new createKeyword;
-        echo '<p class="function_description">Create Weekly Goal</p>';
-        $create_keyword->form_create_keyword();
-        $categories = new keywords_and_categories;
-        echo '<p class="function_description">Assign categories to keywords.</p>';
-        $categories->print_all_keywords();
-    }
-*/ 
+
 }
 
 ?>

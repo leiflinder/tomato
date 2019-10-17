@@ -39,7 +39,7 @@ function set_week(){
         print('<p><a href="home.php?page=addtomato">Reset</a></p>');
 
         print('<form method="post" id="upload_form_tomato" action="http://localhost/tomato220.com/public_html/refresh.tomato.create.php">');
-        print('<input type="hidden" name="userid" value="'.$_SESSION['userid'].'">');
+        print('<input type="hidden" name="userid" value="1001">');
         print('<input type="hidden" name="tomato_submit" value="yes">');
 
     // Title

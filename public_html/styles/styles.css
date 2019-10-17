@@ -257,3 +257,7 @@ table .hrstd {
 #goalInput{
   width:60px;
 }
+.Success {
+  color:red;
+  font-style: italic;
+}
