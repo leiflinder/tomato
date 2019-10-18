@@ -2,6 +2,30 @@
 class keyworddelete extends conn{
 private $number_times_keyword_used = 0;
 
+function testmodal(){
+  print('<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+  Launch demo modal
+</button>
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>');
+}
     function show_toms_associated_with_keyword($keyword_id){
         // first check if keyword exists already
         $stm =$this->conn->prepare("SELECT * FROM `tomato220`.`link_tom_to_keywords` WHERE `link_tom_to_keywords`.`keyword_id` = :KEYWORDID");
@@ -36,11 +60,11 @@ private $number_times_keyword_used = 0;
         for($i=0; $i < $count; $i++){
             print('<tr>
             <td valign="top">'.$resource[$i]['keyword'].'</td>  
-            <td><button type="button" class="btn btn-light" data-toggle="modal" data-target="#'.$resource[$i]['id'].'">Delete</button>
+            <td><button type="button" class="btn btn-danger make-it-mini"  data-toggle="modal" data-target="#number'.$resource[$i]['id'].'">Delete</button>
             </td>
             </tr>'); 
             print('
-                <div id="'.$resource[$i]['id'].'" class="modal fade" role="dialog">
+                <div id="number'.$resource[$i]['id'].'" class="modal fade" role="dialog">
                   <div class="modal-dialog">
                 
                     <!-- Modal content-->

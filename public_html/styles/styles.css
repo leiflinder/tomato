@@ -261,3 +261,12 @@ table .hrstd {
   color:red;
   font-style: italic;
 }
+td .make-it-mini{
+  font-size:80%;
+  background:white;
+  border:solid red 1px;
+  color:red;
+}
+.function-title{
+  margin: 0px 0px 30px 10px;
+}

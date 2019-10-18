@@ -75,7 +75,7 @@ class pagemaster
                             $edit->show_all_keywords_with_edit_delete_links();
                             break;
                         case "keyworddelete":
-                        print('<div class="alert alert-info">Function Delete Keyword</div>');
+                        print('<h5 class="function-title">Delete Keyword</h5>');
                         if (isset($_GET['deletemessage'])) {
                             print("<p><span class='success'>Keyword Deleted</span></p>");
                         }
