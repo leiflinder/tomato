@@ -31,16 +31,9 @@
          ?>
          </div>
 
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="home.php?page=category&function=categorylanding" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Categories
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-         <?php
-            $category_section_menu = new categoryaux;
-            print($category_section_menu->category_section_menu_achors());
-         ?>
-         </div>
+         <li class="nav-item">
+            <a class="nav-link" href="home.php?page=categories" >Categories</a>
+          </li>
 
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="home.php?page=views&function=viewslanding" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

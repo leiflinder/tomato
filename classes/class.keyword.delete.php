@@ -107,9 +107,30 @@ function testmodal(){
         $stm->execute();        
     }
     function delete_actual_keyword($keyid){
+        $keyword_title = $this->keyword_name_by_keyid($keyid);
         $stm =$this->conn->prepare("DELETE FROM `tomato220`.`keywords` WHERE `keywords`.`id` = :KEYID");
         $stm->bindParam(':KEYID',$keyid);
-        $stm->execute();        
+        $stm->execute();
+        if ($stm->execute() == TRUE) {
+          $alert='success';
+          $message='Keyword '.$keyword_title.' successfuly Deleted';
+          $return_value = array($alert,$message);
+          return $return_value;
+            } else {
+            $alert='warning';
+        $resource = $stm->fetchall(PDO::FETCH_ASSOC);
+            $message='fail... Keyword '.$keyword_title.' not deleted';
+            $return_value = array($alert,$message);
+          return $return_value;
+        }       
+    }
+
+      function keyword_name_by_keyid($keyid){
+        $stm =$this->conn->prepare("SELECT * FROM `tomato220`.`keywords` WHERE `keywords`.`id` = :KEYID");
+        $stm->bindParam(':KEYID',$keyid);
+        $stm->execute(); 
+        $resource = $stm->fetch(PDO::FETCH_ASSOC);
+         return  $resource['keyword'];  
     }
 }
 ?>

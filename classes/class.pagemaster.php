@@ -49,12 +49,7 @@ class pagemaster
                         print($keyword_section_menu->keyword_section_menu_anchors());
                         break;
                         case "keywordshow":
-                            print('<h2>Show</h2>');;
-                            $edit = new keywordedit;
-                            $edit->show_all_keywords_group_by_first_letter();
-                            break;
-                        case "keywordcreate":
-                            print('<p>Add</p>');
+                            print('<h2>Create</h2>');
                             $keywordclass = new createKeyword;
                             $keywordclass->form_create_keyword();
                             if (isset($_POST['new_keyword'])) {
@@ -62,16 +57,28 @@ class pagemaster
                                 $keywordclass = new createKeyword;
                                 $keywordclass->upload_new_keyword($_POST['new_keyword']);
                             }
+                            $edit = new keywordedit;
+                            if (isset($_POST['keywordedit'])) {
+                                $edit->upload_edited_keyword($_POST['keywordid'], $_POST['keywordedit']);
+                                print('<p>'.$_POST['keywordid'].'</p>');
+                                print('<p>'.$_POST['keywordedit'].'</p>');
+                            }
+                            print('<h2>Show</h2>');
+                            print_r($_POST);
+                            $edit->alphabet_accordion_with_keywords();
+                            break;
+                        case "keywordcreate":
+                            print('<p>Add</p>');
+                            $keywordclass = new createKeyword;
+                            $keywordclass->form_create_keyword();
+                            if (isset($_POST['new_keyword'])) {
+                                print('<p>New Keyword Submitted</p>');
+                                $keywordclass->upload_new_keyword($_POST['new_keyword']);
+                            }
                             $show = new show_keywords;
                             $show->print_only_keywords_no_accordion();
                             break;
                         case "keywordedit":
-                            print('<p>Edit</p>');
-                            print('<div class="alert alert-info">Function Edit Keyword</div>');
-                            $edit = new keywordedit;
-                            if (isset($_POST['edit_keyword'])) {
-                                $edit->upload_edited_keyword($_POST['keywordid'], $_POST['edit_keyword']);
-                            }
                             $edit->show_all_keywords_with_edit_delete_links();
                             break;
                         case "keyworddelete":
@@ -86,6 +93,19 @@ class pagemaster
                         $keywordtree = new keywordtree;
                         $keywordtree->show_categories_with_associated_keywords();
                         break;
+                        case "linktocategories":
+                            if (isset($_GET['keywordid'])) {
+                                $keywordid = htmlspecialchars(strip_tags($_GET['keywordid']));
+                                $link_to_cat = new link_to_category;
+                                $link_to_cat->return_name_of_keyword_id($keywordid);
+                                print('<h2>'.$link_to_cat->keyword_title.'</h2><br/>');
+                                $cat_list = new link_to_category;
+                                // create object array
+                                $cat_list->all_cats_associated_with_keyid($keywordid);
+                                // show the list of checkboxes
+                                $cat_list->category_form($cat_list->array_of_categories_with_catid_as_index, $cat_list->category_titles_linked_to_this_keyword, $keywordid);
+                            }
+                            break;
                         case "keywordlinktocategory":
                             print('<div class="alert alert-info">Function Keyword Link To Category</div>');
 
@@ -157,9 +177,7 @@ class pagemaster
             //// ***** CATEGORIES PAGES ***** ////
             case "categories":
                 $categoryCreatClass = new createCategory;
-                if (isset($_GET['message'])) {
-                    print('<p><span style="color:green;">' . $_GET['message'] . '</span></p>');
-                }
+
                 if (isset($_GET['function'])) {
                     if ($_GET['function'] == "categorycreate") {
                         print('<h2>Category Create</h2>');
@@ -189,22 +207,25 @@ class pagemaster
                     }
 
                 } else {
-                    include('includes/menu.category.functions.html');
+                   // include('includes/menu.category.functions.html');
                     $show = new show_categories;
                     $show->show_categories_no_extras();
                 }
                 // Upload Edited Category POST value exists
+                /*
                 if (isset($_POST['edit_category_new_value'])) {
                     $edit_category = new editCategory;
                     $edit_category->upload_edited_category($_POST['edit_category_new_value'], $_POST['edit_category_id']);
                 }
+                */
                 // show all categories
                 $categoryShowClass = new show_categories;
                 // $categoryShowClass->show_all_categories();
                 break;
 
-
-            
+            case "categoryshow";
+              print('<h4>Category Show</h4>');
+            break;
             case "linkkeywords":
                 echo "<h3>Now link Keywords</h3>";
                 $this->link_keywords_to_tomoato();

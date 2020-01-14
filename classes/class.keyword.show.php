@@ -60,7 +60,8 @@ public $array_of_categories_indexes_with_catid_as_value = array();
             FROM `tomato220`.`keywords`
             JOIN `tomato220`.`link_cat_to_keywords`
             ON `keywords`.`id` = `link_cat_to_keywords`.`keyword_id`        
-            WHERE `link_cat_to_keywords`.`cat_id` = :id ORDER BY `keywords`.`keyword`");
+            WHERE `link_cat_to_keywords`.`cat_id` = :id 
+            ORDER BY `keywords`.`keyword`");
         $sth->bindParam(':id', $category_id, PDO::PARAM_INT);
         $sth->execute();
        // $value= $sth->fetch(PDO::FETCH_ASSOC);

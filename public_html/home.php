@@ -1,14 +1,5 @@
-﻿<?php
-	// require_once("./includes/session.php");
-	// require_once("../classes/class.user.php");
-	/*
-	$auth_user = new USER();
-	$user_id = $_SESSION['user_session'];
-	$_SESSION['userid']=1001; // change this for each user
-	$stmt = $auth_user->runQuery("SELECT * FROM users WHERE user_id=:user_id");
-	$stmt->execute(array(":user_id"=>$user_id));
-	$userRow=$stmt->fetch(PDO::FETCH_ASSOC);
-*/
+﻿<?PHP session_start();
+$_SESSION['userid']=1001;
 ?>
 <?php
 include ("../classes/config/class.conn.php");
@@ -23,7 +14,7 @@ include ('../classes/class.keyword.delete.php');
 include ('../classes/class.keyword.edit.php');
 include ('../classes/class.keyword.show.php');
 include ('../classes/class.keyword.link_to_category.php');
-include ('../classes/class.keyword.link_category.php');
+//include ('../classes/class.keyword.link_category.php');
 include ('../classes/class.keyword.tree.php');
 include ('../classes/class.category.aux.php');
 include ('../classes/class.category.create.php');
@@ -37,6 +28,7 @@ include ('../classes/class.tomato.aux.php');
 include ('../classes/class.tomato.show.php');
 include ('../classes/class.tomato.add.php');
 include ('../classes/class.tomato.edit.php');
+include ('../classes/class.user.login.php');
 include ('../classes/class.view.aux.php');
 include ('../classes/class.view.today.php');
 include ('../classes/class.view.weeks.php');

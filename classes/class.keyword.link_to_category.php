@@ -2,10 +2,14 @@
 class link_to_category extends conn
 {
     private $categoryids;
+   // private $all_categories_array;
     public $cat_ids_to_key_ids; // PDO::FETCH_FUNC array 
     public $keyword_associated_id_cat; // PDO::FETCH_FUNC array 
     public $array_of_categories_with_catid_as_index = array();
     public $array_of_categories_indexes_with_catid_as_value = array();
+    public $array_of_category_names_assosciated_with_keyword = array();
+    public $category_titles_linked_to_this_keyword = array();
+    public $keyword_title;
     
     
     // helper function to get all keywords associated with a single category
@@ -15,16 +19,13 @@ class link_to_category extends conn
         // Resource array but only use cat_id and key_id 
         // Funcion uses the special PDO FETCH_FUNC to 
         // specifically return columns from nested array
-        function link_resource_by_cat_id($cat_id, $key_id)
+     function link_resource_by_cat_id($cat_id, $key_id)
         {
             return "{$cat_id}: {$key_id}";
         }
         $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`link_cat_to_keywords` WHERE `link_cat_to_keywords`.`cat_id`=:id");
         $sth->bindParam(':id', $category_id, PDO::PARAM_INT);
         $sth->execute();
-        //$value = $sth->fetch(PDO::FETCH_ASSOC);
-        //$value = $sth->fetchall();
-        //$value = $sth->fetchAll(PDO::FETCH_COLUMN, 1);
         $value = $sth->fetchAll(PDO::FETCH_FUNC, "link_resource_by_cat_id");
         // send result upstairs to member property
         $this->cat_ids_to_key_ids = $value;
@@ -33,7 +34,7 @@ class link_to_category extends conn
     
     
     // helper function get all category ids
-    function get_all_category_ids()
+   private function get_all_category_ids()
     {
         $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`category`");
         $sth->execute();
@@ -46,8 +47,8 @@ class link_to_category extends conn
             // completely confusting, Take rough resouce and build
             // nice tight organized nested array
             print('<h3>' . $rough_resource[$i]['category'] . ' ' . $rough_resource[$i]['id'] . '</h3>');
-            $resource = $this->get_keywords_by_category_id(1);
-            print($resource[$i]['keyword'] . ' ' . $resource[$i]['keyword_id']);
+           // $resource = $this->get_keywords_by_category_id(1);
+          //  print($resource[$i]['keyword'] . ' ' . $resource[$i]['keyword_id']);
         }
     }
     
@@ -70,12 +71,12 @@ class link_to_category extends conn
         $sth->execute();
         // $value= $sth->fetch(PDO::FETCH_ASSOC);
         // $value = $sth->fetchall();
-        $value                           = $sth->fetchAll(PDO::FETCH_FUNC, "cat_id_with_linked_keywords");
+        $value = $sth->fetchAll(PDO::FETCH_FUNC, "cat_id_with_linked_keywords");
         $this->keyword_associated_id_cat = $value;
         return $value;
     }
     
-    // helper function take cat id and returns actual name
+    // helper function ::  take cat id and returns actual name
     private function name_of_category($cat_id)
     {
         $sth = $this->conn->prepare("SELECT `category` AS 'name' FROM `tomato220`.`category` WHERE `category`.`id`= :id");
@@ -87,15 +88,19 @@ class link_to_category extends conn
         return $value['name'];
     }
     
-    // helper function take keyword id and returns actual name
-    private function return_name_of_keyword_id($keyword_id)
-    {
-        
+    //get the name of the keyword by its ID
+    public function return_name_of_keyword_id($keyword_id){
+        $stm = $this->conn->prepare("SELECT keywords.keyword FROM tomato220.keywords WHERE keywords.id = :KEYID");
+        $stm->bindParam(':KEYID', $keyword_id, PDO::PARAM_INT);
+        $stm->execute();
+        $value = $stm->fetch(PDO::FETCH_ASSOC);
+        $this->keyword_title = $value['keyword'];
+       // return $value['keyword'];     
     }
     
     
     ///// ***** Again? Is this a repeat????
-    function all_cats_associated_with_keyid($keyid)
+   public function all_cats_associated_with_keyid($keyid)
     {
         $this_is_the_keyword_id = $keyid;
         $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`link_cat_to_keywords` WHERE `link_cat_to_keywords`.`keyword_id` = :id");
@@ -103,11 +108,11 @@ class link_to_category extends conn
         $sth->execute();
         $resource = $sth->fetchall(PDO::FETCH_ASSOC);
         // first build array of categories associated with this keyword  
-        $category_titles_linked_to_this_keyword = array();
-        
+
         for ($i = 0; $i < (sizeof($resource)); $i++) {
-            $category_titles_linked_to_this_keyword[] = $this->name_of_category($resource[$i]['cat_id']);
+            $this->category_titles_linked_to_this_keyword[] = $this->name_of_category($resource[$i]['cat_id']);
         }
+
         //// **** Problem? Some IDs repeating so the accordion for some items does not work.
         print('<div id="'. $keyid .'" class="collapse"><form action="" name="keyword_associations" method="POST"/>
         <input type="hidden" name="keyid" value="' . $keyid . '"/>');
@@ -138,7 +143,7 @@ class link_to_category extends conn
     {
         $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`categories`");
         $sth->execute();
-        $resource            = $sth->fetchall(PDO::FETCH_ASSOC);
+        $resource = $sth->fetchall(PDO::FETCH_ASSOC);
         $array_of_categories = array();
         for ($i = 0; $i < (sizeof($resource)); $i++) {
             $array_of_categories[] = $resource[$i]['category'];
@@ -146,11 +151,11 @@ class link_to_category extends conn
         return $array_of_categories;
     }
     
-    function array_of_categories_with_catid_as_index()
+   public function array_of_categories_with_catid_as_index()
     {
         $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`category`");
         $sth->execute();
-        $value         = $sth->fetchall(PDO::FETCH_ASSOC);
+        $value = $sth->fetchall(PDO::FETCH_ASSOC);
         $scratch_array = array();
         for ($i = 0; $i < (sizeof($value)); $i++) {
             $scratch_array[$value[$i]['id']] = $value[$i]['category'];
@@ -159,7 +164,7 @@ class link_to_category extends conn
     }
     
     
-    function print_all_keywords()
+    public function print_all_keywords()
     {
         $sth = $this->conn->prepare("SELECT `keywords`.`keyword`, `keywords`.`id` FROM `tomato220`.`keywords` ORDER BY `keywords`.`keyword` ASC");
         $sth->execute();
@@ -199,8 +204,7 @@ class link_to_category extends conn
                 // here, I populate an array. The construct makes an array where the categori
                 // is the index and the keyword is the value. The final array is stored as a global variable.
                 // array_of_categories_indexes_with_catid_as_value
-                $this->array_of_categories_indexes_with_catid_as_value[$category_titles[$i]] = $keyword_index;
-                
+                $this->array_of_categories_indexes_with_catid_as_value[$category_titles[$i]] = $keyword_index;     
             }
         }
     }
@@ -230,7 +234,7 @@ class link_to_category extends conn
         
         // UPLOAD the values
         $cats_to_key = $this->array_of_categories_indexes_with_catid_as_value;
-        $sth         = $this->conn->prepare("INSERT INTO `tomato220`.`link_cat_to_keywords` (`cat_id`, `keyword_id`) VALUES (?,?)");
+        $sth = $this->conn->prepare("INSERT INTO `tomato220`.`link_cat_to_keywords` (`cat_id`, `keyword_id`) VALUES (?,?)");
         
         for ($i = 0; $i < sizeof($array_of_categories); $i++) {
             $sth->bindParam(1, $array_of_categories[$i]);
@@ -239,11 +243,44 @@ class link_to_category extends conn
         }
         $count = $sth->rowCount();
         if ($count == '0') {
-            print('<div class="alert alert-danger">Upload Failure</div>');
+            return FALSE;
         } else {
-            print('<div class="alert alert-success">Upload Success</div>');
+            return TRUE;
         }
         
+    }
+
+    public function category_form($array_of_categories_with_catid_as_index, $category_titles_linked_to_this_keyword, $keyword_id){
+        print('<table>');
+        print('<form method="post" action="bounce.link.keywords.php">');
+        print('<input type="hidden" value="'.$keyword_id.'" name="keyword_id">');
+        foreach($array_of_categories_with_catid_as_index AS $key=>$value){
+            if(in_array($value, $category_titles_linked_to_this_keyword)){
+            print('
+            <label class="containerX">'.$value.'
+                <input type="checkbox" name="categories[]" value="'.$value.'" checked="checked">
+                <span class="checkmark"></span>
+          </label>
+          ');
+            }else{
+                print('
+                <label class="containerX">'.$value.'
+                    <input type="checkbox" name="categories[]" value="'.$value.'">
+                    <span class="checkmark"></span>
+              </label>
+              ');             
+            }
+        }
+        print('<div> <button type="submit" class="btn btn-primary mb-2">Submit</button></div>');
+        print('</form>');
+    }
+
+    public function get_category_id_by_category_name($cagetory_name){
+        $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`category` WHERE `category`.`category` LIKE :CATNAME LIMIT 1");
+        $sth->bindParam(':CATNAME', $cagetory_name);
+        $sth->execute();
+        $value = $sth->fetch();
+        return $value['id'];
     }
 }
 
