@@ -208,8 +208,10 @@ class pagemaster
 
                 } else {
                    // include('includes/menu.category.functions.html');
-                    $show = new show_categories;
-                    $show->show_categories_no_extras();
+                   $create = new createCategory;
+                   $create->form_create_category();
+                   $showcategories = new show_categories;
+                   $showcategories->show_categories_with_edit_delete_links();
                 }
                 // Upload Edited Category POST value exists
                 /*
@@ -225,6 +227,8 @@ class pagemaster
 
             case "categoryshow";
               print('<h4>Category Show</h4>');
+              $showcategories = new show_categories;
+              $showcategories->show_categories_with_edit_delete_links();
             break;
             case "linkkeywords":
                 echo "<h3>Now link Keywords</h3>";
