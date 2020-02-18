@@ -11,7 +11,7 @@ class pagemaster
                     switch ($_GET['function']) {
                         case "tomatalanding":
                         print('<p>Tomato Landing page</p>');
-                        $tomato_section_menu = new tomatoaux;
+                        //$tomato_section_menu = new tomatoaux;
                         print($tomato_section_menu->tomato_section_menu_anchors());
                         break;
                         case "tomatoadd":

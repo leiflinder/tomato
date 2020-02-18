@@ -8,7 +8,7 @@ include ('../classes/class.form_elements.php');
 // include ('../classes/class.stats.php');
 // include ('../classes/class.set_week.php');
 //include ('../classes/class.keywords_and_categories.php');
-include ('../classes/class.keyword.aux.php');
+//include ('../classes/class.keyword.aux.php');
 include ('../classes/class.keyword.create.php');
 include ('../classes/class.keyword.delete.php');
 include ('../classes/class.keyword.edit.php');
@@ -24,7 +24,7 @@ include ('../classes/class.category.show.php');
 include ('../classes/class.category.tree.php');
 include ('../classes/class.setup.aux.php');
 include ('../classes/class.setup.goals.php');
-include ('../classes/class.tomato.aux.php');
+//include ('../classes/class.tomato.aux.php');
 include ('../classes/class.tomato.show.php');
 include ('../classes/class.tomato.add.php');
 include ('../classes/class.tomato.edit.php');
@@ -34,7 +34,7 @@ include ('../classes/class.view.today.php');
 include ('../classes/class.view.weeks.php');
 
 include ('./includes/header.php');
-include ('./includes/navigation.php');
+include ('./includes/navigation2.php');
 
 
 print('<div id="content">'); // open content

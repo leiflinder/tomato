@@ -1,5 +1,5 @@
    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
-  <a class="navbar-brand" href="#"><h4>Tomato220</h4></a>
+  <a class="navbar-brand" href="#"><h4>Tomato221</h4></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -9,6 +9,8 @@
         <a class="nav-link" href="home.php">Home <span class="sr-only">(current)</span></a>
       </li>
 
+
+      
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="home.php?page=tomato&function=tomatalanding" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Tomato
@@ -20,19 +22,25 @@
          ?>
         </div>
 
+<!--
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="home.php?page=keywords&function=keywordlanding" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Keywords
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
          <?php
-            $keyword_section_menu = new  keywordaux;
-            print($keyword_section_menu->keyword_section_menu_anchors());
+          //  $keyword_section_menu = new  keywordaux;
+          //  print($keyword_section_menu->keyword_section_menu_anchors());
          ?>
          </div>
+-->
+
+          <li class="nav-item">
+            <a class="nav-link" href="home.php?page=keywords">Keywords</a>
+          </li>
 
          <li class="nav-item">
-            <a class="nav-link" href="home.php?page=categories" >Categories</a>
+            <a class="nav-link" href="home.php?page=categories">Categories</a>
           </li>
 
       <li class="nav-item dropdown">

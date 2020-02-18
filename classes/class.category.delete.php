@@ -92,20 +92,17 @@ UPDATE `tomato220`.`tomato` SET `tomato`.`category`= 22 WHERE `tomato`.`category
         $stm->bindParam(':CATEGORYID',$categoryid);
         $stm->bindParam(':USERID',$userid);
         $stm->bindParam(':NULLVALUE',$null);
-        $stm->execute();        
+        $stm->execute(); 
+        $count = $stm->rowCount();
+        return $count;       
     }
     function delete_actual_category($categoryid, $userid=1001){
         $stm =$this->conn->prepare("DELETE FROM `tomato220`.`category` WHERE `category`.`id` = :CATEGORYID AND `category`.`userid`=:USERID");
         $stm->bindParam(':CATEGORYID',$categoryid);
         $stm->bindParam(':USERID',$userid);
         $stm->execute();
-        $count = $stm->rowCount();  
-        if($count > 0){
-            $message='ID: '.$categoryid.' Deleted';
-        }else{
-            $message="Problem";
-        }
-        return $message;      
+        $count = $stm->rowCount();
+        return $count;       
     }
 
     function delete_actual_goals($categoryid, $userid=1001){
@@ -114,12 +111,7 @@ UPDATE `tomato220`.`tomato` SET `tomato`.`category`= 22 WHERE `tomato`.`category
         $stm->bindParam(':USERID',$userid);
         $stm->execute();
         $count = $stm->rowCount();  
-        if($count > 0){
-            $message2='GOAL: '.$categoryid.' Deleted';
-        }else{
-            $message2="Problem";
-        }
-        return $message2;      
+      return $count;
     }
 }
 ?>

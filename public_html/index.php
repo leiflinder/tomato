@@ -1,11 +1,13 @@
-<?php
-include('./includes/header.php');
-?>
-<?php
-include('./includes/navigation.php');
-?>
+
+<?PHP
+include ('./includes/header.php');
+include ('./includes/navigation2.php');
 
 
-<?php
-include('./includes/footer.php');
+print('<div id="content">'); // open content
+
+
+print('</div>'); // close content
+
+include('includes/footer.php');
 ?>

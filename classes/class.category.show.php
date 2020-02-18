@@ -1,6 +1,8 @@
 <?PHP
 class show_categories extends conn{
 
+  var $category_used;
+
   private function number_category_used($id = 1){
   return $id;
   }
@@ -46,10 +48,10 @@ class show_categories extends conn{
                   </button>
                 </div>
                 <div class="modal-body">
-                <form method="post" action="refresh.keyword.edit.php">
+                <form method="post" action="bounce.categoy.edit.php">
                     <div class="form-group">
-                        <input type="text" class="form-control" value="'.$resource[$i]['category'].'" id="keywordedit" name="keywordedit">
-                        <input type="hidden" name="keywordid" value="'.$resource[$i]['id'].'"/>
+                        <input type="text" class="form-control" value="'.$resource[$i]['category'].'" id="categoryedit" name="categoryedit">
+                        <input type="hidden" name="categoryid" value="'.$resource[$i]['id'].'"/>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -87,7 +89,7 @@ class show_categories extends conn{
     </div>
   </div>');
 
-
+  $this->category_used($resource[$i]['id'], $_SESSION['userid']);
   // delete keyword modal
   print('
   <div id="delete' . $resource[$i]['id'] . '" class="modal fade" role="dialog">
@@ -99,9 +101,9 @@ class show_categories extends conn{
         </div>
         <div class="modal-body">
         <h2>Really?</h2>
-        <p><span class="bigandbad">' . $resource[$i]['category'] . '</span> is used on '.$this->number_category_used($resource[$i]['id']).' tomato entries</p>
-        <form method="post" action="refresh.keyword.delete.php">
-        <input type="hidden" name="keyid" value="' . $resource[$i]['id'] . '"/>
+        <p><span class="bigandbad">' . $resource[$i]['category'] . '</span> is used on '.$this->category_used.' tomato entries</p>
+        <form method="post" action="bounce.category.delete.php">
+        <input type="hidden" name="catid" value="' . $resource[$i]['id'] . '"/>
           <p><input type="submit" value="Delete"/></p>
           </form>
         </div>
@@ -113,7 +115,13 @@ class show_categories extends conn{
   </div>');
   }
 print('</table>');
-}  
+} 
+
+    private function category_used($categoryid, $userid=1001){
+      $cat_used = new categorydelete;
+      $return_value = $cat_used->times_category_used($categoryid, $userid);
+      $this->category_used = $return_value;
+    }
 }
 
 ?>
