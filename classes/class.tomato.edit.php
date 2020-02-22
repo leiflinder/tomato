@@ -198,7 +198,7 @@ function check_tomid_against_keyword_link($tomid, $keyid)
 
 function edit_single_tomato_form($tomid, $userid, $title, $tomdate, $tomweek, $count, $category_title, $category_id, $notes, $url, $keywords)
     {
-    print ('<form method="post" id="edit_single_tomato" action="http://localhost/tomato220.com/public_html/bounce.tomato.edit.php">
+    print ('<form method="post" id="edit_single_tomato" action="bounce.tomato.edit.php">
         <input type=hidden name="tomid" id="tomid" value="'.$tomid.'"/>');
     print ('<input type=hidden name="form_title" value="edit_single_tomato"/>');
     print ('<input type=hidden name="userid" id="userid" value="'.$userid.'"/>');

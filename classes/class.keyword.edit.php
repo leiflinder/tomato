@@ -188,7 +188,7 @@ class keywordedit extends conn
         $letter = $this->alphabet;
         for($i=0;$i<sizeof($letter);$i++){
             $letter[$i];
-        print('<p><a class="btn btn-primary" data-toggle="collapse" href="#'.$letter[$i].'" role="button" aria-expanded="false" aria-controls="collapseExample">'.$letter[$i].'</a>');
+        print('<p><a class="btn btn-primary hundred_percent_width" data-toggle="collapse" href="#'.$letter[$i].'" role="button" aria-expanded="false" aria-controls="collapseExample">'.$letter[$i].'</a>');
         print('<div class="collapse" id="'.$letter[$i].'">');
         // use this function to print out all keywords that start with the leter
         print($this->show_keywords_by_first_letter_with_edit_delete_links($letter[$i]));

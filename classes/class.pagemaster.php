@@ -7,6 +7,19 @@ class pagemaster
         switch ($get_page) {
             //// ***** TOMATO PAGES ***** ////
             case "tomato":
+                print('<div class="margin-bottom">  <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                Create Tomato
+              </a></div>');
+               // $tomato_form = new addtomato;
+               // $tomato_form->upload_form_tomato();
+                $edit_tomatos = new edittomato;
+                $edit_tomatos->pull_tomatos_by_default_this_week();
+                if (isset($_GET['tomid'])) {
+                    $tomato = $edit_tomatos->return_single_tomato_based_on_tomid($_GET['tomid']);
+                    $edit_tomatos->edit_single_tomato_form($tomato['id'], $tomato['userid'], $tomato['title'], $tomato['tomdate'], $tomato['tomweek'], $tomato['count'], $tomato['category_title'], $tomato['category_id'], $tomato['notes'], $tomato['url'], $tomato['keywords']);
+                }
+
+                /*
                 if (isset($_GET['function'])) {
                     switch ($_GET['function']) {
                         case "tomatalanding":
@@ -37,11 +50,16 @@ class pagemaster
                         break;
                     }
                 }
-                
+                */
                 break;
 
                 //// ***** KEYWORDS PAGES ***** ////
                 case "keywords":
+                    $keywordclass = new createKeyword;
+                    $keywordclass->form_create_keyword();
+                    print('<hr/>');
+                    $edit = new keywordedit;
+                    $edit->alphabet_accordion_with_keywords();
                 if (isset($_GET['function'])) {
                     switch ($_GET['function']) {
                         case "keywordlanding":
@@ -57,7 +75,7 @@ class pagemaster
                                 $keywordclass = new createKeyword;
                                 $keywordclass->upload_new_keyword($_POST['new_keyword']);
                             }
-                            $edit = new keywordedit;
+                            
                             if (isset($_POST['keywordedit'])) {
                                 $edit->upload_edited_keyword($_POST['keywordid'], $_POST['keywordedit']);
                                 print('<p>'.$_POST['keywordid'].'</p>');

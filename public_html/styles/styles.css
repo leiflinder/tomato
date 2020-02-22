@@ -364,3 +364,10 @@ td .make-it-mini{
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+
+.hundred_percent_width{
+  width:100%;
+}
+.margin-bottom {
+  margin-bottom:30px;
+}
