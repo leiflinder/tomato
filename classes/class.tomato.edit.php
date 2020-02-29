@@ -50,10 +50,19 @@ function toms_by_tomdate($tomdate)
     $size = sizeof($resource);
     print ('<ul class="list-group tomatolist">');
     for ($i = 0; $i < $size; $i++)
+    /*
         {
-        print ('<li class="list-group-item d-flex justify-content-between align-items-center border-0"><a href="?page=tomato&function=tomatoedit&tomid=' . $resource[$i]['id'] . '"   data-target="#' . $resource[$i]['id'] . '">' . $this->return_category_name_from_catid($resource[$i]['category']) . '</a><span class="badge badge-primary badge-pill">' . ($resource[$i]['count'] / 2) . ' hrs</span></li>');
+        print ('<li class="list-group-item d-flex justify-content-between align-items-center border-0"><a href="?page=tomato&function=tomatoedit&tomid='.$resource[$i]['id'].'"   data-target="#' . $resource[$i]['id'] . '">'.$this->return_category_name_from_catid($resource[$i]['category']).'</a><span class="badge badge-primary badge-pill">' . ($resource[$i]['count'] / 2).' hrs</span></li>');
         }
-
+    */
+    {
+        print ('<li class="list-group-item d-flex justify-content-between align-items-center border-0"><a data-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample">'.$this->return_category_name_from_catid($resource[$i]['category']).'</a><span class="badge badge-primary badge-pill">' . ($resource[$i]['count'] / 2).' hrs</span></li>
+        <div class="collapse margin-bottom" id="collapseExample2">
+        <div class="card card-body">
+          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+        </div>
+      </div>');
+        }
     print ('</ul>');
     }
 

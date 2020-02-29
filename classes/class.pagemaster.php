@@ -10,15 +10,21 @@ class pagemaster
                 print('<div class="margin-bottom">  <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                 Create Tomato
               </a></div>');
+              print('<div class="collapse margin-bottom" id="collapseExample">
+              <div class="card card-body">
+                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+              </div>
+            </div>');
                // $tomato_form = new addtomato;
                // $tomato_form->upload_form_tomato();
                 $edit_tomatos = new edittomato;
                 $edit_tomatos->pull_tomatos_by_default_this_week();
+                /*
                 if (isset($_GET['tomid'])) {
                     $tomato = $edit_tomatos->return_single_tomato_based_on_tomid($_GET['tomid']);
                     $edit_tomatos->edit_single_tomato_form($tomato['id'], $tomato['userid'], $tomato['title'], $tomato['tomdate'], $tomato['tomweek'], $tomato['count'], $tomato['category_title'], $tomato['category_id'], $tomato['notes'], $tomato['url'], $tomato['keywords']);
                 }
-
+                */
                 /*
                 if (isset($_GET['function'])) {
                     switch ($_GET['function']) {
