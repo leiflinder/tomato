@@ -7,14 +7,25 @@ class pagemaster
         switch ($get_page) {
             //// ***** TOMATO PAGES ***** ////
             case "tomato":
-                print('<div class="margin-bottom">  <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+
+                print('<p><a class="btn btn-primary hundred_percent_width" data-toggle="collapse" href="#TomatoMaker" role="button" aria-expanded="false" aria-controls="collapseExample">Create Tomato</a>');
+                print('<div class="collapse" id="TomatoMaker">');
+                // use this function to print out all keywords that start with the leter
+                $tomato_form = new addtomato;
+                $tomato_form->upload_form_tomato();
+                print('</div>');
+                print('<hr/>');
+                /*
+                print('<div class="margin-bottom">  <a class="btn btn-primary" data-toggle="collapse" href="#collapseTomMaker" role="button" aria-expanded="false" aria-controls="collapseExample">
                 Create Tomato
               </a></div>');
-              print('<div class="collapse margin-bottom" id="collapseExample">
-              <div class="card card-body">
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-              </div>
+              print('<div class="collapse margin-bottom" id="collapseTomMaker">
+              <div class="card card-body" id="tomatoMaker">');
+                $tomato_form = new addtomato;
+                $tomato_form->upload_form_tomato();
+              print('</div>
             </div>');
+            */
                // $tomato_form = new addtomato;
                // $tomato_form->upload_form_tomato();
                 $edit_tomatos = new edittomato;

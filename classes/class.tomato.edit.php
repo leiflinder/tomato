@@ -58,9 +58,10 @@ function toms_by_tomdate($tomdate)
     {
         print ('<li class="list-group-item d-flex justify-content-between align-items-center border-0"><a data-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample">'.$this->return_category_name_from_catid($resource[$i]['category']).'</a><span class="badge badge-primary badge-pill">' . ($resource[$i]['count'] / 2).' hrs</span></li>
         <div class="collapse margin-bottom" id="collapseExample2">
-        <div class="card card-body">
-          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-        </div>
+        <div class="card card-body">');
+        $tomato = $this->return_single_tomato_based_on_tomid(201);
+        $this->edit_single_tomato_form($tomato['id'], $tomato['userid'], $tomato['title'], $tomato['tomdate'], $tomato['tomweek'], $tomato['count'], $tomato['category_title'], $tomato['category_id'], $tomato['notes'], $tomato['url'], $tomato['keywords']);
+        print('</div>
       </div>');
         }
     print ('</ul>');
