@@ -72,6 +72,12 @@ class pagemaster
 
                 //// ***** KEYWORDS PAGES ***** ////
                 case "keywords":
+                        $keywordclass = new createKeyword;
+                        $keywordclass->form_create_keyword();
+                        print('<hr/>');
+                        $edit = new keywordedit;
+                        $edit->alphabet_accordion_with_keywords();
+                    /*
                     $keywordclass = new createKeyword;
                     $keywordclass->form_create_keyword();
                     print('<hr/>');
@@ -155,12 +161,22 @@ class pagemaster
                                 $categories->update_assoc_between_keyword_and_categories($_POST['keyid'], $_POST['cats']);
                             }
                         */
-                        default: print('<p>No Function</p>');
-                        break;
-                    }
-                }          
+                       // default: print('<p>No Function</p>');
+                      //  break;         
                 break;
-
+            case "linkcategories":
+                if (isset($_GET['keywordid'])) {
+                    $keywordid = htmlspecialchars(strip_tags($_GET['keywordid']));
+                    $link_to_cat = new link_to_category;
+                    $link_to_cat->return_name_of_keyword_id($keywordid);
+                    print('<h2>'.$link_to_cat->keyword_title.'</h2><br/>');
+                    $cat_list = new link_to_category;
+                    // create object array
+                    $cat_list->all_cats_associated_with_keyid($keywordid);
+                    // show the list of checkboxes
+                    $cat_list->category_form($cat_list->array_of_categories_with_catid_as_index, $cat_list->category_titles_linked_to_this_keyword, $keywordid);
+                }
+            break;
             //// ***** VIEWS PAGES ***** ////
             case "views":
                 if (isset($_GET['function'])) {

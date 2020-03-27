@@ -74,7 +74,7 @@ class keywordedit extends conn
         for ($i = 0; $i < (sizeof($resource)); $i++) {
             print('<tr>
             <td class="keywordcolumn"><span class="keywordlabel">'.$resource[$i]['keyword'].'</span></td>
-            <td class="linkkeyword"><a href="home.php?page=keywords&function=linktocategories&keywordid='.$resource[$i]['id'].'">Link</a></td>
+            <td class="linkkeyword"><a href="home.php?page=linkcategories&keywordid='.$resource[$i]['id'].'">Link</a></td>
             <td><a href="" data-toggle="modal" data-target="#edit'.$resource[$i]['id'].'"><img src="./images/edit1001.png"/></a></td>
             <td><a href="" data-toggle="modal" data-target="#delete'.$resource[$i]['id'].'" class="delete_label"><img src="./images/delete1001.png"/></a></td>
             </tr>');
