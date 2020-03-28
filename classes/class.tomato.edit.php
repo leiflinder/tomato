@@ -50,16 +50,11 @@ function toms_by_tomdate($tomdate)
     $size = sizeof($resource);
     print ('<ul class="list-group tomatolist">');
     for ($i = 0; $i < $size; $i++)
-    /*
-        {
-        print ('<li class="list-group-item d-flex justify-content-between align-items-center border-0"><a href="?page=tomato&function=tomatoedit&tomid='.$resource[$i]['id'].'"   data-target="#' . $resource[$i]['id'] . '">'.$this->return_category_name_from_catid($resource[$i]['category']).'</a><span class="badge badge-primary badge-pill">' . ($resource[$i]['count'] / 2).' hrs</span></li>');
-        }
-    */
     {
-        print ('<li class="list-group-item d-flex justify-content-between align-items-center border-0"><a data-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample">'.$this->return_category_name_from_catid($resource[$i]['category']).'</a><span class="badge badge-primary badge-pill">' . ($resource[$i]['count'] / 2).' hrs</span></li>
-        <div class="collapse margin-bottom" id="collapseExample2">
+        print ('<li class="list-group-item d-flex justify-content-between align-items-center border-0"><a data-toggle="collapse" href="#collapseExample'.$resource[$i]['id'].'" role="button" aria-expanded="false" aria-controls="collapseExample"><div class="titleBox">'.$resource[$i]['title'].'</div></a>'.$this->return_category_name_from_catid($resource[$i]['category']).'<span class="badge badge-primary badge-pill">' . ($resource[$i]['count'] / 2).' hrs</span></li>
+        <div class="collapse margin-bottom" id="collapseExample'.$resource[$i]['id'].'">
         <div class="card card-body">');
-        $tomato = $this->return_single_tomato_based_on_tomid(201);
+        $tomato = $this->return_single_tomato_based_on_tomid($resource[$i]['id']);
         $this->edit_single_tomato_form($tomato['id'], $tomato['userid'], $tomato['title'], $tomato['tomdate'], $tomato['tomweek'], $tomato['count'], $tomato['category_title'], $tomato['category_id'], $tomato['notes'], $tomato['url'], $tomato['keywords']);
         print('</div>
       </div>');

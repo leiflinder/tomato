@@ -17,7 +17,7 @@ class showtomatoes extends conn{
         return $result;
         }
 
-    function show_tomatoes($dbase_resource){
+    function XXX_show_tomatoes($dbase_resource){
         print('<br/>');
         print('<table class="table">');
         print('<tr><th>Title</th><th>Count</th><th>Cat</th></tr>');

@@ -7,7 +7,6 @@ class pagemaster
         switch ($get_page) {
             //// ***** TOMATO PAGES ***** ////
             case "tomato":
-
                 print('<p><a class="btn btn-primary hundred_percent_width" data-toggle="collapse" href="#TomatoMaker" role="button" aria-expanded="false" aria-controls="collapseExample">Create Tomato</a>');
                 print('<div class="collapse" id="TomatoMaker">');
                 // use this function to print out all keywords that start with the leter
@@ -15,59 +14,8 @@ class pagemaster
                 $tomato_form->upload_form_tomato();
                 print('</div>');
                 print('<hr/>');
-                /*
-                print('<div class="margin-bottom">  <a class="btn btn-primary" data-toggle="collapse" href="#collapseTomMaker" role="button" aria-expanded="false" aria-controls="collapseExample">
-                Create Tomato
-              </a></div>');
-              print('<div class="collapse margin-bottom" id="collapseTomMaker">
-              <div class="card card-body" id="tomatoMaker">');
-                $tomato_form = new addtomato;
-                $tomato_form->upload_form_tomato();
-              print('</div>
-            </div>');
-            */
-               // $tomato_form = new addtomato;
-               // $tomato_form->upload_form_tomato();
                 $edit_tomatos = new edittomato;
                 $edit_tomatos->pull_tomatos_by_default_this_week();
-                /*
-                if (isset($_GET['tomid'])) {
-                    $tomato = $edit_tomatos->return_single_tomato_based_on_tomid($_GET['tomid']);
-                    $edit_tomatos->edit_single_tomato_form($tomato['id'], $tomato['userid'], $tomato['title'], $tomato['tomdate'], $tomato['tomweek'], $tomato['count'], $tomato['category_title'], $tomato['category_id'], $tomato['notes'], $tomato['url'], $tomato['keywords']);
-                }
-                */
-                /*
-                if (isset($_GET['function'])) {
-                    switch ($_GET['function']) {
-                        case "tomatalanding":
-                        print('<p>Tomato Landing page</p>');
-                        //$tomato_section_menu = new tomatoaux;
-                        print($tomato_section_menu->tomato_section_menu_anchors());
-                        break;
-                        case "tomatoadd":
-                            print('<h2>Add</h2>');
-                            $tomato_form = new addtomato;
-                            $tomato_form->upload_form_tomato();
-                            break;
-                        case "tomatoedit":
-                            print('<h2>Edit</h2>');
-                            $edit_tomatos = new edittomato;
-                            if (isset($_GET['tomid'])) {
-                                $tomato = $edit_tomatos->return_single_tomato_based_on_tomid($_GET['tomid']);
-                                $edit_tomatos->edit_single_tomato_form($tomato['id'], $tomato['userid'], $tomato['title'], $tomato['tomdate'], $tomato['tomweek'], $tomato['count'], $tomato['category_title'], $tomato['category_id'], $tomato['notes'], $tomato['url'], $tomato['keywords']);
-                            }
-                            $edit_tomatos->pull_tomatos_by_default_this_week();
-                           break;
-                          case "tomatoshow";
-                          print('<h2>Show</h2>');
-                          $edit_tomatos = new edittomato;
-                          $edit_tomatos->pull_tomatos_by_default_this_week();
-                          break;
-                        default: print('<p>No Function</p>');
-                        break;
-                    }
-                }
-                */
                 break;
 
                 //// ***** KEYWORDS PAGES ***** ////
@@ -76,93 +24,7 @@ class pagemaster
                         $keywordclass->form_create_keyword();
                         print('<hr/>');
                         $edit = new keywordedit;
-                        $edit->alphabet_accordion_with_keywords();
-                    /*
-                    $keywordclass = new createKeyword;
-                    $keywordclass->form_create_keyword();
-                    print('<hr/>');
-                    $edit = new keywordedit;
-                    $edit->alphabet_accordion_with_keywords();
-                if (isset($_GET['function'])) {
-                    switch ($_GET['function']) {
-                        case "keywordlanding":
-                        $keyword_section_menu = new keywordaux;
-                        print($keyword_section_menu->keyword_section_menu_anchors());
-                        break;
-                        case "keywordshow":
-                            print('<h2>Create</h2>');
-                            $keywordclass = new createKeyword;
-                            $keywordclass->form_create_keyword();
-                            if (isset($_POST['new_keyword'])) {
-                                print('<p>New Keyword Submitted</p>');
-                                $keywordclass = new createKeyword;
-                                $keywordclass->upload_new_keyword($_POST['new_keyword']);
-                            }
-                            
-                            if (isset($_POST['keywordedit'])) {
-                                $edit->upload_edited_keyword($_POST['keywordid'], $_POST['keywordedit']);
-                                print('<p>'.$_POST['keywordid'].'</p>');
-                                print('<p>'.$_POST['keywordedit'].'</p>');
-                            }
-                            print('<h2>Show</h2>');
-                            print_r($_POST);
-                            $edit->alphabet_accordion_with_keywords();
-                            break;
-                        case "keywordcreate":
-                            print('<p>Add</p>');
-                            $keywordclass = new createKeyword;
-                            $keywordclass->form_create_keyword();
-                            if (isset($_POST['new_keyword'])) {
-                                print('<p>New Keyword Submitted</p>');
-                                $keywordclass->upload_new_keyword($_POST['new_keyword']);
-                            }
-                            $show = new show_keywords;
-                            $show->print_only_keywords_no_accordion();
-                            break;
-                        case "keywordedit":
-                            $edit->show_all_keywords_with_edit_delete_links();
-                            break;
-                        case "keyworddelete":
-                        print('<h5 class="function-title">Delete Keyword</h5>');
-                        if (isset($_GET['deletemessage'])) {
-                            print("<p><span class='success'>Keyword Deleted</span></p>");
-                        }
-                        $delete = new keyworddelete;
-                        $delete->show_keywords_with_delete_button();
-                        break;
-                        case "keywordtree":
-                        $keywordtree = new keywordtree;
-                        $keywordtree->show_categories_with_associated_keywords();
-                        break;
-                        case "linktocategories":
-                            if (isset($_GET['keywordid'])) {
-                                $keywordid = htmlspecialchars(strip_tags($_GET['keywordid']));
-                                $link_to_cat = new link_to_category;
-                                $link_to_cat->return_name_of_keyword_id($keywordid);
-                                print('<h2>'.$link_to_cat->keyword_title.'</h2><br/>');
-                                $cat_list = new link_to_category;
-                                // create object array
-                                $cat_list->all_cats_associated_with_keyid($keywordid);
-                                // show the list of checkboxes
-                                $cat_list->category_form($cat_list->array_of_categories_with_catid_as_index, $cat_list->category_titles_linked_to_this_keyword, $keywordid);
-                            }
-                            break;
-                        case "keywordlinktocategory":
-                            print('<div class="alert alert-info">Function Keyword Link To Category</div>');
-
-                            $link_categories = new link_category;
-                            $link_categories->show_all_keywords();
-                            /*
-                            $categories = new link_to_category;
-                            if (!isset($_POST['cats'])) {
-                                $_POST['cats'] = null;
-                            }
-                            if (isset($_POST['keyid'])) {
-                                $categories->update_assoc_between_keyword_and_categories($_POST['keyid'], $_POST['cats']);
-                            }
-                        */
-                       // default: print('<p>No Function</p>');
-                      //  break;         
+                        $edit->alphabet_accordion_with_keywords();       
                 break;
             case "linkcategories":
                 if (isset($_GET['keywordid'])) {
@@ -209,18 +71,16 @@ class pagemaster
             case "index":
                 // uses file class.tomato.show.php
                 $page_display = new showtomatoes;
-                print('<h2>This Week</h2>');
+                $date = new DateTime();
+                $week = $date->format("W");
+                print('<h4><span class="badge badge-secondary">Week #'.$week.'</span></h4>');
                 $edit_tomatos = new edittomato;
                 if (isset($_GET['tomid'])) {
                     $tomato = $edit_tomatos->return_single_tomato_based_on_tomid($_GET['tomid']);
                     $edit_tomatos->edit_single_tomato_form($tomato['id'], $tomato['userid'], $tomato['title'], $tomato['tomdate'], $tomato['tomweek'], $tomato['count'], $tomato['category_title'], $tomato['category_id'], $tomato['notes'], $tomato['url'], $tomato['keywords']);                   
                 }
                 $edit_tomatos->pull_tomatos_by_default_this_week();
-        // $debase_resource_today_changed = $page_display->query_table_for_tomdate_today();
-        // $page_display->show_tomatoes($debase_resource_today_changed);
-        // uses file class.pagefunctions.index.php
-
-                print('<h3>Weekly Goals</h3>');
+                print('<h4><span class="badge badge-secondary">Goals</span></h4>');
                 $goals = new setupgoals;
                 $goals->show_goals();
                 break;

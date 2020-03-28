@@ -389,3 +389,12 @@ body.modal-open-noscroll
     margin-right: 0!important;
 }
 */
+
+.titleBox{
+  padding: 3px;
+  background-color:lightgoldenrodyellow;
+    white-space: nowrap; 
+    width: 180px; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
