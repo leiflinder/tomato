@@ -80,6 +80,7 @@ class pagemaster
                     $edit_tomatos->edit_single_tomato_form($tomato['id'], $tomato['userid'], $tomato['title'], $tomato['tomdate'], $tomato['tomweek'], $tomato['count'], $tomato['category_title'], $tomato['category_id'], $tomato['notes'], $tomato['url'], $tomato['keywords']);                   
                 }
                 $edit_tomatos->pull_tomatos_by_default_this_week();
+                print('<br/>');
                 print('<h4><span class="badge badge-secondary">Goals</span></h4>');
                 $goals = new setupgoals;
                 $goals->show_goals();
@@ -124,13 +125,6 @@ class pagemaster
                    $showcategories = new show_categories;
                    $showcategories->show_categories_with_edit_delete_links();
                 }
-                // Upload Edited Category POST value exists
-                /*
-                if (isset($_POST['edit_category_new_value'])) {
-                    $edit_category = new editCategory;
-                    $edit_category->upload_edited_category($_POST['edit_category_new_value'], $_POST['edit_category_id']);
-                }
-                */
                 // show all categories
                 $categoryShowClass = new show_categories;
                 // $categoryShowClass->show_all_categories();

@@ -73,17 +73,8 @@ class setupgoals extends conn{
         print('<button type="submit" class="btn btn-primary">Submit</button>');
       print('</form>');
       print('<p>&nbsp;</p>');
-      /*
-      print('<p><input type="text" value="'.$category_goals[].'" name="category" value="'..'"/></p>');
-      */
+
     }
-    /*
-      for($i=0;$i<sizeof($value);$i++){
-        $q= $this->conn->query("SELECT `hours` FROM `goals` WHERE `catname` LIKE ".$value[$i]," ORDER BY (`timestamp`) DESC LIMIT 1");
-        $hours = $q->fetchColumn();
-        $category_goals[$value[$i]]=$hours;
-      }
-    */
       return $category_goals;
   }
 
@@ -106,17 +97,37 @@ class setupgoals extends conn{
   public function show_goals(){
   $weekly_goals = $this->array_of_latest_goals();
  // for($i=0;$i<(sizeof($weekly_goals));$i++){
+   print('<table class="table2">');
    foreach($weekly_goals AS $index => $value){
     $thisweek = $this->check_hours_this_week_by_category($index);
     if($thisweek >= $value){
       $message = 'Success';
+      $success_style ="aqua";
     }else{
-      $message = 'Not Yet';
+      $success_style ="not_yet";
     }
       if($value > 1){
-        print('<p>'.$index.' '.$value.' ('.$thisweek.') <span class='.$message.'>'.$message.'</span></p>');
+        //print('<p>'.$index.' '.$value.' ('.$thisweek.')</p>');
+        print('<form method="post" action="bounce.edit.goal.php">');
+        print('<tr>');
+        print('<td><div class="titleBox2 '.$success_style.'"><a href="">'.$index.'</a></div></td>');
+        print('<td><input type="submit" value="Set Goal"/></td>');
+        print('<td>
+        <input type="text" value="'.$value.'" class="form-control"   name="goal_week_value">
+        </td>');
+        print('<input type="hidden" value="'.$index.'" name="goal_title">');
+        print('</form>');
+        print('<td><div class="goal_input">'.$thisweek.'</div></td>');
+        print('</tr>');
+        /*
+        print('<ul class="list-group tomatolist">
+        <li class="list-group-item d-flex justify-content-between align-items-center border-0"><a data-toggle="collapse" href="#collapseExample'.$index.'" role="button" aria-expanded="false" aria-controls="collapseExample'.$index.'"><div class="titleBox">'.$index.'</div></a><span class="badge badge-primary badge-pill"> '.$thisweek.' of '.$value.' hrs</span></li>
+        </ul>');
+        */
       }
+      
   }
+  print('</table>');
 }
 
     function form_set_weekly_goals(){
