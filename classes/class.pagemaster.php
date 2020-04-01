@@ -7,9 +7,10 @@ class pagemaster
         switch ($get_page) {
             //// ***** TOMATO PAGES ***** ////
             case "tomato":
+
+                
                 print('<p><a class="btn btn-primary hundred_percent_width" data-toggle="collapse" href="#TomatoMaker" role="button" aria-expanded="false" aria-controls="collapseExample">Create Tomato</a>');
                 print('<div class="collapse" id="TomatoMaker">');
-                // use this function to print out all keywords that start with the leter
                 $tomato_form = new addtomato;
                 $tomato_form->upload_form_tomato();
                 print('</div>');
@@ -17,6 +18,8 @@ class pagemaster
                 $edit_tomatos = new edittomato;
                 $edit_tomatos->pull_tomatos_by_default_this_week();
                 break;
+
+
 
                 //// ***** KEYWORDS PAGES ***** ////
                 case "keywords":
@@ -70,6 +73,12 @@ class pagemaster
                 break;
             case "index":
                 // uses file class.tomato.show.php
+                print('<p><a class="btn btn-primary hundred_percent_width" data-toggle="collapse" href="#TomatoMaker" role="button" aria-expanded="false" aria-controls="collapseExample">Create Tomato</a>');
+                print('<div class="collapse" id="TomatoMaker">');
+                $tomato_form = new addtomato;
+                $tomato_form->upload_form_tomato();
+                print('</div>');
+                print('<hr/>');
                 $page_display = new showtomatoes;
                 $date = new DateTime();
                 $week = $date->format("W");

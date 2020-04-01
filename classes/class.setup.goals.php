@@ -12,6 +12,7 @@ class setupgoals extends conn{
 
   }
 
+  
   function get_catid_by_catname($catname){
     $sth = $this->conn->prepare("SELECT `category`.`id` FROM `tomato220`.`category` WHERE `category`.`category` LIKE :CATNAME LIMIT 1");
     $sth->bindParam(':CATNAME',$catname);
@@ -19,6 +20,8 @@ class setupgoals extends conn{
     $value = $sth->fetch(PDO::FETCH_ASSOC);
     return ($value['id']);
   }
+  
+  
  function check_hours_this_week_by_category($categryname){
     $week = date('Y')."-W".date('W');
     $catid = $this->get_catid_by_catname($categryname);
@@ -56,17 +59,10 @@ class setupgoals extends conn{
     }
     // Now take the $category_goals array and print out as a form
     for($i=0;$i<sizeof($category_goals);$i++){
-     // print('<pre>');
-     // print_r($category_goals[$i]);
-     // print('</pre>');
       print('<form method="post" action="refresh.goals.edit.php" id="update_goal">');
         print('<div class="form-group">');
           print('<label for="WeeklyGoal'.$category_goals[$i][1].'">'.$category_goals[$i][1].'</label>');
           print('<input type="text" class="form-control" id="WeeklyGoal'.$category_goals[$i][1].'" value="'.$category_goals[$i][2].'" name="hours">');
-/*
-          print('<label for="Active'.$category_goals[$i][1].'">Active</label>');
-          print('<input type="text" class="form-control" id="Active'.$category_goals[$i][1].'" value="'.$value[$i]['active'].'" name="active">');
-*/
           print('<input type="hidden" value="'.$category_goals[$i][0].'" name="categoryid">');
           print('<input type="hidden" value="'.$category_goals[$i][1].'" name="categoryname">');
         print('</div>');
@@ -100,6 +96,7 @@ class setupgoals extends conn{
    print('<table class="table2">');
    foreach($weekly_goals AS $index => $value){
     $thisweek = $this->check_hours_this_week_by_category($index);
+    // change CSS if goal is fulfilled
     if($thisweek >= $value){
       $message = 'Success';
       $success_style ="aqua";
@@ -107,8 +104,7 @@ class setupgoals extends conn{
       $success_style ="not_yet";
     }
       if($value > 1){
-        //print('<p>'.$index.' '.$value.' ('.$thisweek.')</p>');
-        print('<form method="post" action="bounce.edit.goal.php">');
+        print('<form method="post" action="bounce.goal.edit.php">');
         print('<tr>');
         print('<td><div class="titleBox2 '.$success_style.'"><a href="">'.$index.'</a></div></td>');
         print('<td><input type="submit" value="Set Goal"/></td>');
@@ -116,16 +112,11 @@ class setupgoals extends conn{
         <input type="text" value="'.$value.'" class="form-control"   name="goal_week_value">
         </td>');
         print('<input type="hidden" value="'.$index.'" name="goal_title">');
+        print('<input type="hidden" value="'.$index.'" name="goal_id">');
         print('</form>');
         print('<td><div class="goal_input">'.$thisweek.'</div></td>');
         print('</tr>');
-        /*
-        print('<ul class="list-group tomatolist">
-        <li class="list-group-item d-flex justify-content-between align-items-center border-0"><a data-toggle="collapse" href="#collapseExample'.$index.'" role="button" aria-expanded="false" aria-controls="collapseExample'.$index.'"><div class="titleBox">'.$index.'</div></a><span class="badge badge-primary badge-pill"> '.$thisweek.' of '.$value.' hrs</span></li>
-        </ul>');
-        */
       }
-      
   }
   print('</table>');
 }
