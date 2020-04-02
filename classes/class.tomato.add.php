@@ -85,8 +85,9 @@ function set_week(){
        </div>';
 
     // Categories
-    $categories = new form_elements; 
-    $categories->categories();
+    // $categories = new form_elements; 
+    // $categories->categories();
+    $this->categories();
 
     // Keywords
     echo '<div class="form-group"><label for="tomatoKeywords_FormElement">Keywords</label><br/>';
@@ -150,6 +151,58 @@ function set_week(){
                 $stmt->execute();
             }
             return $tomid;
+        }
+
+        function categories(){  
+            print('<div class="form-group">');
+            print('<label for="categories">Categories</label>');
+            print('<select class="form-control" name="categories" id="categories" onchange="showKeywords(this.value)">');
+            $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`category` ORDER BY `category`.`category` ASC");
+            $sth->execute();
+            $table = $sth->fetchAll();
+            // add a selected class if the category has been selected and make black background
+            foreach($table as $value){
+                if(isset($_GET['category'])){
+                    if($_GET['category']==$value['category']){
+                        $this->selected="selected";
+                        $this->category=$value['category'];
+                        $this->cat_id=$value['id'];
+    
+                    }else{
+                        $this->selected="not_selected";
+                    }
+                }else{
+                    $this->selected="not_selected";
+                }
+            print("<option value='".$value['id']."'>".$value['category']."</option>");
+            }
+           print('</select></div>');
+       }
+    
+       function submit(){
+           print("<input type='submit'>");
+       }
+
+        function keywords($category_param=1){   
+            if($category_param){
+                $this->category=$category_param;
+            }else{
+                $this->category=1;
+            }
+            $sth = $this->conn->prepare("SELECT tomato220.keywords.keyword AS keyword, tomato220.keywords.id AS id 
+                    FROM tomato220.link_cat_to_keywords 
+                    JOIN tomato220.keywords 
+                    ON tomato220.link_cat_to_keywords.keyword_id = tomato220.keywords.id
+                    WHERE tomato220.link_cat_to_keywords.cat_id = ".$this->category." ORDER BY `keywords`.`keyword` ASC");
+                $sth->execute();
+                $table = $sth->fetchAll();
+                foreach($table as $value){
+                    print('<div class="form-check">
+                    <input class="form-check-input" name="keywords[]" type="checkbox" value="'.$value['id'].'" id="'.$value['id'].'">
+                    <label class="form-check-label" for="'.$value['id'].'">
+                    '.$value['keyword'].'</label>
+                </div>');  
+                }
         }
     }
 ?>

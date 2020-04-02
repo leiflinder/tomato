@@ -7,29 +7,41 @@ class pagemaster
         switch ($get_page) {
             //// ***** TOMATO PAGES ***** ////
             case "tomato":
-
-                
+                message();
                 print('<p><a class="btn btn-primary hundred_percent_width" data-toggle="collapse" href="#TomatoMaker" role="button" aria-expanded="false" aria-controls="collapseExample">Create Tomato</a>');
                 print('<div class="collapse" id="TomatoMaker">');
                 $tomato_form = new addtomato;
                 $tomato_form->upload_form_tomato();
                 print('</div>');
                 print('<hr/>');
+                $page_display = new showtomatoes;
+                $date = new DateTime();
+                $week = $date->format("W");
+                print('<h4><span class="badge badge-secondary">Week #'.$week.'</span></h4>');
                 $edit_tomatos = new edittomato;
+                if (isset($_GET['tomid'])) {
+                    $tomato = $edit_tomatos->return_single_tomato_based_on_tomid($_GET['tomid']);
+                    $edit_tomatos->edit_single_tomato_form($tomato['id'], $tomato['userid'], $tomato['title'], $tomato['tomdate'], $tomato['tomweek'], $tomato['count'], $tomato['category_title'], $tomato['category_id'], $tomato['notes'], $tomato['url'], $tomato['keywords']);                   
+                }
                 $edit_tomatos->pull_tomatos_by_default_this_week();
+                print('<br/>');
+                print('<h4><span class="badge badge-secondary">Goals</span></h4>');
+                $goals = new setupgoals;
+                $goals->show_goals();
                 break;
-
-
 
                 //// ***** KEYWORDS PAGES ***** ////
                 case "keywords":
-                        $keywordclass = new createKeyword;
-                        $keywordclass->form_create_keyword();
-                        print('<hr/>');
-                        $edit = new keywordedit;
-                        $edit->alphabet_accordion_with_keywords();       
+                    message();
+                    $keywordclass = new createKeyword;
+                    $keywordclass->form_create_keyword();
+                    print('<hr/>');
+                    $edit = new keywordedit;
+                    $edit->alphabet_accordion_with_keywords();       
                 break;
+
             case "linkcategories":
+                message();
                 if (isset($_GET['keywordid'])) {
                     $keywordid = htmlspecialchars(strip_tags($_GET['keywordid']));
                     $link_to_cat = new link_to_category;
@@ -42,37 +54,15 @@ class pagemaster
                     $cat_list->category_form($cat_list->array_of_categories_with_catid_as_index, $cat_list->category_titles_linked_to_this_keyword, $keywordid);
                 }
             break;
+
             //// ***** VIEWS PAGES ***** ////
             case "views":
-                if (isset($_GET['function'])) {
-                    switch ($_GET['function']) {
-                        case "viewtoday":
-                            print('<p>viewtoday</p>');
-                            break;
-                        case "viewyesterday":
-                            print('<p>viewyesterday</p>');
-                            break;
-                        case "viewweeks";
-                            print('<p>viewweeks</p>');
-                            $weeks = new viewweeks;
-                            $weeks->view_weeks_html();
-                            break;
-                        case "viewcomparisons":
-                            print('<p>viewcomparisons</p>');
-                            break;
-                        case "viewcustomviews";
-                            print('<p>viewcustomviews</p>');
-                            break;
-                    }
-                } else {
-                    print('<p>No Function</p>');
-                }
-                
-
-                //// ***** INDEX PAGE ***** ////
+                message();
+                print('<h3>Views</h3>');
                 break;
+
             case "index":
-                // uses file class.tomato.show.php
+                message();
                 print('<p><a class="btn btn-primary hundred_percent_width" data-toggle="collapse" href="#TomatoMaker" role="button" aria-expanded="false" aria-controls="collapseExample">Create Tomato</a>');
                 print('<div class="collapse" id="TomatoMaker">');
                 $tomato_form = new addtomato;
@@ -96,6 +86,7 @@ class pagemaster
                 break;
 
             //// ***** CATEGORIES PAGES ***** ////
+            /*
             case "categories":
                 $categoryCreatClass = new createCategory;
 
@@ -138,17 +129,22 @@ class pagemaster
                 $categoryShowClass = new show_categories;
                 // $categoryShowClass->show_all_categories();
                 break;
-
-            case "categoryshow";
+                */
+            case "categories":
+           // case "categoryshow";
+              message();
               print('<h4>Category Show</h4>');
+              $create = new createCategory;
+              $create->form_create_category();
               $showcategories = new show_categories;
               $showcategories->show_categories_with_edit_delete_links();
             break;
+
             case "linkkeywords":
+                message();
                 echo "<h3>Now link Keywords</h3>";
                 $this->link_keywords_to_tomoato();
                 break;
-            
             
             
             case "setup":

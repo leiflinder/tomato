@@ -11,8 +11,8 @@ class goal_create extends conn {
       }
 
     //helper
-    private function get_catid_by_catname($catname){
-        $sth = $this->conn->prepare("SELECT `category`.`id` FROM `tomato220`.`category` WHERE `category`.`category` LIKE :CATNAME LIMIT 1");
+    public function get_catid_by_catname($catname){
+        $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`category` WHERE `category`.`category` LIKE :CATNAME");
         $sth->bindParam(':CATNAME',$catname);
         $sth->execute();
         $value = $sth->fetch(PDO::FETCH_ASSOC);
@@ -21,7 +21,7 @@ class goal_create extends conn {
 
     public function create_goal($goal, $catname, $userid, $active=1, $timeperiod="week"){
         // use helper function to get cat id by cat name
-        $catid - $this->get_catid_by_catname($catname);
+        $catid = $this->get_catid_by_catname($catname);
         // determine if this is this new goal
         // get current weekly goal value
         $current_weekly_goal = $this->get_latest_goal_from_catid($catid);

@@ -80,13 +80,9 @@ private $number_times_category_used = 0;
         $rows = sizeof($resource);
         return $rows;      
     }
-/*
-UPDATE `tomato220`.`tomato` SET `tomato`.`category`= 22 WHERE `tomato`.`category`= 23 AND `tomato`.`userid`= 1001 
-*/
+
     function replace_with_null($categoryid, $null=22, $userid=1001 ){
-        /*
-        $stm =$this->conn->prepare("UPDATE `tomato220`.`tomato` SET `tomato`.`category`= :NULLVALUE WHERE `tomato`.`category`= :CATEGORYID AND `tomato`.`userid`= :USERID");
-        */
+
         $stm =$this->conn->prepare("UPDATE `tomato220`.`tomato` SET `tomato`.`category`= :NULLVALUE WHERE `tomato`.`category`= :CATEGORYID AND `tomato`.`userid`= :USERID");
 
         $stm->bindParam(':CATEGORYID',$categoryid);
