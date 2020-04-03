@@ -5,5 +5,6 @@ include ('../classes/class.tomato.add.php');
 $form_elements_object = new addtomato;
 // get all keywords associated with category
 // and create a lot of check boxes
-$form_elements_object->keywords($_GET['categoryid']);
+$catid = htmlspecialchars(strip_tags($_GET['categoryid']));
+$form_elements_object->keywords($catid);
 ?>
