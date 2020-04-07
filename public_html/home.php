@@ -1,5 +1,7 @@
 ﻿<?PHP session_start();
 $_SESSION['userid']=1001;
+date_default_timezone_set('Europe/Oslo');
+error_reporting(E_ALL);
 ?>
 <?php
 include ("../classes/config/class.conn.php");
@@ -33,6 +35,7 @@ include ('../classes/class.tomato.show.php');
 // include ('../classes/class.view.aux.php');
 // include ('../classes/class.view.today.php');
 // include ('../classes/class.view.weeks.php');
+include ('../classes/class.view.day.php');
 
 include ('./includes/header.php');
 include ('./includes/navigation2.php');

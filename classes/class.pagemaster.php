@@ -59,6 +59,34 @@ class pagemaster
             case "views":
                 message();
                 print('<h3>Views</h3>');
+                $viewtoday = new viewday;
+                // create date object property
+                $viewtoday->today(); // set day value in object
+                $userid = filter_var($_SESSION['userid'], FILTER_SANITIZE_STRING);
+                $viewtoday->set_userid(); // set userid in object
+                $values = $viewtoday->today_tomatoes(); // get all today values
+                $viewtoday->set_total_tomato_hours(); // set total hrs of tomatos
+                /*
+                print('<hr/>');
+                print('<pre>');
+                print_r($values);
+                print('</pre>');
+                */
+                $viewtoday->day_view();
+                /*
+                print('<p>Size of: '.sizeof($values).'</p>');
+                print('<pre>');
+                print_r($viewtoday->today_tomatoes_array);
+                print('</pre>');
+                print('<hr/>');
+                print('<p>Size of: '.sizeof($values).'</p>');
+                print('<pre>');
+                print_r($values);
+                print('</pre>');
+                */
+                // this function creates database resource as object propery
+                // total_tomatoes_today() gets sizeof() database resource
+               // $today_total = $values->total_tomatoes_today($values->today_tomatoes);
                 break;
 
             case "index":

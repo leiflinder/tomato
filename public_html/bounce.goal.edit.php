@@ -23,6 +23,7 @@ print('<p>Cat ID: '.$catid.'</p>');
 */
 // $create_goal->create_goal($goal, $catname, $userid);
 
+/*
 $update = $show_goal->check_goal_if_changed($catid, $goal);
 print('<p>Update = '.$update.'</p>');
 if($update == 0){
@@ -33,6 +34,8 @@ if($update == 0){
   $message ="Goal not Changed";
   $alert = "secondary";
 }
- header("Location: home.php?message=$message&alert=$alert");
+*/
+$create_goal->delete_and_then_create($goal, $catname, $userid, $active=1, $timeperiod="week")
+ // header("Location: home.php?message=$message&alert=$alert");
 
 ?>
