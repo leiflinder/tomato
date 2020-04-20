@@ -1,8 +1,8 @@
-<?PHP
+<?php
 
 class pagemaster
 {
-    function pagefinder($get_page)
+    public function pagefinder($get_page)
     {
         switch ($get_page) {
             //// ***** TOMATO PAGES ***** ////
@@ -20,8 +20,15 @@ class pagemaster
                 print('<h4><span class="badge badge-secondary">Week #'.$week.'</span></h4>');
                 $edit_tomatos = new edittomato;
                 if (isset($_GET['tomid'])) {
-                    $tomato = $edit_tomatos->return_single_tomato_based_on_tomid($_GET['tomid']);
-                    $edit_tomatos->edit_single_tomato_form($tomato['id'], $tomato['userid'], $tomato['title'], $tomato['tomdate'], $tomato['tomweek'], $tomato['count'], $tomato['category_title'], $tomato['category_id'], $tomato['notes'], $tomato['url'], $tomato['keywords']);                   
+                    // santitize GET value
+                    if (filter_var($_GET['tomid'], FILTER_VALIDATE_INT) === false) {
+                        print('<div class="alert alert-danger" role="alert">
+                        Danger. Tomato ID not integer.</div>');
+                    } else {
+                        $tomid = $_GET['tomid'];
+                        $tomato = $edit_tomatos->return_single_tomato_based_on_tomid($tomid);
+                        $edit_tomatos->edit_single_tomato_form($tomato['id'], $tomato['userid'], $tomato['title'], $tomato['tomdate'], $tomato['tomweek'], $tomato['count'], $tomato['category_title'], $tomato['category_id'], $tomato['notes'], $tomato['url'], $tomato['keywords']);
+                    }
                 }
                 $edit_tomatos->pull_tomatos_by_default_this_week();
                 print('<br/>');
@@ -37,7 +44,7 @@ class pagemaster
                     $keywordclass->form_create_keyword();
                     print('<hr/>');
                     $edit = new keywordedit;
-                    $edit->alphabet_accordion_with_keywords();       
+                    $edit->alphabet_accordion_with_keywords();
                 break;
 
             case "linkcategories":
@@ -58,35 +65,25 @@ class pagemaster
             //// ***** VIEWS PAGES ***** ////
             case "views":
                 message();
-                print('<h3>Views</h3>');
+                print('<h3>Today</h3>');
                 $viewtoday = new viewday;
                 // create date object property
-                $viewtoday->today(); // set day value in object
-                $userid = filter_var($_SESSION['userid'], FILTER_SANITIZE_STRING);
+                $viewtoday->today(); // set date value in object
+               // $userid = filter_var($_SESSION['userid'], FILTER_SANITIZE_STRING);
                 $viewtoday->set_userid(); // set userid in object
-                $values = $viewtoday->today_tomatoes(); // get all today values
-                $viewtoday->set_total_tomato_hours(); // set total hrs of tomatos
-                /*
-                print('<hr/>');
-                print('<pre>');
-                print_r($values);
-                print('</pre>');
-                */
-                $viewtoday->day_view();
-                /*
-                print('<p>Size of: '.sizeof($values).'</p>');
-                print('<pre>');
-                print_r($viewtoday->today_tomatoes_array);
-                print('</pre>');
-                print('<hr/>');
-                print('<p>Size of: '.sizeof($values).'</p>');
-                print('<pre>');
-                print_r($values);
-                print('</pre>');
-                */
-                // this function creates database resource as object propery
-                // total_tomatoes_today() gets sizeof() database resource
-               // $today_total = $values->total_tomatoes_today($values->today_tomatoes);
+                $values = $viewtoday->today_tomatoes(); // get all today values using date and userid
+                $viewtoday->set_total_hours_today(); // set total hrs of today tomatos
+                $viewtoday->day_view(); // display overview of today for userid and date today
+                print('<h3>Yesterday</h3>');
+                $viewtoday->yesterday(); // set yesterday date property
+                $viewtoday->yesterday_tomatoes(); // set yesterday array property
+                $viewtoday->set_total_hours_yesterday(); // set total hrs of yesterday tomatos
+                $viewtoday->day_view_yesterday(); // display overview of yesterday for userid and date today
+                print('<h3>This Week</h3>');
+                $viewthisweek = new viewweek;
+                print('<h3>Last Week</h3>');
+                print('<h3>Current Month</h3>');
+                print('<h3>Last Month</h3>');
                 break;
 
             case "index":
@@ -103,8 +100,13 @@ class pagemaster
                 print('<h4><span class="badge badge-secondary">Week #'.$week.'</span></h4>');
                 $edit_tomatos = new edittomato;
                 if (isset($_GET['tomid'])) {
-                    $tomato = $edit_tomatos->return_single_tomato_based_on_tomid($_GET['tomid']);
-                    $edit_tomatos->edit_single_tomato_form($tomato['id'], $tomato['userid'], $tomato['title'], $tomato['tomdate'], $tomato['tomweek'], $tomato['count'], $tomato['category_title'], $tomato['category_id'], $tomato['notes'], $tomato['url'], $tomato['keywords']);                   
+                    if (filter_var($_GET['tomid'], FILTER_VALIDATE_INT) === false) {
+                        print('<div class="alert alert-danger" role="alert">
+                        Danger. Tomato ID not integer.</div>');
+                    } else {
+                        $tomato = $edit_tomatos->return_single_tomato_based_on_tomid($_GET['tomid']);
+                        $edit_tomatos->edit_single_tomato_form($tomato['id'], $tomato['userid'], $tomato['title'], $tomato['tomdate'], $tomato['tomweek'], $tomato['count'], $tomato['category_title'], $tomato['category_id'], $tomato['notes'], $tomato['url'], $tomato['keywords']);
+                    }
                 }
                 $edit_tomatos->pull_tomatos_by_default_this_week();
                 print('<br/>');
@@ -113,52 +115,7 @@ class pagemaster
                 $goals->show_goals();
                 break;
 
-            //// ***** CATEGORIES PAGES ***** ////
-            /*
-            case "categories":
-                $categoryCreatClass = new createCategory;
-
-                if (isset($_GET['function'])) {
-                    if ($_GET['function'] == "categorycreate") {
-                        print('<h2>Category Create</h2>');
-                        $create = new createCategory;
-                        $create->form_create_category();
-                        $show = new show_categories;
-                        $show->show_categories_no_extras();
-                        // $categoryCreatClass->form_create_category();
-                    } elseif ($_GET['function'] == "categorydedit") {
-                        print('<h2>Category Edit</h2>');
-                        $edit = new editCategory;
-                        $edit->show_categories_with_edit();
-                        if (isset($_POST['edit_category_new_value'])) {
-                            $edit->upload_edited_category($_POST['edit_category_new_value'], $_POST['edit_category_id']);
-                            $edit->show_categories_with_edit();
-                        }
-                    } elseif ($_GET['function'] == "categorydelete") {
-                        $delete = new categorydelete;
-                        $delete->show_categories_with_delete_button();
-                    } elseif ($_GET['function'] == "categorytree") {
-                        $showcategytree = new categorytree;
-                        $showcategytree->show_categories_with_associated_keywords();
-                    } else {
-                        print('<h2>No Function Defined</h2>');
-                        $edit = new editCategory;
-                        $edit->show_categories_with_edit();
-                    }
-
-                } else {
-                   // include('includes/menu.category.functions.html');
-                   $create = new createCategory;
-                   $create->form_create_category();
-                   $showcategories = new show_categories;
-                   $showcategories->show_categories_with_edit_delete_links();
-                }
-                // show all categories
-                $categoryShowClass = new show_categories;
-                // $categoryShowClass->show_all_categories();
-                break;
-                */
-            case "categories":
+    case "categories":
            // case "categoryshow";
               message();
               print('<h4>Category Show</h4>');
@@ -167,38 +124,36 @@ class pagemaster
               $showcategories = new show_categories;
               $showcategories->show_categories_with_edit_delete_links();
             break;
-
+/*
             case "linkkeywords":
                 message();
                 echo "<h3>Now link Keywords</h3>";
                 $this->link_keywords_to_tomoato();
                 break;
-            
-            
+ */
             case "setup":
                // $this->setup();
+               /*
                if (isset($_GET['function'])) {
                    print('<p>Function used in URL parameter</p>');
                    print('<p>'.$_GET['function'].'</p>');
-                   if($_GET['function']=="setupweeklygoals"){
+                   if ($_GET['function']=="setupweeklygoals") {
                        $setup = new setupgoals;
-                     // $setup->form_set_weekly_goals();
-                    // $goals_array = $setup->make_goals_array();
-                    // print('<pre>');
-                   //  print_r($goals_array);
-                    // print('</pre>');
-                    $setup->make_goals_array();
-                   }else{
+                       // $setup->form_set_weekly_goals();
+                       // $goals_array = $setup->make_goals_array();
+                       // print('<pre>');
+                       //  print_r($goals_array);
+                       // print('</pre>');
+                       $setup->make_goals_array();
+                   } else {
                        print('<p>function not defined</p>');
                    }
                }
+               */
                 break;
             default:
                 echo "page has not been defined";
-                // $this->index_page();                             
+                // $this->index_page();
         }
     }
-
 }
-
-?>

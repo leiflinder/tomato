@@ -114,7 +114,7 @@ class setupgoals extends conn{
         print('<input type="hidden" value="'.$index.'" name="goal_title">');
         print('<input type="hidden" value="'.$index.'" name="goal_id">');
         print('</form>');
-        print('<td><div class="goal_input">'.$thisweek.'</div></td>');
+        print('<td><input type="text" value="'.$thisweek.'" class="form-control"/></td>');
         print('</tr>');
       
   }

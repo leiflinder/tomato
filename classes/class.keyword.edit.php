@@ -22,42 +22,20 @@ class keywordedit extends conn
 
    protected $alphabet = array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');
     
-   public function upload_edited_keyword($keyword_id, $edited)
+   public function upload_edited_keyword($keyword_id, $edited, $userid)
     {
-        // first check if keyword exists already
-        $stm = $this->conn->prepare("SELECT * FROM `tomato220`.`keywords` WHERE `keywords`.`keyword` LIKE :EDITED");
-        $stm->bindParam(':EDITED', $edited);
-        $stm->execute();
-        if ($stm->rowCount() > 0) {
-           // print('<p>Opps... Keyword "' . $edited . '" already exists in dBase.</p>');
-            $alert='warning';
-            $message='Opps... Keyword "' . $edited . '" already exists in dBase';
-            $return_value = array($alert,$message);
-            return $return_value;
-            return;
-        } else {
             // since edit keyword does not exist, create it...
-            $stm = $this->conn->prepare("UPDATE `tomato220`.`keywords` SET `keywords`.`keyword` = :EDITED WHERE `keywords`.`id` = :KEYWORDID;");
+            $stm = $this->conn->prepare("UPDATE `tomato220`.`keywords` SET `keywords`.`keyword` = :EDITED WHERE `keywords`.`id`= :KEYWORDID AND `keywords`.`userid`= :USERID");
             $stm->bindParam(':KEYWORDID', $keyword_id);
             $stm->bindParam(':EDITED', $edited);
-            if ($stm->execute() == TRUE) {
-              $alert='success';
-              $message=$edited.' successfuly edited';
-              $return_value = array($alert,$message);
-              return $return_value;
-              //  print('<div class="alert alert-success" role="alert">' . $edited . ' Edited</div>');
+            $stm->bindParam(':USERID', $userid);
+            if ($stm->execute() == TRUE){
+              return TRUE;
             } else {
-                // print('<div class="alert alert-danger" role="alert">' . $edited . ' Not Edited</div>');
-                $alert='warning';
-                $message='fail.. '.$edited.' not edited';
-                $return_value = array($alert,$message);
-                return $return_value;
-            }
-            
+              return FALSE;
+          }       
         }
-        
-        $this->conn = NULL;
-    }
+
      
   // use this function inside alphabet_accordion_with_keywords()
     function show_keywords_by_first_letter_with_edit_delete_links($firstleter="a")
@@ -89,7 +67,7 @@ class keywordedit extends conn
                   </button>
                 </div>
                 <div class="modal-body">
-                <form method="post" action="refresh.keyword.edit.php">
+                <form method="post" action="bounce.keyword.edit.php">
                     <div class="form-group">
                         <input type="text" class="form-control" value="'.$resource[$i]['keyword'].'" id="keywordedit" name="keywordedit">
                         <input type="hidden" name="keywordid" value="'.$resource[$i]['id'].'"/>

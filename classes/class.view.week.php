@@ -1,20 +1,22 @@
 <?php
-class viewday extends conn{
-    public $today; //date
+class viewweek extends conn{
+    public $thisweek; // this week number
     public $yesterday; // date
     public $userid; // userid
-    public $today_tomatoes_dbase_resource = array();
-    public $yesterday_tomatoes_dbase_resource = array();
+    public $this_week_dbase_resource = array();
+    public $last_week_dbase_resource = array();
     public $number_of_tomatoes_today;
-    public $time_in_hours_today; // sum of all tomatoes today in hours
+    public $time_in_hours_this_week; // sum of all tomatoes this week in hours
     public $time_in_hours_yesterday; // sum of all tomatoes today in hours
-    public $tasks_today;
+    public $this_week_total_tasks; // all of the indiviudal tasks (not tomatoes)
     public $tasks_yesterday;
 
 
-    public function today(){
-        $this->today = date("Y-m-d");
-    }
+    private function thisweek(){
+        $currentWeekNumber = date('Y')."-W".date('W');
+        $this->thisweek=$currentWeekNumber;
+}
+
 
     public function yesterday(){
         $this->yesterday = date("Y-m-d", strtotime("yesterday")); 
@@ -25,18 +27,18 @@ class viewday extends conn{
             $this->userid = $_SESSION['userid'];
         }
     }
-    public function today_tomatoes(){
+    public function this_week_dbase_resource(){
         $userid = $this->userid;
-        $datevalue = $this->today;
+        $weekvalue = $this->thisweek;
         // query todays tomatoes with userid and today date
-        $stmt = $this->conn->prepare("SELECT * FROM `tomato220`.`tomato` WHERE `tomato`.`userid` = :USERID AND `tomato`.`tomdate` LIKE :DATEVALUE");
+        $stmt = $this->conn->prepare("SELECT * FROM `tomato220`.`tomato` WHERE `tomato`.`userid` = :USERID AND `tomato`.`tomweek` LIKE :WEEKVALUE");
         $stmt->bindParam(':USERID', $userid, PDO::PARAM_INT);
-        $stmt->bindParam(':DATEVALUE', $datevalue, PDO::PARAM_STR);
+        $stmt->bindParam(':WEEKVALUE', $datevalue, PDO::PARAM_STR);
         $stmt->execute(); 
-        $today_tomatoes = $stmt->fetchall(PDO::FETCH_ASSOC);
+        $this_week_tomatoes = $stmt->fetchall(PDO::FETCH_ASSOC);
         //$this->$today_tomatoes_array = $today_tomatoes;
-        $this->today_tomatoes_dbase_resource  = $today_tomatoes;
-        $this->tasks_today = sizeof($today_tomatoes);
+        $this->this_week_dbase_resource  = $today_tomatoes;
+        $this->this_week_total_tasks = sizeof($this_week_tomatoes);
     }
 
     public function yesterday_tomatoes(){
@@ -52,24 +54,16 @@ class viewday extends conn{
         $this->tasks_yesterday = sizeof($yesterday_tomatoes);
     }
 
-    /*
-    public function total_tomatoes_today($dbase_resultset=0){
-        if($dbase_resultset==0){
-            throw new Exception("<p>Resultset has no value</p>");
-        }
-            return sizeof($dbase_resultset);
-    }
-*/
 
-    public function set_total_hours_today(){
-        $stmt = $this->conn->prepare('SELECT sum(`tomato`.`count`) FROM `tomato220`.`tomato` WHERE `tomato`.`userid` = :USERID AND `tomato`.`tomdate` = :DATEVALUE');
+    public function set_total_hours_this_week(){
+        $stmt = $this->conn->prepare('SELECT sum(`tomato`.`count`) FROM `tomato220`.`tomato` WHERE `tomato`.`userid` = :USERID AND `tomato`.`tomweek` = :   WEEKVALUE');
         $stmt->bindParam(':USERID', $this->userid, PDO::PARAM_INT);
-        $stmt->bindParam(':DATEVALUE', $this->today, PDO::PARAM_STR);
+        $stmt->bindParam(':WEEKVALUE', $this->thisweek, PDO::PARAM_STR);
         $stmt->execute(); 
         $total_tomatoes = $stmt->fetch();
         $total_tomatoes = $total_tomatoes[0];
         $total_tomatoes = ($total_tomatoes)*(.5); // in hours
-        $this->time_in_hours_today = $total_tomatoes; 
+        $this->time_in_hours_this_week = $total_tomatoes; 
     }
 
     public function set_total_hours_yesterday(){
@@ -83,11 +77,11 @@ class viewday extends conn{
         $this->time_in_hours_yesterday = $total_tomatoes; 
     }
 
-    public function day_view(){
+    public function this_view(){
         print('<table class="table">');
-        print('<tr><td>Date</td><td>'.$this->today.'</td></tr>');
+        print('<tr><td>Date</td><td>'.$this->thisweek.'</td></tr>');
         print('<tr><td>User ID</td><td>'.$this->userid.'</td></tr>');
-        print('<tr><td>Tasks</td><td>'.$this->tasks_today.'</td></tr>');
+        print('<tr><td>Tasks</td><td>'.$this->this_week_total_tasks.'</td></tr>');
         print('<tr><td>Total Time (hrs)</td><td>'.$this->time_in_hours_today.'</td></tr>');
         print('</table>');
     }
