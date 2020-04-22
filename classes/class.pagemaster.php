@@ -65,25 +65,34 @@ class pagemaster
             //// ***** VIEWS PAGES ***** ////
             case "views":
                 message();
-                print('<h3>Today</h3>');
-                $viewtoday = new viewday;
+               // print('<h3>Today</h3>');
+               // $viewtoday = new viewday;
                 // create date object property
-                $viewtoday->today(); // set date value in object
+               // $viewtoday->today(); // set date value in object
                // $userid = filter_var($_SESSION['userid'], FILTER_SANITIZE_STRING);
-                $viewtoday->set_userid(); // set userid in object
-                $values = $viewtoday->today_tomatoes(); // get all today values using date and userid
-                $viewtoday->set_total_hours_today(); // set total hrs of today tomatos
-                $viewtoday->day_view(); // display overview of today for userid and date today
-                print('<h3>Yesterday</h3>');
-                $viewtoday->yesterday(); // set yesterday date property
-                $viewtoday->yesterday_tomatoes(); // set yesterday array property
-                $viewtoday->set_total_hours_yesterday(); // set total hrs of yesterday tomatos
-                $viewtoday->day_view_yesterday(); // display overview of yesterday for userid and date today
-                print('<h3>This Week</h3>');
+              //  $viewtoday->set_userid(); // set userid in object
+              //  $values = $viewtoday->today_tomatoes(); // get all today values using date and userid
+              //  $viewtoday->set_total_hours_today(); // set total hrs of today tomatos
+              //  $viewtoday->day_view(); // display overview of today for userid and date today
+               // print('<h3>Yesterday</h3>');
+               // $viewtoday->yesterday(); // set yesterday date property
+               // $viewtoday->yesterday_tomatoes(); // set yesterday array property
+              //  $viewtoday->set_total_hours_yesterday(); // set total hrs of yesterday tomatos
+              //  $viewtoday->day_view_yesterday(); // display overview of yesterday for userid and date today
                 $viewthisweek = new viewweek;
-                print('<h3>Last Week</h3>');
-                print('<h3>Current Month</h3>');
-                print('<h3>Last Month</h3>');
+                $viewthisweek->userid = $_SESSION['userid'];
+                $viewthisweek->default_week_setting();
+                $viewthisweek->this_week_dbase_resource();
+                print('<h4>Week '.$viewthisweek->defaultWeekNumber.'</h4>');
+                $viewthisweek->generic_time_view();
+                print('<p>'.$viewthisweek->defaultWeekNumber.'</p>');
+                print('<p>'.$viewthisweek->userid.'</p>');
+                print('<pre>');
+                print_r($viewthisweek->this_week_dbase_resource);
+                print('</pre>');
+               // print('<h4>Last Week</h4>');
+               // print('<h4>Current Month</h4>');
+               // print('<h4>Last Month</h4>');
                 break;
 
             case "index":
