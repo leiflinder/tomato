@@ -63,6 +63,7 @@ class viewday extends conn{
 
     public function set_total_hours_today(){
         $stmt = $this->conn->prepare('SELECT sum(`tomato`.`count`) FROM `tomato220`.`tomato` WHERE `tomato`.`userid` = :USERID AND `tomato`.`tomdate` = :DATEVALUE');
+        
         $stmt->bindParam(':USERID', $this->userid, PDO::PARAM_INT);
         $stmt->bindParam(':DATEVALUE', $this->today, PDO::PARAM_STR);
         $stmt->execute(); 

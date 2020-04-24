@@ -83,6 +83,9 @@ class pagemaster
                 $viewthisweek->userid = $_SESSION['userid'];
                 $viewthisweek->default_week_setting();
                 $viewthisweek->this_week_dbase_resource();
+                $viewthisweek->set_total_hours_this_week();
+                $viewthisweek->number_of_total_goals();
+                print('<h1>No. Goals '.$viewthisweek->number_of_total_goals.'</h1>');
                 print('<h4>Week '.$viewthisweek->defaultWeekNumber.'</h4>');
                 $viewthisweek->generic_time_view();
                 print('<p>'.$viewthisweek->defaultWeekNumber.'</p>');

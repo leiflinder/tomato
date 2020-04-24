@@ -425,3 +425,10 @@ body.modal-open-noscroll
 .table2 td {
   padding:3px;
 }
+.table2 {
+  display:block;
+  float:left;
+}
+.page-footer{
+  margin-top:5em;
+}

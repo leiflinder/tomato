@@ -2,15 +2,23 @@
 class viewweek extends conn{
     public $thisweek; // this week number
   //  public $yesterday; // date
+    public $total_number_of_goals;
     public $userid; // userid
     public $this_week_dbase_resource = array();
     public $last_week_dbase_resource = array();
     public $number_of_tomatoes_today;
     public $time_in_hours_this_week; // sum of all tomatoes this week in hours
-    public $time_in_hours_yesterday; // sum of all tomatoes today in hours
+  //  public $time_in_hours_yesterday; // sum of all tomatoes today in hours
     public $this_week_total_tasks; // all of the indiviudal tasks (not tomatoes)
   //  public $tasks_yesterday;
     public $defaultWeekNumber;
+
+    public function number_of_total_goals(){
+        $stmt = $this->conn->prepare("SELECT * FROM `tomato220`.`goals`");
+        $stmt->execute(); 
+        $value = $stmt->fetchall(PDO::FETCH_ASSOC);
+        $this->total_number_of_goals =  sizeof($value); 
+    }
 
     public function thisweek(){
         $currentWeekNumber = "W".date('W');
@@ -62,9 +70,9 @@ public function default_week_setting(){
 
 */
     public function set_total_hours_this_week(){
-        $stmt = $this->conn->prepare('SELECT sum(`tomato`.`count`) FROM `tomato220`.`tomato` WHERE `tomato`.`userid` = :USERID AND `tomato`.`tomweek` = :   WEEKVALUE');
+        $stmt = $this->conn->prepare('SELECT sum(`tomato`.`count`) FROM `tomato220`.`tomato` WHERE `tomato`.`userid` = :USERID AND `tomato`.`tomweek` = :WEEKVALUE');
         $stmt->bindParam(':USERID', $this->userid, PDO::PARAM_INT);
-        $stmt->bindParam(':WEEKVALUE', $this->thisweek, PDO::PARAM_STR);
+        $stmt->bindParam(':WEEKVALUE', $this->defaultWeekNumber, PDO::PARAM_STR);
         $stmt->execute(); 
         $total_tomatoes = $stmt->fetch();
         $total_tomatoes = $total_tomatoes[0];
@@ -86,20 +94,26 @@ public function default_week_setting(){
 
 */
     public function generic_time_view(){
-        print('<table class="table">');
-        print('<tr><th>Date</th><th>Total Hrs</th><th>Categories</th></tr>');
+        print('<table class="table" border="1">');
+        print('<tr><th>Total Hrs</th><th>Goals</th><th>Categories</th></tr>');
+        print('<tr>');
+        print('<td>'.$this->time_in_hours_this_week.'</td>');
+        print('<td>'.$this->number_of_total_goals.'</td>');
+        print('<td>'.$this->time_in_hours_this_week.'</td>');
+        print('</tr>');
         print('</table>');
     }
 
+    /*
     public function this_view(){
-        print('<table class="table">');
+        print('<table class="table" border="1">');
         print('<tr><td>Date</td><td>'.$this->thisweek.'</td></tr>');
         print('<tr><td>User ID</td><td>'.$this->userid.'</td></tr>');
         print('<tr><td>Tasks</td><td>'.$this->this_week_total_tasks.'</td></tr>');
         print('<tr><td>Total Time (hrs)</td><td>'.$this->time_in_hours_today.'</td></tr>');
         print('</table>');
     }
-
+*/
     /*
     public function day_view_yesterday(){
         print('<table class="table">');
