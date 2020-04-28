@@ -138,7 +138,7 @@ class setupgoals extends conn{
         print('<p>&nbsp;<br/>&nbsp;<br/></p>');
     }
 
-
+/*
    function check_goal_if_changed($catid, $goal){
     $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`goals` WHERE `goals`.`categoryid` = :CATID AND `goals`.`hours` = :GOAL");
     $sth->bindParam(':GOAL',$goal);
@@ -151,7 +151,7 @@ class setupgoals extends conn{
         return 0;
       }
    }
-
+*/
    function create_new_goal($catid, $goal, $catname, $userid, $active=1, $timeperiod="week"){
     $sth = $this->conn->prepare("INSERT INTO `tomato220`.`goals` (`goals`.`id`, `goals`.`userid`, `goals`.`categoryid`, `goals`.`catname`, `goals`.`hours`, `goals`.`active`, `goals`.`timeperiod`, `goals`.`timestamp`) VALUES (NULL, :USERID, :CATID, :CATNAME, :GOAL, :ACTIVE, :TIMEPERIOD, CURRENT_TIMESTAMP)");
     $sth->bindParam(':GOAL',$goal);
