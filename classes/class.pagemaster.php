@@ -65,54 +65,26 @@ class pagemaster
             //// ***** VIEWS PAGES ***** ////
             case "views":
                 message();
-               // print('<h3>Today</h3>');
-               // $viewtoday = new viewday;
-                // create date object property
-               // $viewtoday->today(); // set date value in object
-               // $userid = filter_var($_SESSION['userid'], FILTER_SANITIZE_STRING);
-              //  $viewtoday->set_userid(); // set userid in object
-              //  $values = $viewtoday->today_tomatoes(); // get all today values using date and userid
-              //  $viewtoday->set_total_hours_today(); // set total hrs of today tomatos
-              //  $viewtoday->day_view(); // display overview of today for userid and date today
-               // print('<h3>Yesterday</h3>');
-               // $viewtoday->yesterday(); // set yesterday date property
-               // $viewtoday->yesterday_tomatoes(); // set yesterday array property
-              //  $viewtoday->set_total_hours_yesterday(); // set total hrs of yesterday tomatos
-              //  $viewtoday->day_view_yesterday(); // display overview of yesterday for userid and date today
-                $viewthisweek = new viewweek;
-                $viewthisweek->userid = $_SESSION['userid']; // create user property
-                $viewthisweek->default_week_setting(); // create today property
-                $viewthisweek->week_dbase_resource($viewthisweek->defaultWeekNumber); // get this week value
-                $viewthisweek->set_total_hours_this_week($viewthisweek->defaultWeekNumber); // create total hours this week property
-                $viewthisweek->number_of_total_goals(); // create total goals this week property
-                print('<h4>Week '.$viewthisweek->defaultWeekNumber.'</h4>');
-                $viewthisweek->generic_time_view();
-                print('<hr/>');
-                /*
-                print('<p>'.$viewthisweek->defaultWeekNumber.'</p>');
-                print('<p>'.$viewthisweek->userid.'</p>');
-                $viewthisweek->get_distinct_categories_for_specific_week($viewthisweek->defaultWeekNumber);
-                print('<p>'.sizeof($viewthisweek->distinct_categories_for_specific_week).'</p>');
-                */
-                $viewthisweek->default_week_number(0);
-                print('<p>'.$viewthisweek->WeekNumber.'</p>');
-                print('<hr/>');
+
                 $generic= new viewweek2;
                 $generic->week_number_only();
                 print('<p>'.$generic->week_formated_like_database.'</p>');
-
-
-                $generic->week_number_only(1); // last week
+                $generic->generic_time_view();
+                
+                $generic = new viewweek2;
+                $generic->week_number_only(1);
                 print('<p>'.$generic->week_formated_like_database.'</p>');
+                $generic->generic_time_view();
 
-
-                $generic->week_number_only(2); // last week
+                $generic = new viewweek2;
+                $generic->week_number_only(2);
                 print('<p>'.$generic->week_formated_like_database.'</p>');
+                $generic->generic_time_view();
 
-
-                $generic->week_number_only(3); // last week
+                $generic = new viewweek2;
+                $generic->week_number_only(3);
                 print('<p>'.$generic->week_formated_like_database.'</p>');
-
+                $generic->generic_time_view();
 
                 break;
 
