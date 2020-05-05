@@ -1,7 +1,7 @@
 <?php
 class keywordedit extends conn
 {
-
+  protected $alphabet = array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');
   var $categories_array;
 
     private function number_keyword_used($keyid){
@@ -18,9 +18,6 @@ class keywordedit extends conn
           $this->categories_array[$resource[$i]['id']] = $resource[$i]['category'];
       }
   }
-    
-
-   protected $alphabet = array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');
     
    public function upload_edited_keyword($keyword_id, $edited, $userid)
     {
@@ -79,7 +76,9 @@ class keywordedit extends conn
                 </div>
                 </form>
               </div>
+              <br class="clear_left"/>
             </div>
+            <br class="clear_left"/>
           </div>');
 
 

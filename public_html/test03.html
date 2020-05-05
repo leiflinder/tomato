@@ -1,0 +1,1997 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head 
+         content must come *after* these tags -->
+    <!-- bootstrap and jQuery -->
+    <title>Tomato221</title>
+    <link rel="stylesheet" type="text/css" href="./styles/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- endbuild -->
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+</head>
+
+<body class="modal-open-noscroll">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+        <a class="navbar-brand" href="#">
+            <h4>Tomato221</h4>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="home.php">Home <span class="sr-only">(current)</span></a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="home.php?page=tomato">Tomatoes</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="home.php?page=keywords">Keywords</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="home.php?page=categories">Categories</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="home.php?page=views">Views</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="home.php?page=setup">Setup</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <br />
+    <div id="content">
+        <p><a class="btn btn-primary hundred_percent_width" data-toggle="collapse" href="#TomatoMaker" role="button"
+                aria-expanded="false" aria-controls="collapseExample">Create Tomato</a>
+            <div class="collapse" id="TomatoMaker">
+                <p><a href="home.php">Reset</a></p>
+                <form method="post" id="upload_form_tomato" action="bounce.tomato.create.php"><input type="hidden"
+                        name="userid" value="1001"><input type="hidden" name="tomato_submit" value="yes">
+                    <div class="form-group">
+                        <label for="tomatoTitle_FormElement">Title</label>
+                        <input type="text" name="title" class="form-control" id="tomatoTitle_FormElement"
+                            aria-describedby="titleHelp" placeholder="Tomato Title">
+                        <small id="titleHelp" class="form-text text-muted">Keep it short and sweet.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="tomatoDescription_FormElement">Notes</label>
+                        <textarea name="notes" class="form-control" id="tomatoDescription_FormElement"
+                            placeholder="Notes" rows="3"></textarea>
+                        <small id="notesHelp" class="form-text text-muted">Write a lot of notes.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="tomatoCount_FormElement">Count</label>
+                        <input type="number" name="count" class="form-control" id="tomatoCount_FormElement"
+                            aria-describedby="countHelp" placeholder="Count">
+                        <small id="countHelp" class="form-text text-muted">Number of tomatos.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="tomatoDate_FormElement">Date</label>
+                        <input type="date" name="date" class="form-control" id="tomatoDate_FormElement"
+                            aria-describedby="dateHelp" placeholder="Date" value="2020-05-02">
+                        <small id="dateHelp" class="form-text text-muted">Enter date of tomato.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="tomatoWeek_FormElement">Week</label>
+                        <input type="text" name="week" class="form-control" id="tomatoWeek_FormElement"
+                            aria-describedby="weekHelp" placeholder="Tomato Week" value="2020-W18">
+                        <small id="weekHelp" class="form-text text-muted">Automatically created by default.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="tomatoUrl_FormElement">URL</label>
+                        <input type="url" name="url" class="form-control" id="tomatoUrl_FormElement"
+                            aria-describedby="urlHelp" placeholder="Tomato URL">
+                        <small id="urlHelp" class="form-text text-muted">Nice but not necessary.</small>
+                    </div>
+                    <div class="form-group"><label for="categories">Categories</label><select class="form-control"
+                            name="category" id="category" onchange="showKeywords(this.value)">
+                            <option value='20'>Business</option>
+                            <option value='1'>Code</option>
+                            <option value='9'>Design</option>
+                            <option value='8'>Drawing</option>
+                            <option value='7'>Exercise</option>
+                            <option value='5'>Guitar</option>
+                            <option value='14'>Job Search</option>
+                            <option value='2'>Norsk</option>
+                            <option value='22'>NULL</option>
+                            <option value='3'>Study</option>
+                            <option value='6'>Task</option>
+                            <option value='4'>Work</option>
+                            <option value='10'>Writing</option>
+                        </select></div>
+                    <div class="form-group"><label for="tomatoKeywords_FormElement">Keywords</label><br />
+                        <div class="ajaxKeywords"></div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary mb-2">Submit</button>
+                    </div>
+                </form><br /><br />
+            </div>
+            <hr />
+            <h4><span class="badge badge-secondary">Week #18</span></h4>
+            <p class="no-padding">Saturday the 2nd</p>
+            <ul class="list-group tomatolist">
+                <li class="list-group-item d-flex justify-content-between align-items-center border-0"><a
+                        data-toggle="collapse" href="#collapseExample1704" role="button" aria-expanded="false"
+                        aria-controls="collapseExample">
+                        <div class="titleBox">Bike Tire Research</div>
+                    </a>Task<span class="badge badge-primary badge-pill">0.5 hrs</span></li>
+                <div class="collapse margin-bottom" id="collapseExample1704">
+                    <div class="card card-body">
+                        <form method="post" id="edit_single_tomato" action="bounce.tomato.edit.php">
+                            <input type=hidden name="tomid" id="tomid" value="1704" /><input type=hidden
+                                name="form_title" value="edit_single_tomato" /><input type=hidden name="userid"
+                                id="userid" value="1001" /><input type=hidden name="old_category_id" value="6" />
+                            <p>USERID: 1001</p>
+                            <div class="form-group">
+                                <label for="tile">Title</label>
+                                <input type="text" name="title" class="form-control" id="title"
+                                    value="Bike Tire Research" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomdate">Current Tomdate</label>
+                                <input type="text" name="tomdate" class="form-control" id="tomdate"
+                                    value="2020-05-02" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomweek">Tomweek</label>
+                                <input type="text" name="tomweek" class="form-control" id="tomweek" value="2020-W18" />
+                            </div>
+                            <div class="form-group">
+                                <label for="count">Count</label>
+                                <input type="text" name="count" class="form-control" id="count" value="1" />
+                            </div>
+                            <div class="form-group">
+                                <label for="notes">Notes</label>
+                                <textarea name="notes" class="form-control" id="notes">Bike Tire Research
+        </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="url">URL</label>
+                                <input type="text" name="url" class="form-control" id="url" value="" />
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Category :</td>
+                                        <td>Task</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Keywords :</td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p><span style="color:Blue;">Or, Change Category</span></p>
+                            <div class="form-group"><label for="new_category">Categories</label><select
+                                    class="form-control" name="new_category" id="new_category"
+                                    onchange="showKeywordsEdit(this.value)">
+                                    <option value='22'>NULL</option>
+                                    <option value='20'>Business</option>
+                                    <option value='1'>Code</option>
+                                    <option value='9'>Design</option>
+                                    <option value='8'>Drawing</option>
+                                    <option value='7'>Exercise</option>
+                                    <option value='5'>Guitar</option>
+                                    <option value='14'>Job Search</option>
+                                    <option value='2'>Norsk</option>
+                                    <option value='22'>NULL</option>
+                                    <option value='3'>Study</option>
+                                    <option value='6'>Task</option>
+                                    <option value='4'>Work</option>
+                                    <option value='10'>Writing</option>
+                                </select></div>
+                            <div class="form-group">
+                                <div id="ajaxKeywordsEdit"></div>
+                            </div><button type="submit" class="btn btn-primary">Submit</button>
+                        </form><br /<br />
+                    </div>
+                </div>
+                <li class="list-group-item d-flex justify-content-between align-items-center border-0"><a
+                        data-toggle="collapse" href="#collapseExample1705" role="button" aria-expanded="false"
+                        aria-controls="collapseExample">
+                        <div class="titleBox">youtube React JS</div>
+                    </a>Study<span class="badge badge-primary badge-pill">0.5 hrs</span></li>
+                <div class="collapse margin-bottom" id="collapseExample1705">
+                    <div class="card card-body">
+                        <form method="post" id="edit_single_tomato" action="bounce.tomato.edit.php">
+                            <input type=hidden name="tomid" id="tomid" value="1705" /><input type=hidden
+                                name="form_title" value="edit_single_tomato" /><input type=hidden name="userid"
+                                id="userid" value="1001" /><input type=hidden name="old_category_id" value="3" />
+                            <p>USERID: 1001</p>
+                            <div class="form-group">
+                                <label for="tile">Title</label>
+                                <input type="text" name="title" class="form-control" id="title"
+                                    value="youtube React JS" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomdate">Current Tomdate</label>
+                                <input type="text" name="tomdate" class="form-control" id="tomdate"
+                                    value="2020-05-02" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomweek">Tomweek</label>
+                                <input type="text" name="tomweek" class="form-control" id="tomweek" value="2020-W18" />
+                            </div>
+                            <div class="form-group">
+                                <label for="count">Count</label>
+                                <input type="text" name="count" class="form-control" id="count" value="1" />
+                            </div>
+                            <div class="form-group">
+                                <label for="notes">Notes</label>
+                                <textarea name="notes" class="form-control" id="notes">youtube React JS
+        </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="url">URL</label>
+                                <input type="text" name="url" class="form-control" id="url" value="" />
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Category :</td>
+                                        <td>Study</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Keywords :</td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p><span style="color:Blue;">Or, Change Category</span></p>
+                            <div class="form-group"><label for="new_category">Categories</label><select
+                                    class="form-control" name="new_category" id="new_category"
+                                    onchange="showKeywordsEdit(this.value)">
+                                    <option value='22'>NULL</option>
+                                    <option value='20'>Business</option>
+                                    <option value='1'>Code</option>
+                                    <option value='9'>Design</option>
+                                    <option value='8'>Drawing</option>
+                                    <option value='7'>Exercise</option>
+                                    <option value='5'>Guitar</option>
+                                    <option value='14'>Job Search</option>
+                                    <option value='2'>Norsk</option>
+                                    <option value='22'>NULL</option>
+                                    <option value='3'>Study</option>
+                                    <option value='6'>Task</option>
+                                    <option value='4'>Work</option>
+                                    <option value='10'>Writing</option>
+                                </select></div>
+                            <div class="form-group">
+                                <div id="ajaxKeywordsEdit"></div>
+                            </div><button type="submit" class="btn btn-primary">Submit</button>
+                        </form><br /<br />
+                    </div>
+                </div>
+                <li class="list-group-item d-flex justify-content-between align-items-center border-0"><a
+                        data-toggle="collapse" href="#collapseExample1706" role="button" aria-expanded="false"
+                        aria-controls="collapseExample">
+                        <div class="titleBox">Fix Keyword select on Tom Edit</div>
+                    </a>Code<span class="badge badge-primary badge-pill">1 hrs</span></li>
+                <div class="collapse margin-bottom" id="collapseExample1706">
+                    <div class="card card-body">
+                        <form method="post" id="edit_single_tomato" action="bounce.tomato.edit.php">
+                            <input type=hidden name="tomid" id="tomid" value="1706" /><input type=hidden
+                                name="form_title" value="edit_single_tomato" /><input type=hidden name="userid"
+                                id="userid" value="1001" /><input type=hidden name="old_category_id" value="1" />
+                            <p>USERID: 1001</p>
+                            <div class="form-group">
+                                <label for="tile">Title</label>
+                                <input type="text" name="title" class="form-control" id="title"
+                                    value="Fix Keyword select on Tom Edit" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomdate">Current Tomdate</label>
+                                <input type="text" name="tomdate" class="form-control" id="tomdate"
+                                    value="2020-05-02" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomweek">Tomweek</label>
+                                <input type="text" name="tomweek" class="form-control" id="tomweek" value="2020-W18" />
+                            </div>
+                            <div class="form-group">
+                                <label for="count">Count</label>
+                                <input type="text" name="count" class="form-control" id="count" value="2" />
+                            </div>
+                            <div class="form-group">
+                                <label for="notes">Notes</label>
+                                <textarea name="notes" class="form-control" id="notes">Fix Keyword select on Tom Edit
+        </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="url">URL</label>
+                                <input type="text" name="url" class="form-control" id="url" value="" />
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Category :</td>
+                                        <td>Code</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Keywords :</td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p><span style="color:Blue;">Or, Change Category</span></p>
+                            <div class="form-group"><label for="new_category">Categories</label><select
+                                    class="form-control" name="new_category" id="new_category"
+                                    onchange="showKeywordsEdit(this.value)">
+                                    <option value='22'>NULL</option>
+                                    <option value='20'>Business</option>
+                                    <option value='1'>Code</option>
+                                    <option value='9'>Design</option>
+                                    <option value='8'>Drawing</option>
+                                    <option value='7'>Exercise</option>
+                                    <option value='5'>Guitar</option>
+                                    <option value='14'>Job Search</option>
+                                    <option value='2'>Norsk</option>
+                                    <option value='22'>NULL</option>
+                                    <option value='3'>Study</option>
+                                    <option value='6'>Task</option>
+                                    <option value='4'>Work</option>
+                                    <option value='10'>Writing</option>
+                                </select></div>
+                            <div class="form-group">
+                                <div id="ajaxKeywordsEdit"></div>
+                            </div><button type="submit" class="btn btn-primary">Submit</button>
+                        </form><br /<br />
+                    </div>
+                </div>
+            </ul>
+            <p class="no-padding">Friday the 1st</p>
+            <ul class="list-group tomatolist">
+                <li class="list-group-item d-flex justify-content-between align-items-center border-0"><a
+                        data-toggle="collapse" href="#collapseExample1702" role="button" aria-expanded="false"
+                        aria-controls="collapseExample">
+                        <div class="titleBox">Check Accounts file dispute</div>
+                    </a>Business<span class="badge badge-primary badge-pill">0.5 hrs</span></li>
+                <div class="collapse margin-bottom" id="collapseExample1702">
+                    <div class="card card-body">
+                        <form method="post" id="edit_single_tomato" action="bounce.tomato.edit.php">
+                            <input type=hidden name="tomid" id="tomid" value="1702" /><input type=hidden
+                                name="form_title" value="edit_single_tomato" /><input type=hidden name="userid"
+                                id="userid" value="1001" /><input type=hidden name="old_category_id" value="20" />
+                            <p>USERID: 1001</p>
+                            <div class="form-group">
+                                <label for="tile">Title</label>
+                                <input type="text" name="title" class="form-control" id="title"
+                                    value="Check Accounts file dispute" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomdate">Current Tomdate</label>
+                                <input type="text" name="tomdate" class="form-control" id="tomdate"
+                                    value="2020-05-01" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomweek">Tomweek</label>
+                                <input type="text" name="tomweek" class="form-control" id="tomweek" value="2020-W18" />
+                            </div>
+                            <div class="form-group">
+                                <label for="count">Count</label>
+                                <input type="text" name="count" class="form-control" id="count" value="1" />
+                            </div>
+                            <div class="form-group">
+                                <label for="notes">Notes</label>
+                                <textarea name="notes" class="form-control" id="notes">Check Accounts file dispute
+        </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="url">URL</label>
+                                <input type="text" name="url" class="form-control" id="url" value="" />
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Category :</td>
+                                        <td>Business</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Keywords :</td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p><span style="color:Blue;">Or, Change Category</span></p>
+                            <div class="form-group"><label for="new_category">Categories</label><select
+                                    class="form-control" name="new_category" id="new_category"
+                                    onchange="showKeywordsEdit(this.value)">
+                                    <option value='22'>NULL</option>
+                                    <option value='20'>Business</option>
+                                    <option value='1'>Code</option>
+                                    <option value='9'>Design</option>
+                                    <option value='8'>Drawing</option>
+                                    <option value='7'>Exercise</option>
+                                    <option value='5'>Guitar</option>
+                                    <option value='14'>Job Search</option>
+                                    <option value='2'>Norsk</option>
+                                    <option value='22'>NULL</option>
+                                    <option value='3'>Study</option>
+                                    <option value='6'>Task</option>
+                                    <option value='4'>Work</option>
+                                    <option value='10'>Writing</option>
+                                </select></div>
+                            <div class="form-group">
+                                <div id="ajaxKeywordsEdit"></div>
+                            </div><button type="submit" class="btn btn-primary">Submit</button>
+                        </form><br /<br />
+                    </div>
+                </div>
+                <li class="list-group-item d-flex justify-content-between align-items-center border-0"><a
+                        data-toggle="collapse" href="#collapseExample1703" role="button" aria-expanded="false"
+                        aria-controls="collapseExample">
+                        <div class="titleBox">Norsk Assigment Design Postcard</div>
+                    </a>Design<span class="badge badge-primary badge-pill">1 hrs</span></li>
+                <div class="collapse margin-bottom" id="collapseExample1703">
+                    <div class="card card-body">
+                        <form method="post" id="edit_single_tomato" action="bounce.tomato.edit.php">
+                            <input type=hidden name="tomid" id="tomid" value="1703" /><input type=hidden
+                                name="form_title" value="edit_single_tomato" /><input type=hidden name="userid"
+                                id="userid" value="1001" /><input type=hidden name="old_category_id" value="9" />
+                            <p>USERID: 1001</p>
+                            <div class="form-group">
+                                <label for="tile">Title</label>
+                                <input type="text" name="title" class="form-control" id="title"
+                                    value="Norsk Assigment Design Postcard" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomdate">Current Tomdate</label>
+                                <input type="text" name="tomdate" class="form-control" id="tomdate"
+                                    value="2020-05-01" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomweek">Tomweek</label>
+                                <input type="text" name="tomweek" class="form-control" id="tomweek" value="2020-W18" />
+                            </div>
+                            <div class="form-group">
+                                <label for="count">Count</label>
+                                <input type="text" name="count" class="form-control" id="count" value="2" />
+                            </div>
+                            <div class="form-group">
+                                <label for="notes">Notes</label>
+                                <textarea name="notes" class="form-control" id="notes">Norsk Assigment Design Postcard
+        </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="url">URL</label>
+                                <input type="text" name="url" class="form-control" id="url" value="" />
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Category :</td>
+                                        <td>Design</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Keywords :</td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p><span style="color:Blue;">Or, Change Category</span></p>
+                            <div class="form-group"><label for="new_category">Categories</label><select
+                                    class="form-control" name="new_category" id="new_category"
+                                    onchange="showKeywordsEdit(this.value)">
+                                    <option value='22'>NULL</option>
+                                    <option value='20'>Business</option>
+                                    <option value='1'>Code</option>
+                                    <option value='9'>Design</option>
+                                    <option value='8'>Drawing</option>
+                                    <option value='7'>Exercise</option>
+                                    <option value='5'>Guitar</option>
+                                    <option value='14'>Job Search</option>
+                                    <option value='2'>Norsk</option>
+                                    <option value='22'>NULL</option>
+                                    <option value='3'>Study</option>
+                                    <option value='6'>Task</option>
+                                    <option value='4'>Work</option>
+                                    <option value='10'>Writing</option>
+                                </select></div>
+                            <div class="form-group">
+                                <div id="ajaxKeywordsEdit"></div>
+                            </div><button type="submit" class="btn btn-primary">Submit</button>
+                        </form><br /<br />
+                    </div>
+                </div>
+            </ul>
+            <p class="no-padding">Thursday the 30th</p>
+            <ul class="list-group tomatolist">
+                <li class="list-group-item d-flex justify-content-between align-items-center border-0"><a
+                        data-toggle="collapse" href="#collapseExample1697" role="button" aria-expanded="false"
+                        aria-controls="collapseExample">
+                        <div class="titleBox">Fix Keyword Upload</div>
+                    </a>Code<span class="badge badge-primary badge-pill">0.5 hrs</span></li>
+                <div class="collapse margin-bottom" id="collapseExample1697">
+                    <div class="card card-body">
+                        <form method="post" id="edit_single_tomato" action="bounce.tomato.edit.php">
+                            <input type=hidden name="tomid" id="tomid" value="1697" /><input type=hidden
+                                name="form_title" value="edit_single_tomato" /><input type=hidden name="userid"
+                                id="userid" value="1001" /><input type=hidden name="old_category_id" value="1" />
+                            <p>USERID: 1001</p>
+                            <div class="form-group">
+                                <label for="tile">Title</label>
+                                <input type="text" name="title" class="form-control" id="title"
+                                    value="Fix Keyword Upload" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomdate">Current Tomdate</label>
+                                <input type="text" name="tomdate" class="form-control" id="tomdate"
+                                    value="2020-04-30" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomweek">Tomweek</label>
+                                <input type="text" name="tomweek" class="form-control" id="tomweek" value="2020-W18" />
+                            </div>
+                            <div class="form-group">
+                                <label for="count">Count</label>
+                                <input type="text" name="count" class="form-control" id="count" value="1" />
+                            </div>
+                            <div class="form-group">
+                                <label for="notes">Notes</label>
+                                <textarea name="notes" class="form-control" id="notes">Fix Keyword Upload
+        </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="url">URL</label>
+                                <input type="text" name="url" class="form-control" id="url" value="" />
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Category :</td>
+                                        <td>Code</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Keywords :</td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p><span style="color:Blue;">Or, Change Category</span></p>
+                            <div class="form-group"><label for="new_category">Categories</label><select
+                                    class="form-control" name="new_category" id="new_category"
+                                    onchange="showKeywordsEdit(this.value)">
+                                    <option value='22'>NULL</option>
+                                    <option value='20'>Business</option>
+                                    <option value='1'>Code</option>
+                                    <option value='9'>Design</option>
+                                    <option value='8'>Drawing</option>
+                                    <option value='7'>Exercise</option>
+                                    <option value='5'>Guitar</option>
+                                    <option value='14'>Job Search</option>
+                                    <option value='2'>Norsk</option>
+                                    <option value='22'>NULL</option>
+                                    <option value='3'>Study</option>
+                                    <option value='6'>Task</option>
+                                    <option value='4'>Work</option>
+                                    <option value='10'>Writing</option>
+                                </select></div>
+                            <div class="form-group">
+                                <div id="ajaxKeywordsEdit"></div>
+                            </div><button type="submit" class="btn btn-primary">Submit</button>
+                        </form><br /<br />
+                    </div>
+                </div>
+                <li class="list-group-item d-flex justify-content-between align-items-center border-0"><a
+                        data-toggle="collapse" href="#collapseExample1698" role="button" aria-expanded="false"
+                        aria-controls="collapseExample">
+                        <div class="titleBox">Fix keywords float left footer</div>
+                    </a>Code<span class="badge badge-primary badge-pill">1 hrs</span></li>
+                <div class="collapse margin-bottom" id="collapseExample1698">
+                    <div class="card card-body">
+                        <form method="post" id="edit_single_tomato" action="bounce.tomato.edit.php">
+                            <input type=hidden name="tomid" id="tomid" value="1698" /><input type=hidden
+                                name="form_title" value="edit_single_tomato" /><input type=hidden name="userid"
+                                id="userid" value="1001" /><input type=hidden name="old_category_id" value="1" />
+                            <p>USERID: 1001</p>
+                            <div class="form-group">
+                                <label for="tile">Title</label>
+                                <input type="text" name="title" class="form-control" id="title"
+                                    value="Fix keywords float left footer" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomdate">Current Tomdate</label>
+                                <input type="text" name="tomdate" class="form-control" id="tomdate"
+                                    value="2020-04-30" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomweek">Tomweek</label>
+                                <input type="text" name="tomweek" class="form-control" id="tomweek" value="2020-W18" />
+                            </div>
+                            <div class="form-group">
+                                <label for="count">Count</label>
+                                <input type="text" name="count" class="form-control" id="count" value="2" />
+                            </div>
+                            <div class="form-group">
+                                <label for="notes">Notes</label>
+                                <textarea name="notes" class="form-control" id="notes">Fix keywords float left footer
+        
+        </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="url">URL</label>
+                                <input type="text" name="url" class="form-control" id="url" value="" />
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Category :</td>
+                                        <td>Code</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Keywords :</td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p><span style="color:Blue;">Or, Change Category</span></p>
+                            <div class="form-group"><label for="new_category">Categories</label><select
+                                    class="form-control" name="new_category" id="new_category"
+                                    onchange="showKeywordsEdit(this.value)">
+                                    <option value='22'>NULL</option>
+                                    <option value='20'>Business</option>
+                                    <option value='1'>Code</option>
+                                    <option value='9'>Design</option>
+                                    <option value='8'>Drawing</option>
+                                    <option value='7'>Exercise</option>
+                                    <option value='5'>Guitar</option>
+                                    <option value='14'>Job Search</option>
+                                    <option value='2'>Norsk</option>
+                                    <option value='22'>NULL</option>
+                                    <option value='3'>Study</option>
+                                    <option value='6'>Task</option>
+                                    <option value='4'>Work</option>
+                                    <option value='10'>Writing</option>
+                                </select></div>
+                            <div class="form-group">
+                                <div id="ajaxKeywordsEdit"></div>
+                            </div><button type="submit" class="btn btn-primary">Submit</button>
+                        </form><br /<br />
+                    </div>
+                </div>
+                <li class="list-group-item d-flex justify-content-between align-items-center border-0"><a
+                        data-toggle="collapse" href="#collapseExample1699" role="button" aria-expanded="false"
+                        aria-controls="collapseExample">
+                        <div class="titleBox">Removing dead code</div>
+                    </a>Code<span class="badge badge-primary badge-pill">0.5 hrs</span></li>
+                <div class="collapse margin-bottom" id="collapseExample1699">
+                    <div class="card card-body">
+                        <form method="post" id="edit_single_tomato" action="bounce.tomato.edit.php">
+                            <input type=hidden name="tomid" id="tomid" value="1699" /><input type=hidden
+                                name="form_title" value="edit_single_tomato" /><input type=hidden name="userid"
+                                id="userid" value="1001" /><input type=hidden name="old_category_id" value="1" />
+                            <p>USERID: 1001</p>
+                            <div class="form-group">
+                                <label for="tile">Title</label>
+                                <input type="text" name="title" class="form-control" id="title"
+                                    value="Removing dead code" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomdate">Current Tomdate</label>
+                                <input type="text" name="tomdate" class="form-control" id="tomdate"
+                                    value="2020-04-30" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomweek">Tomweek</label>
+                                <input type="text" name="tomweek" class="form-control" id="tomweek" value="2020-W18" />
+                            </div>
+                            <div class="form-group">
+                                <label for="count">Count</label>
+                                <input type="text" name="count" class="form-control" id="count" value="1" />
+                            </div>
+                            <div class="form-group">
+                                <label for="notes">Notes</label>
+                                <textarea name="notes" class="form-control" id="notes">Removing dead code
+        </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="url">URL</label>
+                                <input type="text" name="url" class="form-control" id="url" value="" />
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Category :</td>
+                                        <td>Code</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Keywords :</td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p><span style="color:Blue;">Or, Change Category</span></p>
+                            <div class="form-group"><label for="new_category">Categories</label><select
+                                    class="form-control" name="new_category" id="new_category"
+                                    onchange="showKeywordsEdit(this.value)">
+                                    <option value='22'>NULL</option>
+                                    <option value='20'>Business</option>
+                                    <option value='1'>Code</option>
+                                    <option value='9'>Design</option>
+                                    <option value='8'>Drawing</option>
+                                    <option value='7'>Exercise</option>
+                                    <option value='5'>Guitar</option>
+                                    <option value='14'>Job Search</option>
+                                    <option value='2'>Norsk</option>
+                                    <option value='22'>NULL</option>
+                                    <option value='3'>Study</option>
+                                    <option value='6'>Task</option>
+                                    <option value='4'>Work</option>
+                                    <option value='10'>Writing</option>
+                                </select></div>
+                            <div class="form-group">
+                                <div id="ajaxKeywordsEdit"></div>
+                            </div><button type="submit" class="btn btn-primary">Submit</button>
+                        </form><br /<br />
+                    </div>
+                </div>
+                <li class="list-group-item d-flex justify-content-between align-items-center border-0"><a
+                        data-toggle="collapse" href="#collapseExample1700" role="button" aria-expanded="false"
+                        aria-controls="collapseExample">
+                        <div class="titleBox">Delete Emails</div>
+                    </a>Business<span class="badge badge-primary badge-pill">0.5 hrs</span></li>
+                <div class="collapse margin-bottom" id="collapseExample1700">
+                    <div class="card card-body">
+                        <form method="post" id="edit_single_tomato" action="bounce.tomato.edit.php">
+                            <input type=hidden name="tomid" id="tomid" value="1700" /><input type=hidden
+                                name="form_title" value="edit_single_tomato" /><input type=hidden name="userid"
+                                id="userid" value="1001" /><input type=hidden name="old_category_id" value="20" />
+                            <p>USERID: 1001</p>
+                            <div class="form-group">
+                                <label for="tile">Title</label>
+                                <input type="text" name="title" class="form-control" id="title" value="Delete Emails" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomdate">Current Tomdate</label>
+                                <input type="text" name="tomdate" class="form-control" id="tomdate"
+                                    value="2020-04-30" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomweek">Tomweek</label>
+                                <input type="text" name="tomweek" class="form-control" id="tomweek" value="2020-W18" />
+                            </div>
+                            <div class="form-group">
+                                <label for="count">Count</label>
+                                <input type="text" name="count" class="form-control" id="count" value="1" />
+                            </div>
+                            <div class="form-group">
+                                <label for="notes">Notes</label>
+                                <textarea name="notes" class="form-control" id="notes">Delete Emails
+        
+        </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="url">URL</label>
+                                <input type="text" name="url" class="form-control" id="url" value="" />
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Category :</td>
+                                        <td>Business</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Keywords :</td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p><span style="color:Blue;">Or, Change Category</span></p>
+                            <div class="form-group"><label for="new_category">Categories</label><select
+                                    class="form-control" name="new_category" id="new_category"
+                                    onchange="showKeywordsEdit(this.value)">
+                                    <option value='22'>NULL</option>
+                                    <option value='20'>Business</option>
+                                    <option value='1'>Code</option>
+                                    <option value='9'>Design</option>
+                                    <option value='8'>Drawing</option>
+                                    <option value='7'>Exercise</option>
+                                    <option value='5'>Guitar</option>
+                                    <option value='14'>Job Search</option>
+                                    <option value='2'>Norsk</option>
+                                    <option value='22'>NULL</option>
+                                    <option value='3'>Study</option>
+                                    <option value='6'>Task</option>
+                                    <option value='4'>Work</option>
+                                    <option value='10'>Writing</option>
+                                </select></div>
+                            <div class="form-group">
+                                <div id="ajaxKeywordsEdit"></div>
+                            </div><button type="submit" class="btn btn-primary">Submit</button>
+                        </form><br /<br />
+                    </div>
+                </div>
+                <li class="list-group-item d-flex justify-content-between align-items-center border-0"><a
+                        data-toggle="collapse" href="#collapseExample1701" role="button" aria-expanded="false"
+                        aria-controls="collapseExample">
+                        <div class="titleBox">Norsk Class</div>
+                    </a>Norsk<span class="badge badge-primary badge-pill">1 hrs</span></li>
+                <div class="collapse margin-bottom" id="collapseExample1701">
+                    <div class="card card-body">
+                        <form method="post" id="edit_single_tomato" action="bounce.tomato.edit.php">
+                            <input type=hidden name="tomid" id="tomid" value="1701" /><input type=hidden
+                                name="form_title" value="edit_single_tomato" /><input type=hidden name="userid"
+                                id="userid" value="1001" /><input type=hidden name="old_category_id" value="2" />
+                            <p>USERID: 1001</p>
+                            <div class="form-group">
+                                <label for="tile">Title</label>
+                                <input type="text" name="title" class="form-control" id="title" value="Norsk Class" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomdate">Current Tomdate</label>
+                                <input type="text" name="tomdate" class="form-control" id="tomdate"
+                                    value="2020-04-30" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomweek">Tomweek</label>
+                                <input type="text" name="tomweek" class="form-control" id="tomweek" value="2020-W18" />
+                            </div>
+                            <div class="form-group">
+                                <label for="count">Count</label>
+                                <input type="text" name="count" class="form-control" id="count" value="2" />
+                            </div>
+                            <div class="form-group">
+                                <label for="notes">Notes</label>
+                                <textarea name="notes" class="form-control" id="notes">Norsk Class
+        </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="url">URL</label>
+                                <input type="text" name="url" class="form-control" id="url" value="" />
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Category :</td>
+                                        <td>Norsk</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Keywords :</td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p><span style="color:Blue;">Or, Change Category</span></p>
+                            <div class="form-group"><label for="new_category">Categories</label><select
+                                    class="form-control" name="new_category" id="new_category"
+                                    onchange="showKeywordsEdit(this.value)">
+                                    <option value='22'>NULL</option>
+                                    <option value='20'>Business</option>
+                                    <option value='1'>Code</option>
+                                    <option value='9'>Design</option>
+                                    <option value='8'>Drawing</option>
+                                    <option value='7'>Exercise</option>
+                                    <option value='5'>Guitar</option>
+                                    <option value='14'>Job Search</option>
+                                    <option value='2'>Norsk</option>
+                                    <option value='22'>NULL</option>
+                                    <option value='3'>Study</option>
+                                    <option value='6'>Task</option>
+                                    <option value='4'>Work</option>
+                                    <option value='10'>Writing</option>
+                                </select></div>
+                            <div class="form-group">
+                                <div id="ajaxKeywordsEdit"></div>
+                            </div><button type="submit" class="btn btn-primary">Submit</button>
+                        </form><br /<br />
+                    </div>
+                </div>
+            </ul>
+            <p class="no-padding">Wednesday the 29th</p>
+            <ul class="list-group tomatolist">
+                <li class="list-group-item d-flex justify-content-between align-items-center border-0"><a
+                        data-toggle="collapse" href="#collapseExample1694" role="button" aria-expanded="false"
+                        aria-controls="collapseExample">
+                        <div class="titleBox">Walking the Cow</div>
+                    </a>Guitar<span class="badge badge-primary badge-pill">0.5 hrs</span></li>
+                <div class="collapse margin-bottom" id="collapseExample1694">
+                    <div class="card card-body">
+                        <form method="post" id="edit_single_tomato" action="bounce.tomato.edit.php">
+                            <input type=hidden name="tomid" id="tomid" value="1694" /><input type=hidden
+                                name="form_title" value="edit_single_tomato" /><input type=hidden name="userid"
+                                id="userid" value="1001" /><input type=hidden name="old_category_id" value="5" />
+                            <p>USERID: 1001</p>
+                            <div class="form-group">
+                                <label for="tile">Title</label>
+                                <input type="text" name="title" class="form-control" id="title"
+                                    value="Walking the Cow" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomdate">Current Tomdate</label>
+                                <input type="text" name="tomdate" class="form-control" id="tomdate"
+                                    value="2020-04-29" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomweek">Tomweek</label>
+                                <input type="text" name="tomweek" class="form-control" id="tomweek" value="2020-W18" />
+                            </div>
+                            <div class="form-group">
+                                <label for="count">Count</label>
+                                <input type="text" name="count" class="form-control" id="count" value="1" />
+                            </div>
+                            <div class="form-group">
+                                <label for="notes">Notes</label>
+                                <textarea name="notes" class="form-control" id="notes">Walking the Cow
+        </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="url">URL</label>
+                                <input type="text" name="url" class="form-control" id="url" value="" />
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Category :</td>
+                                        <td>Guitar</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Keywords :</td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p><span style="color:Blue;">Or, Change Category</span></p>
+                            <div class="form-group"><label for="new_category">Categories</label><select
+                                    class="form-control" name="new_category" id="new_category"
+                                    onchange="showKeywordsEdit(this.value)">
+                                    <option value='22'>NULL</option>
+                                    <option value='20'>Business</option>
+                                    <option value='1'>Code</option>
+                                    <option value='9'>Design</option>
+                                    <option value='8'>Drawing</option>
+                                    <option value='7'>Exercise</option>
+                                    <option value='5'>Guitar</option>
+                                    <option value='14'>Job Search</option>
+                                    <option value='2'>Norsk</option>
+                                    <option value='22'>NULL</option>
+                                    <option value='3'>Study</option>
+                                    <option value='6'>Task</option>
+                                    <option value='4'>Work</option>
+                                    <option value='10'>Writing</option>
+                                </select></div>
+                            <div class="form-group">
+                                <div id="ajaxKeywordsEdit"></div>
+                            </div><button type="submit" class="btn btn-primary">Submit</button>
+                        </form><br /<br />
+                    </div>
+                </div>
+                <li class="list-group-item d-flex justify-content-between align-items-center border-0"><a
+                        data-toggle="collapse" href="#collapseExample1695" role="button" aria-expanded="false"
+                        aria-controls="collapseExample">
+                        <div class="titleBox">Generic Week Views </div>
+                    </a>Code<span class="badge badge-primary badge-pill">2 hrs</span></li>
+                <div class="collapse margin-bottom" id="collapseExample1695">
+                    <div class="card card-body">
+                        <form method="post" id="edit_single_tomato" action="bounce.tomato.edit.php">
+                            <input type=hidden name="tomid" id="tomid" value="1695" /><input type=hidden
+                                name="form_title" value="edit_single_tomato" /><input type=hidden name="userid"
+                                id="userid" value="1001" /><input type=hidden name="old_category_id" value="1" />
+                            <p>USERID: 1001</p>
+                            <div class="form-group">
+                                <label for="tile">Title</label>
+                                <input type="text" name="title" class="form-control" id="title"
+                                    value="Generic Week Views " />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomdate">Current Tomdate</label>
+                                <input type="text" name="tomdate" class="form-control" id="tomdate"
+                                    value="2020-04-29" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomweek">Tomweek</label>
+                                <input type="text" name="tomweek" class="form-control" id="tomweek" value="2020-W18" />
+                            </div>
+                            <div class="form-group">
+                                <label for="count">Count</label>
+                                <input type="text" name="count" class="form-control" id="count" value="4" />
+                            </div>
+                            <div class="form-group">
+                                <label for="notes">Notes</label>
+                                <textarea name="notes" class="form-control" id="notes">Generic Week Views 
+        </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="url">URL</label>
+                                <input type="text" name="url" class="form-control" id="url" value="" />
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Category :</td>
+                                        <td>Code</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Keywords :</td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p><span style="color:Blue;">Or, Change Category</span></p>
+                            <div class="form-group"><label for="new_category">Categories</label><select
+                                    class="form-control" name="new_category" id="new_category"
+                                    onchange="showKeywordsEdit(this.value)">
+                                    <option value='22'>NULL</option>
+                                    <option value='20'>Business</option>
+                                    <option value='1'>Code</option>
+                                    <option value='9'>Design</option>
+                                    <option value='8'>Drawing</option>
+                                    <option value='7'>Exercise</option>
+                                    <option value='5'>Guitar</option>
+                                    <option value='14'>Job Search</option>
+                                    <option value='2'>Norsk</option>
+                                    <option value='22'>NULL</option>
+                                    <option value='3'>Study</option>
+                                    <option value='6'>Task</option>
+                                    <option value='4'>Work</option>
+                                    <option value='10'>Writing</option>
+                                </select></div>
+                            <div class="form-group">
+                                <div id="ajaxKeywordsEdit"></div>
+                            </div><button type="submit" class="btn btn-primary">Submit</button>
+                        </form><br /<br />
+                    </div>
+                </div>
+                <li class="list-group-item d-flex justify-content-between align-items-center border-0"><a
+                        data-toggle="collapse" href="#collapseExample1696" role="button" aria-expanded="false"
+                        aria-controls="collapseExample">
+                        <div class="titleBox">Get bird stuff</div>
+                    </a>Task<span class="badge badge-primary badge-pill">2 hrs</span></li>
+                <div class="collapse margin-bottom" id="collapseExample1696">
+                    <div class="card card-body">
+                        <form method="post" id="edit_single_tomato" action="bounce.tomato.edit.php">
+                            <input type=hidden name="tomid" id="tomid" value="1696" /><input type=hidden
+                                name="form_title" value="edit_single_tomato" /><input type=hidden name="userid"
+                                id="userid" value="1001" /><input type=hidden name="old_category_id" value="6" />
+                            <p>USERID: 1001</p>
+                            <div class="form-group">
+                                <label for="tile">Title</label>
+                                <input type="text" name="title" class="form-control" id="title"
+                                    value="Get bird stuff" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomdate">Current Tomdate</label>
+                                <input type="text" name="tomdate" class="form-control" id="tomdate"
+                                    value="2020-04-29" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomweek">Tomweek</label>
+                                <input type="text" name="tomweek" class="form-control" id="tomweek" value="2020-W18" />
+                            </div>
+                            <div class="form-group">
+                                <label for="count">Count</label>
+                                <input type="text" name="count" class="form-control" id="count" value="4" />
+                            </div>
+                            <div class="form-group">
+                                <label for="notes">Notes</label>
+                                <textarea name="notes" class="form-control" id="notes">Get bird stuff
+        </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="url">URL</label>
+                                <input type="text" name="url" class="form-control" id="url" value="" />
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Category :</td>
+                                        <td>Task</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Keywords :</td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p><span style="color:Blue;">Or, Change Category</span></p>
+                            <div class="form-group"><label for="new_category">Categories</label><select
+                                    class="form-control" name="new_category" id="new_category"
+                                    onchange="showKeywordsEdit(this.value)">
+                                    <option value='22'>NULL</option>
+                                    <option value='20'>Business</option>
+                                    <option value='1'>Code</option>
+                                    <option value='9'>Design</option>
+                                    <option value='8'>Drawing</option>
+                                    <option value='7'>Exercise</option>
+                                    <option value='5'>Guitar</option>
+                                    <option value='14'>Job Search</option>
+                                    <option value='2'>Norsk</option>
+                                    <option value='22'>NULL</option>
+                                    <option value='3'>Study</option>
+                                    <option value='6'>Task</option>
+                                    <option value='4'>Work</option>
+                                    <option value='10'>Writing</option>
+                                </select></div>
+                            <div class="form-group">
+                                <div id="ajaxKeywordsEdit"></div>
+                            </div><button type="submit" class="btn btn-primary">Submit</button>
+                        </form><br /<br />
+                    </div>
+                </div>
+            </ul>
+            <p class="no-padding">Tuesday the 28th</p>
+            <ul class="list-group tomatolist">
+                <li class="list-group-item d-flex justify-content-between align-items-center border-0"><a
+                        data-toggle="collapse" href="#collapseExample1691" role="button" aria-expanded="false"
+                        aria-controls="collapseExample">
+                        <div class="titleBox">Create generic week view class</div>
+                    </a>Code<span class="badge badge-primary badge-pill">4 hrs</span></li>
+                <div class="collapse margin-bottom" id="collapseExample1691">
+                    <div class="card card-body">
+                        <form method="post" id="edit_single_tomato" action="bounce.tomato.edit.php">
+                            <input type=hidden name="tomid" id="tomid" value="1691" /><input type=hidden
+                                name="form_title" value="edit_single_tomato" /><input type=hidden name="userid"
+                                id="userid" value="1001" /><input type=hidden name="old_category_id" value="1" />
+                            <p>USERID: 1001</p>
+                            <div class="form-group">
+                                <label for="tile">Title</label>
+                                <input type="text" name="title" class="form-control" id="title"
+                                    value="Create generic week view class" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomdate">Current Tomdate</label>
+                                <input type="text" name="tomdate" class="form-control" id="tomdate"
+                                    value="2020-04-28" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomweek">Tomweek</label>
+                                <input type="text" name="tomweek" class="form-control" id="tomweek" value="2020-W18" />
+                            </div>
+                            <div class="form-group">
+                                <label for="count">Count</label>
+                                <input type="text" name="count" class="form-control" id="count" value="8" />
+                            </div>
+                            <div class="form-group">
+                                <label for="notes">Notes</label>
+                                <textarea name="notes" class="form-control" id="notes">Create generic week view class
+        </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="url">URL</label>
+                                <input type="text" name="url" class="form-control" id="url" value="" />
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Category :</td>
+                                        <td>Code</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Keywords :</td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p><span style="color:Blue;">Or, Change Category</span></p>
+                            <div class="form-group"><label for="new_category">Categories</label><select
+                                    class="form-control" name="new_category" id="new_category"
+                                    onchange="showKeywordsEdit(this.value)">
+                                    <option value='22'>NULL</option>
+                                    <option value='20'>Business</option>
+                                    <option value='1'>Code</option>
+                                    <option value='9'>Design</option>
+                                    <option value='8'>Drawing</option>
+                                    <option value='7'>Exercise</option>
+                                    <option value='5'>Guitar</option>
+                                    <option value='14'>Job Search</option>
+                                    <option value='2'>Norsk</option>
+                                    <option value='22'>NULL</option>
+                                    <option value='3'>Study</option>
+                                    <option value='6'>Task</option>
+                                    <option value='4'>Work</option>
+                                    <option value='10'>Writing</option>
+                                </select></div>
+                            <div class="form-group">
+                                <div id="ajaxKeywordsEdit"></div>
+                            </div><button type="submit" class="btn btn-primary">Submit</button>
+                        </form><br /<br />
+                    </div>
+                </div>
+                <li class="list-group-item d-flex justify-content-between align-items-center border-0"><a
+                        data-toggle="collapse" href="#collapseExample1692" role="button" aria-expanded="false"
+                        aria-controls="collapseExample">
+                        <div class="titleBox">Play guitar</div>
+                    </a>Guitar<span class="badge badge-primary badge-pill">0.5 hrs</span></li>
+                <div class="collapse margin-bottom" id="collapseExample1692">
+                    <div class="card card-body">
+                        <form method="post" id="edit_single_tomato" action="bounce.tomato.edit.php">
+                            <input type=hidden name="tomid" id="tomid" value="1692" /><input type=hidden
+                                name="form_title" value="edit_single_tomato" /><input type=hidden name="userid"
+                                id="userid" value="1001" /><input type=hidden name="old_category_id" value="5" />
+                            <p>USERID: 1001</p>
+                            <div class="form-group">
+                                <label for="tile">Title</label>
+                                <input type="text" name="title" class="form-control" id="title" value="Play guitar" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomdate">Current Tomdate</label>
+                                <input type="text" name="tomdate" class="form-control" id="tomdate"
+                                    value="2020-04-28" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomweek">Tomweek</label>
+                                <input type="text" name="tomweek" class="form-control" id="tomweek" value="2020-W18" />
+                            </div>
+                            <div class="form-group">
+                                <label for="count">Count</label>
+                                <input type="text" name="count" class="form-control" id="count" value="1" />
+                            </div>
+                            <div class="form-group">
+                                <label for="notes">Notes</label>
+                                <textarea name="notes" class="form-control" id="notes">Play guitar
+        </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="url">URL</label>
+                                <input type="text" name="url" class="form-control" id="url" value="" />
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Category :</td>
+                                        <td>Guitar</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Keywords :</td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p><span style="color:Blue;">Or, Change Category</span></p>
+                            <div class="form-group"><label for="new_category">Categories</label><select
+                                    class="form-control" name="new_category" id="new_category"
+                                    onchange="showKeywordsEdit(this.value)">
+                                    <option value='22'>NULL</option>
+                                    <option value='20'>Business</option>
+                                    <option value='1'>Code</option>
+                                    <option value='9'>Design</option>
+                                    <option value='8'>Drawing</option>
+                                    <option value='7'>Exercise</option>
+                                    <option value='5'>Guitar</option>
+                                    <option value='14'>Job Search</option>
+                                    <option value='2'>Norsk</option>
+                                    <option value='22'>NULL</option>
+                                    <option value='3'>Study</option>
+                                    <option value='6'>Task</option>
+                                    <option value='4'>Work</option>
+                                    <option value='10'>Writing</option>
+                                </select></div>
+                            <div class="form-group">
+                                <div id="ajaxKeywordsEdit"></div>
+                            </div><button type="submit" class="btn btn-primary">Submit</button>
+                        </form><br /<br />
+                    </div>
+                </div>
+                <li class="list-group-item d-flex justify-content-between align-items-center border-0"><a
+                        data-toggle="collapse" href="#collapseExample1693" role="button" aria-expanded="false"
+                        aria-controls="collapseExample">
+                        <div class="titleBox">Work on steel roadbike</div>
+                    </a>Task<span class="badge badge-primary badge-pill">0.5 hrs</span></li>
+                <div class="collapse margin-bottom" id="collapseExample1693">
+                    <div class="card card-body">
+                        <form method="post" id="edit_single_tomato" action="bounce.tomato.edit.php">
+                            <input type=hidden name="tomid" id="tomid" value="1693" /><input type=hidden
+                                name="form_title" value="edit_single_tomato" /><input type=hidden name="userid"
+                                id="userid" value="1001" /><input type=hidden name="old_category_id" value="6" />
+                            <p>USERID: 1001</p>
+                            <div class="form-group">
+                                <label for="tile">Title</label>
+                                <input type="text" name="title" class="form-control" id="title"
+                                    value="Work on steel roadbike" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomdate">Current Tomdate</label>
+                                <input type="text" name="tomdate" class="form-control" id="tomdate"
+                                    value="2020-04-28" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomweek">Tomweek</label>
+                                <input type="text" name="tomweek" class="form-control" id="tomweek" value="2020-W18" />
+                            </div>
+                            <div class="form-group">
+                                <label for="count">Count</label>
+                                <input type="text" name="count" class="form-control" id="count" value="1" />
+                            </div>
+                            <div class="form-group">
+                                <label for="notes">Notes</label>
+                                <textarea name="notes" class="form-control" id="notes">Work on steel roadbike
+        </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="url">URL</label>
+                                <input type="text" name="url" class="form-control" id="url" value="" />
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Category :</td>
+                                        <td>Task</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Keywords :</td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p><span style="color:Blue;">Or, Change Category</span></p>
+                            <div class="form-group"><label for="new_category">Categories</label><select
+                                    class="form-control" name="new_category" id="new_category"
+                                    onchange="showKeywordsEdit(this.value)">
+                                    <option value='22'>NULL</option>
+                                    <option value='20'>Business</option>
+                                    <option value='1'>Code</option>
+                                    <option value='9'>Design</option>
+                                    <option value='8'>Drawing</option>
+                                    <option value='7'>Exercise</option>
+                                    <option value='5'>Guitar</option>
+                                    <option value='14'>Job Search</option>
+                                    <option value='2'>Norsk</option>
+                                    <option value='22'>NULL</option>
+                                    <option value='3'>Study</option>
+                                    <option value='6'>Task</option>
+                                    <option value='4'>Work</option>
+                                    <option value='10'>Writing</option>
+                                </select></div>
+                            <div class="form-group">
+                                <div id="ajaxKeywordsEdit"></div>
+                            </div><button type="submit" class="btn btn-primary">Submit</button>
+                        </form><br /<br />
+                    </div>
+                </div>
+            </ul>
+            <p class="no-padding">Monday the 27th</p>
+            <ul class="list-group tomatolist">
+                <li class="list-group-item d-flex justify-content-between align-items-center border-0"><a
+                        data-toggle="collapse" href="#collapseExample1688" role="button" aria-expanded="false"
+                        aria-controls="collapseExample">
+                        <div class="titleBox">Morning guitar</div>
+                    </a>Guitar<span class="badge badge-primary badge-pill">0.5 hrs</span></li>
+                <div class="collapse margin-bottom" id="collapseExample1688">
+                    <div class="card card-body">
+                        <form method="post" id="edit_single_tomato" action="bounce.tomato.edit.php">
+                            <input type=hidden name="tomid" id="tomid" value="1688" /><input type=hidden
+                                name="form_title" value="edit_single_tomato" /><input type=hidden name="userid"
+                                id="userid" value="1001" /><input type=hidden name="old_category_id" value="5" />
+                            <p>USERID: 1001</p>
+                            <div class="form-group">
+                                <label for="tile">Title</label>
+                                <input type="text" name="title" class="form-control" id="title"
+                                    value="Morning guitar" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomdate">Current Tomdate</label>
+                                <input type="text" name="tomdate" class="form-control" id="tomdate"
+                                    value="2020-04-27" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomweek">Tomweek</label>
+                                <input type="text" name="tomweek" class="form-control" id="tomweek" value="2020-W18" />
+                            </div>
+                            <div class="form-group">
+                                <label for="count">Count</label>
+                                <input type="text" name="count" class="form-control" id="count" value="1" />
+                            </div>
+                            <div class="form-group">
+                                <label for="notes">Notes</label>
+                                <textarea name="notes" class="form-control" id="notes">Morning guitar
+        </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="url">URL</label>
+                                <input type="text" name="url" class="form-control" id="url" value="" />
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Category :</td>
+                                        <td>Guitar</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Keywords :</td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p><span style="color:Blue;">Or, Change Category</span></p>
+                            <div class="form-group"><label for="new_category">Categories</label><select
+                                    class="form-control" name="new_category" id="new_category"
+                                    onchange="showKeywordsEdit(this.value)">
+                                    <option value='22'>NULL</option>
+                                    <option value='20'>Business</option>
+                                    <option value='1'>Code</option>
+                                    <option value='9'>Design</option>
+                                    <option value='8'>Drawing</option>
+                                    <option value='7'>Exercise</option>
+                                    <option value='5'>Guitar</option>
+                                    <option value='14'>Job Search</option>
+                                    <option value='2'>Norsk</option>
+                                    <option value='22'>NULL</option>
+                                    <option value='3'>Study</option>
+                                    <option value='6'>Task</option>
+                                    <option value='4'>Work</option>
+                                    <option value='10'>Writing</option>
+                                </select></div>
+                            <div class="form-group">
+                                <div id="ajaxKeywordsEdit"></div>
+                            </div><button type="submit" class="btn btn-primary">Submit</button>
+                        </form><br /<br />
+                    </div>
+                </div>
+                <li class="list-group-item d-flex justify-content-between align-items-center border-0"><a
+                        data-toggle="collapse" href="#collapseExample1689" role="button" aria-expanded="false"
+                        aria-controls="collapseExample">
+                        <div class="titleBox">Buy handlebars </div>
+                    </a>Task<span class="badge badge-primary badge-pill">2.5 hrs</span></li>
+                <div class="collapse margin-bottom" id="collapseExample1689">
+                    <div class="card card-body">
+                        <form method="post" id="edit_single_tomato" action="bounce.tomato.edit.php">
+                            <input type=hidden name="tomid" id="tomid" value="1689" /><input type=hidden
+                                name="form_title" value="edit_single_tomato" /><input type=hidden name="userid"
+                                id="userid" value="1001" /><input type=hidden name="old_category_id" value="6" />
+                            <p>USERID: 1001</p>
+                            <div class="form-group">
+                                <label for="tile">Title</label>
+                                <input type="text" name="title" class="form-control" id="title"
+                                    value="Buy handlebars " />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomdate">Current Tomdate</label>
+                                <input type="text" name="tomdate" class="form-control" id="tomdate"
+                                    value="2020-04-27" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomweek">Tomweek</label>
+                                <input type="text" name="tomweek" class="form-control" id="tomweek" value="2020-W18" />
+                            </div>
+                            <div class="form-group">
+                                <label for="count">Count</label>
+                                <input type="text" name="count" class="form-control" id="count" value="5" />
+                            </div>
+                            <div class="form-group">
+                                <label for="notes">Notes</label>
+                                <textarea name="notes" class="form-control" id="notes">Buy handlebars 
+        </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="url">URL</label>
+                                <input type="text" name="url" class="form-control" id="url" value="" />
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Category :</td>
+                                        <td>Task</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Keywords :</td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p><span style="color:Blue;">Or, Change Category</span></p>
+                            <div class="form-group"><label for="new_category">Categories</label><select
+                                    class="form-control" name="new_category" id="new_category"
+                                    onchange="showKeywordsEdit(this.value)">
+                                    <option value='22'>NULL</option>
+                                    <option value='20'>Business</option>
+                                    <option value='1'>Code</option>
+                                    <option value='9'>Design</option>
+                                    <option value='8'>Drawing</option>
+                                    <option value='7'>Exercise</option>
+                                    <option value='5'>Guitar</option>
+                                    <option value='14'>Job Search</option>
+                                    <option value='2'>Norsk</option>
+                                    <option value='22'>NULL</option>
+                                    <option value='3'>Study</option>
+                                    <option value='6'>Task</option>
+                                    <option value='4'>Work</option>
+                                    <option value='10'>Writing</option>
+                                </select></div>
+                            <div class="form-group">
+                                <div id="ajaxKeywordsEdit"></div>
+                            </div><button type="submit" class="btn btn-primary">Submit</button>
+                        </form><br /<br />
+                    </div>
+                </div>
+                <li class="list-group-item d-flex justify-content-between align-items-center border-0"><a
+                        data-toggle="collapse" href="#collapseExample1690" role="button" aria-expanded="false"
+                        aria-controls="collapseExample">
+                        <div class="titleBox">Week view stuff</div>
+                    </a>Code<span class="badge badge-primary badge-pill">0.5 hrs</span></li>
+                <div class="collapse margin-bottom" id="collapseExample1690">
+                    <div class="card card-body">
+                        <form method="post" id="edit_single_tomato" action="bounce.tomato.edit.php">
+                            <input type=hidden name="tomid" id="tomid" value="1690" /><input type=hidden
+                                name="form_title" value="edit_single_tomato" /><input type=hidden name="userid"
+                                id="userid" value="1001" /><input type=hidden name="old_category_id" value="1" />
+                            <p>USERID: 1001</p>
+                            <div class="form-group">
+                                <label for="tile">Title</label>
+                                <input type="text" name="title" class="form-control" id="title"
+                                    value="Week view stuff" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomdate">Current Tomdate</label>
+                                <input type="text" name="tomdate" class="form-control" id="tomdate"
+                                    value="2020-04-27" />
+                            </div>
+                            <div class="form-group">
+                                <label for="tomweek">Tomweek</label>
+                                <input type="text" name="tomweek" class="form-control" id="tomweek" value="2020-W18" />
+                            </div>
+                            <div class="form-group">
+                                <label for="count">Count</label>
+                                <input type="text" name="count" class="form-control" id="count" value="1" />
+                            </div>
+                            <div class="form-group">
+                                <label for="notes">Notes</label>
+                                <textarea name="notes" class="form-control" id="notes">Week view stuff
+        </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="url">URL</label>
+                                <input type="text" name="url" class="form-control" id="url" value="" />
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Category :</td>
+                                        <td>Code</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="circuit">
+                                <table>
+                                    <tr>
+                                        <td style="width:150px;">Keywords :</td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p><span style="color:Blue;">Or, Change Category</span></p>
+                            <div class="form-group"><label for="new_category">Categories</label><select
+                                    class="form-control" name="new_category" id="new_category"
+                                    onchange="showKeywordsEdit(this.value)">
+                                    <option value='22'>NULL</option>
+                                    <option value='20'>Business</option>
+                                    <option value='1'>Code</option>
+                                    <option value='9'>Design</option>
+                                    <option value='8'>Drawing</option>
+                                    <option value='7'>Exercise</option>
+                                    <option value='5'>Guitar</option>
+                                    <option value='14'>Job Search</option>
+                                    <option value='2'>Norsk</option>
+                                    <option value='22'>NULL</option>
+                                    <option value='3'>Study</option>
+                                    <option value='6'>Task</option>
+                                    <option value='4'>Work</option>
+                                    <option value='10'>Writing</option>
+                                </select></div>
+                            <div class="form-group">
+                                <div id="ajaxKeywordsEdit"></div>
+                            </div><button type="submit" class="btn btn-primary">Submit</button>
+                        </form><br /<br />
+                    </div>
+                </div>
+            </ul><br />
+            <h4><span class="badge badge-secondary">Goals</span></h4>
+            <table class="table2">
+                <form method="post" action="bounce.goal.edit.php">
+                    <tr>
+                        <td>
+                            <div class="titleBox2 not_yet"><a href="">Exercise</a></div>
+                        </td>
+                        <td><input type="submit" value="Set Goal" /></td>
+                        <td>
+                            <input type="text" value="2" class="form-control" name="goal_week_value">
+                        </td><input type="hidden" value="Exercise" name="goal_title"><input type="hidden"
+                            value="Exercise" name="goal_id">
+                </form>
+                <td><input type="text" value="0" class="form-control" /></td>
+                </tr>
+                <form method="post" action="bounce.goal.edit.php">
+                    <tr>
+                        <td>
+                            <div class="titleBox2 not_yet"><a href="">Design</a></div>
+                        </td>
+                        <td><input type="submit" value="Set Goal" /></td>
+                        <td>
+                            <input type="text" value="5" class="form-control" name="goal_week_value">
+                        </td><input type="hidden" value="Design" name="goal_title"><input type="hidden" value="Design"
+                            name="goal_id">
+                </form>
+                <td><input type="text" value="1" class="form-control" /></td>
+                </tr>
+                <form method="post" action="bounce.goal.edit.php">
+                    <tr>
+                        <td>
+                            <div class="titleBox2 not_yet"><a href="">Guitar</a></div>
+                        </td>
+                        <td><input type="submit" value="Set Goal" /></td>
+                        <td>
+                            <input type="text" value="3" class="form-control" name="goal_week_value">
+                        </td><input type="hidden" value="Guitar" name="goal_title"><input type="hidden" value="Guitar"
+                            name="goal_id">
+                </form>
+                <td><input type="text" value="1.5" class="form-control" /></td>
+                </tr>
+                <form method="post" action="bounce.goal.edit.php">
+                    <tr>
+                        <td>
+                            <div class="titleBox2 not_yet"><a href="">Study</a></div>
+                        </td>
+                        <td><input type="submit" value="Set Goal" /></td>
+                        <td>
+                            <input type="text" value="8" class="form-control" name="goal_week_value">
+                        </td><input type="hidden" value="Study" name="goal_title"><input type="hidden" value="Study"
+                            name="goal_id">
+                </form>
+                <td><input type="text" value="0.5" class="form-control" /></td>
+                </tr>
+                <form method="post" action="bounce.goal.edit.php">
+                    <tr>
+                        <td>
+                            <div class="titleBox2 aqua"><a href="">Drawing</a></div>
+                        </td>
+                        <td><input type="submit" value="Set Goal" /></td>
+                        <td>
+                            <input type="text" value="0" class="form-control" name="goal_week_value">
+                        </td><input type="hidden" value="Drawing" name="goal_title"><input type="hidden" value="Drawing"
+                            name="goal_id">
+                </form>
+                <td><input type="text" value="0" class="form-control" /></td>
+                </tr>
+                <form method="post" action="bounce.goal.edit.php">
+                    <tr>
+                        <td>
+                            <div class="titleBox2 not_yet"><a href="">Job Search</a></div>
+                        </td>
+                        <td><input type="submit" value="Set Goal" /></td>
+                        <td>
+                            <input type="text" value="8" class="form-control" name="goal_week_value">
+                        </td><input type="hidden" value="Job Search" name="goal_title"><input type="hidden"
+                            value="Job Search" name="goal_id">
+                </form>
+                <td><input type="text" value="0" class="form-control" /></td>
+                </tr>
+                <form method="post" action="bounce.goal.edit.php">
+                    <tr>
+                        <td>
+                            <div class="titleBox2 not_yet"><a href="">Code</a></div>
+                        </td>
+                        <td><input type="submit" value="Set Goal" /></td>
+                        <td>
+                            <input type="text" value="16" class="form-control" name="goal_week_value">
+                        </td><input type="hidden" value="Code" name="goal_title"><input type="hidden" value="Code"
+                            name="goal_id">
+                </form>
+                <td><input type="text" value="9.5" class="form-control" /></td>
+                </tr>
+                <form method="post" action="bounce.goal.edit.php">
+                    <tr>
+                        <td>
+                            <div class="titleBox2 not_yet"><a href="">Norsk</a></div>
+                        </td>
+                        <td><input type="submit" value="Set Goal" /></td>
+                        <td>
+                            <input type="text" value="5" class="form-control" name="goal_week_value">
+                        </td><input type="hidden" value="Norsk" name="goal_title"><input type="hidden" value="Norsk"
+                            name="goal_id">
+                </form>
+                <td><input type="text" value="1" class="form-control" /></td>
+                </tr>
+                <form method="post" action="bounce.goal.edit.php">
+                    <tr>
+                        <td>
+                            <div class="titleBox2 not_yet"><a href="">Task</a></div>
+                        </td>
+                        <td><input type="submit" value="Set Goal" /></td>
+                        <td>
+                            <input type="text" value="8" class="form-control" name="goal_week_value">
+                        </td><input type="hidden" value="Task" name="goal_title"><input type="hidden" value="Task"
+                            name="goal_id">
+                </form>
+                <td><input type="text" value="5.5" class="form-control" /></td>
+                </tr>
+                <form method="post" action="bounce.goal.edit.php">
+                    <tr>
+                        <td>
+                            <div class="titleBox2 not_yet"><a href="">Business</a></div>
+                        </td>
+                        <td><input type="submit" value="Set Goal" /></td>
+                        <td>
+                            <input type="text" value="5" class="form-control" name="goal_week_value">
+                        </td><input type="hidden" value="Business" name="goal_title"><input type="hidden"
+                            value="Business" name="goal_id">
+                </form>
+                <td><input type="text" value="1" class="form-control" /></td>
+                </tr>
+            </table>
+    </div><br class="clear_left" />
+    <!-- Footer -->
+    <footer class="page-footer font-small mdb-color pt-4">
+
+        <!-- Footer Links -->
+        <div class="container text-center text-md-left">
+
+            <!-- Footer links -->
+            <div class="row text-center text-md-left mt-3 pb-3">
+
+                <!-- Grid column -->
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h6 class="text-uppercase mb-4 font-weight-bold">Company name</h6>
+                    <p>Here you can use rows and columns to organize your footer content. Lorem ipsum dolor sit amet,
+                        consectetur
+                        adipisicing elit.</p>
+                </div>
+                <!-- Grid column -->
+
+                <hr class="w-100 clearfix d-md-none">
+
+                <!-- Grid column -->
+                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+                    <h6 class="text-uppercase mb-4 font-weight-bold">Products</h6>
+                    <p>
+                        <a href="#!">MDBootstrap</a>
+                    </p>
+                    <p>
+                        <a href="#!">MDWordPress</a>
+                    </p>
+                    <p>
+                        <a href="#!">BrandFlow</a>
+                    </p>
+                    <p>
+                        <a href="#!">Bootstrap Angular</a>
+                    </p>
+                </div>
+                <!-- Grid column -->
+
+                <hr class="w-100 clearfix d-md-none">
+
+                <!-- Grid column -->
+                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+                    <h6 class="text-uppercase mb-4 font-weight-bold">Useful links</h6>
+                    <p>
+                        <a href="#!">Your Account</a>
+                    </p>
+                    <p>
+                        <a href="#!">Become an Affiliate</a>
+                    </p>
+                    <p>
+                        <a href="#!">Shipping Rates</a>
+                    </p>
+                    <p>
+                        <a href="#!">Help</a>
+                    </p>
+                </div>
+
+                <!-- Grid column -->
+                <hr class="w-100 clearfix d-md-none">
+
+                <!-- Grid column -->
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
+                    <p>
+                        <i class="fas fa-home mr-3"></i> New York, NY 10012, US</p>
+                    <p>
+                        <i class="fas fa-envelope mr-3"></i> info@gmail.com</p>
+                    <p>
+                        <i class="fas fa-phone mr-3"></i> + 01 234 567 88</p>
+                    <p>
+                        <i class="fas fa-print mr-3"></i> + 01 234 567 89</p>
+                </div>
+                <!-- Grid column -->
+
+            </div>
+            <!-- Footer links -->
+
+            <hr>
+
+            <!-- Grid row -->
+            <div class="row d-flex align-items-center">
+
+                <!-- Grid column -->
+                <div class="col-md-7 col-lg-8">
+
+                    <!--Copyright-->
+                    <p class="text-center text-md-left">© 2020 Copyright:
+                        <a href="https://mdbootstrap.com/">
+                            <strong> MDBootstrap.com</strong>
+                        </a>
+                    </p>
+
+                </div>
+                <!-- Grid column -->
+
+                <!-- Grid column -->
+                <div class="col-md-5 col-lg-4 ml-lg-0">
+
+                    <!-- Social buttons -->
+                    <div class="text-center text-md-right">
+                        <ul class="list-unstyled list-inline">
+                            <li class="list-inline-item">
+                                <a class="btn-floating btn-sm rgba-white-slight mx-1">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a class="btn-floating btn-sm rgba-white-slight mx-1">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a class="btn-floating btn-sm rgba-white-slight mx-1">
+                                    <i class="fab fa-google-plus-g"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a class="btn-floating btn-sm rgba-white-slight mx-1">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+                <!-- Grid column -->
+
+            </div>
+            <!-- Grid row -->
+
+        </div>
+        <!-- Footer Links -->
+
+    </footer>
+    <!-- Footer -->
+
+    </footer>
+    <!-- Footer -->
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+    <!--
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/popper.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+-->
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+
+    <script>
+        function showKeywords(str) {
+            if (str.length == 0) {
+                document.getElementByClassName("ajaxKeywords").innerHTML = "";
+                return;
+            } else {
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                       /* document.getElementById("ajaxKeywords").innerHTML = this.responseText;*/
+                        document.getElementByClassName("ajaxKeywords").innerHTML = this.responseText;
+                    }
+                }
+                xmlhttp.open("GET", "ajaxkeywords.php?categoryid=" + str, true);
+                xmlhttp.send();
+            }
+        }
+        function showKeywordsEdit(str, tomidkeywords = 3) {
+            if (str.length == 0) {
+                document.getElementByClassName("ajaxKeywordsEdit").innerHTML = "";
+                return;
+            } else {
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        document.getElementClassName("ajaxKeywordsEdit").innerHTML = this.responseText;
+                    }
+                }
+                xmlhttp.open("GET", "ajax.tomato.edit.keywords.php?categoryid=" + str, true);
+                xmlhttp.send();
+            }
+        }
+    </script>

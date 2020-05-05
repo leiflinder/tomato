@@ -90,6 +90,7 @@ public $array_of_categories_indexes_with_catid_as_value = array();
         // ******* Kill this function?
 
     ///// ***** Again? Is this a repeat????
+    /*
     function all_cats_associated_with_keyid($keyid){
         $this_is_the_keyword_id = $keyid;
         $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`link_cat_to_keywords` WHERE `link_cat_to_keywords`.`keyword_id` = :id");
@@ -133,7 +134,7 @@ public $array_of_categories_indexes_with_catid_as_value = array();
     }
       print('<input type="submit" value="Update" name="submit" style="background-color:black;color:white;"/></form><br/></div>');
     }
-
+*/
     function array_of_categories(){
         $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`categories`");
         $sth->execute();
@@ -156,13 +157,11 @@ public $array_of_categories_indexes_with_catid_as_value = array();
         $this->array_of_categories_with_catid_as_index = $scratch_array;
     }
 
-
+/*
     function print_all_keywords(){
         $sth = $this->conn->prepare("SELECT `keywords`.`keyword`, `keywords`.`id` FROM `tomato220`.`keywords` ORDER BY `keywords`.`keyword` DESC");
         $sth->execute();
         $resource= $sth->fetchall(PDO::FETCH_ASSOC);
-      //  $resource = $sth->fetchall();
-       // $resource = $sth->fetch(PDO::FETCH_ASSOC);
 
         for($i=0; $i<(sizeof($resource)); $i++){
            // class="panel-heading accordion-toggle collapsed"
@@ -172,7 +171,8 @@ public $array_of_categories_indexes_with_catid_as_value = array();
 
         }
     }
-
+*/
+/*
     function print_only_keywords_no_accordion(){
         $sth = $this->conn->prepare("SELECT `keywords`.`keyword`, `keywords`.`id` FROM `tomato220`.`keywords` ORDER BY `keywords`.`keyword` ASC");
         $sth->execute();
@@ -183,7 +183,7 @@ public $array_of_categories_indexes_with_catid_as_value = array();
         }
         print('</table>');
 }
-
+*/
     function change_array_of_category_titles_to_indexes($keyword_index, $category_titles=NULL){
         // note: value is keyword ID and index is category IDs. So 
         // the value of all array elements is the same, keyword ID but the index are all differnt, cat ID.
@@ -201,6 +201,7 @@ public $array_of_categories_indexes_with_catid_as_value = array();
         }
     }
 
+/*
     function update_assoc_between_keyword_and_categories($keyword,  $array_of_categories=NULL){
         print('<h1>update_assoc_between_keyword_and_categories</h1>');
         // then, gulp... delete all current keyword-to-categoy associations in dbase for that single keyword.
@@ -243,6 +244,7 @@ public $array_of_categories_indexes_with_catid_as_value = array();
           }
 
     }
+    */
 }
 
 ?>

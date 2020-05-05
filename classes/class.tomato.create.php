@@ -142,6 +142,7 @@ function week_value_from_week_table(){
             print('<div class="form-group">');
             print('<label for="categories">Categories</label>');
             print('<select class="form-control" name="category" id="category" onchange="showKeywords(this.value)">');
+            print("<option value='22'>NULL</option>");
             $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`category` ORDER BY `category`.`category` ASC");
             $sth->execute();
             $table = $sth->fetchAll();

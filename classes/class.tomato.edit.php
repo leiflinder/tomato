@@ -8,9 +8,45 @@ class edittomato extends conn
         $this->defaultWeekNumber = $currentWeekNumber;
     }
 
+    public function keyword_change_id_to_name($keyword_id){
+        $sth = $this->conn->prepare("SELECT `keywords`.`keyword` FROM `tomato220`.`keywords` WHERE `keywords`.`id` = :KEYWORDID LIMIT 1");
+        $sth->bindParam(':KEYWORDID', $keyword_id);
+        $sth->execute();
+        $name = $sth->fetch(PDO::FETCH_ASSOC);
+        return $name['keyword'];
+    }
+
+    public function cycle_through_keywords($keywords)
+    {
+        for ($i=0;$i<sizeof($keywords);$i++) {
+            // get keyword name from id
+            $keyword = $this->keyword_change_id_to_name($keywords[$i]['keyword_id']);
+            print($keyword.'<br/>');
+        }
+    }
+
+    public function sanitizeTomID()
+    {
+        if (isset($_GET['tomid'])) {
+            if (filter_var($_GET['tomid'], FILTER_VALIDATE_INT) === false) {
+                print('<div class="alert alert-danger" role="alert">
+            Danger. Tomato ID not integer.</div>');
+                $_GET['tomid'] = null;
+                return $_GET['tomid'];
+            } else {
+                return $_GET['tomid'];
+            }
+        } else {
+            print('<div class="alert alert-danger" role="alert">
+            No Tomato ID.</div>');
+            $_GET['tomid'] = null;
+            return $_GET['tomid'];
+        }
+    }
+
     public function edit_tomato_count($tomcount, $tomid)
     {
-        $sth = $this->conn->prepare("UPDATE `tomato220`.`tomato` SET `tomato`.`count` = :TOMCOUNT WHERE `tomato`.`id` = :TOMID;");
+        $sth = $this->conn->prepare("UPDATE `tomato220`.`tomato` SET `tomato`.`count` = :TOMCOUNT WHERE `tomato`.`id` = :TOMID");
         $sth->bindParam(':TOMCOUNT', $tomcount);
         $sth->bindParam(':TOMID', $tomid);
         $sth->execute();
@@ -50,15 +86,57 @@ class edittomato extends conn
         $size = sizeof($resource);
         print('<ul class="list-group tomatolist">');
         for ($i = 0; $i < $size; $i++) {
-            print('<li class="list-group-item d-flex justify-content-between align-items-center border-0"><a data-toggle="collapse" href="#collapseExample'.$resource[$i]['id'].'" role="button" aria-expanded="false" aria-controls="collapseExample"><div class="titleBox">'.$resource[$i]['title'].'</div></a>'.$this->return_category_name_from_catid($resource[$i]['category']).'<span class="badge badge-primary badge-pill">' . ($resource[$i]['count'] / 2).' hrs</span></li>
-        <div class="collapse margin-bottom" id="collapseExample'.$resource[$i]['id'].'">
-        <div class="card card-body">');
+            print('<li class="list-group-item d-flex justify-content-between align-items-center border-0"><a data-toggle="collapse" href="#collapseExample'.$resource[$i]['id'].'" role="button" 
+            aria-expanded="false" aria-controls="collapseExample"><div class="titleBox">'.$resource[$i]['title'].'</div></a>'.
+        
+            $this->return_category_name_from_catid($resource[$i]['category']).'<span class="badge badge-primary badge-pill">' . ($resource[$i]['count'] / 2).' hrs</span></li>
+        <div class="collapse margin-bottom" id="collapseExample'.$resource[$i]['id'].'">');
             $tomato = $this->return_single_tomato_based_on_tomid($resource[$i]['id']);
-            $this->edit_single_tomato_form($tomato['id'], $tomato['userid'], $tomato['title'], $tomato['tomdate'], $tomato['tomweek'], $tomato['count'], $tomato['category_title'], $tomato['category_id'], $tomato['notes'], $tomato['url'], $tomato['keywords']);
-            print('</div>
-      </div>');
+            print('<table class="table table-bordered">');
+            print('<tr>');
+            print('<td>Category:&nbsp;  '.$tomato['category_title'].'</td>');
+            print('<td><a href="home.php?page=tomatoedit&tomid='.$tomato['id'].'"><img src="./images/edit1001.png"/></a></td>');
+            print('<td><a href="" data-toggle="modal" data-target="#delete'.$tomato['id'].'" class="delete_label"><img src="./images/delete1001.png"/></a></td>');
+            print('</tr>');
+            print('<tr><td colspan="3"><p>Notes:</p><p>'.$tomato['notes'].'</p></td></tr>');
+            
+            print('<tr><td><p>Keywords:</p></td><td colspan=2>'.$this->cycle_through_keywords($tomato['keywords']).'</td></tr>');
+
+            // "Are You Sure?" modal
+            $this->are_you_sure_delete_modal($resource[$i]['id'], $resource[$i]['title']);
+            print('</table>');
+            print('</div>');
         }
         print('</ul>');
+    }
+
+    public function are_you_sure_delete_modal($tomid, $title=null)
+    {
+        print('<div class="modal fade keyword_edit_modal" id="delete'.$tomid.'" tabindex="-1" role="dialog" aria-labelledby="EditKeyword" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="editModalLabel">Delete - Are you sure?</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+            <form method="post" action="bounce.tomato.delete.php">
+                <div class="form-group">
+                    <p>Tomato ID:&nbsp; '.$tomid.'</p>
+                    <p>Tomato Title:&nbsp; '.$title.'</p>
+                    <input type="hidden" name="tomid" value="'.$tomid.'"/>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>');
     }
 
     public function distinct_tomweek_values($limit_number)
@@ -262,30 +340,6 @@ class edittomato extends conn
         print('</form><br/<br/>');
     }
 
-    /*
-    public function upload_edit_query($tomid, $title, $tomdate, $tomcount, $categoryid, $notes)
-    {
-        $sth = $this->conn->prepare("UPDATE 
-        `tomato220`.`tomato` SET 
-        `tomato`.`title` = :TITLE, 
-        `tomato`.`tomdate` = :TOMDATE, 
-        `tomato`.`tomweek` = '2018-W52', 
-        `tomato`.`count` = :TOMCOUNT, 
-        `category` = :CATEGORYID, 
-        `tomato`.`notes` = :NOTES, 
-        `tomato`.`url` = 'http://asasdf' 
-        WHERE `tomato`.`id` = :TOMID
-        AND `tomato`.`userid`=1001");
-        $sth->bindParam(':TOMID', $tomid);
-        $sth->bindParam(':TITLE', $title);
-        $sth->bindParam(':TOMDATE', $tomdate);
-        $sth->bindParam(':TOMCOUNT', $tomcount);
-        $sth->bindParam(':CATEGORYID', $categoryid);
-        $sth->bindParam(':NOTES', $notes);
-        $resource = $sth->execute();
-        return $resource;
-    }
-*/
     /// update queries ///
 
     public function update_title($tomid, $userid, $title)

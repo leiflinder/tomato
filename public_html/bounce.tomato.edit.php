@@ -10,7 +10,6 @@ if(isset($_POST['tomid'])){
     header("Location: home.php?message=$message&alert=$alert");
   }else{
     $tomid = $_POST['tomid'];
-   // print('<p>'.$tomid.'</p>');
   }
 }
 
@@ -21,7 +20,6 @@ if(isset($_POST['userid'])){
       header("Location: home.php?message=$message&alert=$alert");
     }else{
       $userid = $_POST['userid'];
-    //  print('<p>'.$userid.'</p>');
     }  
 }
 
@@ -32,7 +30,6 @@ if(isset($_POST['userid'])){
       header("Location: home.php?message=$message&alert=$alert");
     }else{
       $old_category_id = $_POST['old_category_id'];
-     // print('<p>'.$old_category_id.'</p>');
     } 
 }
 
@@ -49,7 +46,6 @@ if(isset($_POST['title'])){
 if(isset($_POST['tomdate'])){
   $tomdate = $_POST['tomdate'];
   $tomdate = filter_var($tomdate, FILTER_SANITIZE_STRING);
- // print('<p>'.$tomdate.'</p>' );
    $edit_tomato->update_tomdate($tomid, $userid, $tomdate);
 }
 
@@ -57,7 +53,6 @@ if(isset($_POST['tomweek'])){
    $tomweek = $_POST['tomweek'];
    $tomweek = filter_var($tomweek, FILTER_SANITIZE_STRING);
     $edit_tomato->update_tomweek($tomid, $userid, $tomweek);
- //  print('<p>'.$tomweek.'</p>' );
 }
 
 if(isset($_POST['count'])){
@@ -68,7 +63,6 @@ if(isset($_POST['count'])){
     }else{
       $count = $_POST['count'];
       $edit_tomato->update_count($tomid, $userid, $count);
-    // print('<p>'.$count.'</p>' );
     }
 }
 
@@ -76,14 +70,12 @@ if(isset($_POST['notes'])){
   $notes = $_POST['notes'];
   $notes = filter_var($notes, FILTER_SANITIZE_STRING);
   $edit_tomato->update_notes($tomid, $userid, $notes);
- // print('<p>'.$notes.'</p>' );
 }
 
 if(isset($_POST['url'])){
   $url = $_POST['url'];
   $url = filter_var($url, FILTER_SANITIZE_STRING);
   $edit_tomato->update_url($tomid, $userid, $url);
- // print('<p>'.$url.'</p>' );
 }
 
 if(isset($_POST['new_category'])){
@@ -97,7 +89,6 @@ if(isset($_POST['new_category'])){
             }else{
               $new_category = $_POST['new_category'];
               $edit_tomato->update_new_category($tomid, $userid, $new_category);
-            // print('<p>'.$new_category.'</p>' );
             } 
         }
     }else{
@@ -109,13 +100,15 @@ if(isset($_POST['keywords'])){
       $keywords[] = filter_var($_POST['keywords'][$i], FILTER_SANITIZE_STRING);
     }
         $edit_tomato->update_keywords($tomid, $userid, $keywords);
-      // print('<pre>');
-      // print_r($keywords);
-      // print('</pre>');
     }else{
        // do nothing
 }
- header("Location: home.php?message=$message&alert=$alert");
+ header("Location: home.php?page=tomato&message=$message&alert=$alert");
+/*
+print('<pre>');
+print_r($_POST);
+print('</pre>');
+*/
 ?>
 
 

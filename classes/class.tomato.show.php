@@ -6,6 +6,32 @@ class showtomatoes extends conn
         return date("Y-m-d");
     }
 
+    public function toms_by_tomdate($tomdate)
+    {
+        $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`tomato` WHERE `tomato`.`tomdate` LIKE :TOMDATE");
+        $sth->bindParam(':TOMDATE', $tomdate);
+        $sth->execute();
+        $resource = $sth->fetchall(PDO::FETCH_ASSOC);
+        $size = sizeof($resource);
+       // print('<pre>Something');
+       // print_r($resource);
+      //  print('</pre>');
+        
+        print('<ul class="list-group tomatolist">');
+        for ($i = 0; $i < $size; $i++) {
+            print('<li class="list-group-item d-flex justify-content-between align-items-center border-0"><a data-toggle="collapse" href="#collapseExample'.$resource[$i]['id'].'" role="button" 
+            aria-expanded="false" aria-controls="collapseExample"><div class="titleBox">'.$resource[$i]['title'].'</div></a>'.$this->return_category_name_from_catid($resource[$i]['category']).'<span class="badge badge-primary badge-pill">' . ($resource[$i]['count'] / 2).' hrs</span></li>
+        <div class="collapse margin-bottom" id="collapseExample'.$resource[$i]['id'].'">
+        <div class="card card-body">');
+            $tomato = $this->return_single_tomato_based_on_tomid($resource[$i]['id']);
+            $this->edit_single_tomato_form($tomato['id'], $tomato['userid'], $tomato['title'], $tomato['tomdate'], $tomato['tomweek'], $tomato['count'], $tomato['category_title'], $tomato['category_id'], $tomato['notes'], $tomato['url'], $tomato['keywords']);
+        print('</div>');
+      print('</div>');
+        }
+        print('</ul>'); 
+    }
+
+
     public function get_keywords_for_tom_id($tom_id)
     {
         $sth = $this->conn->prepare("SELECT tomato220.keywords.keyword 
@@ -49,5 +75,15 @@ class showtomatoes extends conn
         $sth->execute();
         $result = $sth->fetchAll();
         return $result;
+    }
+
+    public function return_category_name_from_catid($catid)
+    {
+        $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`category` WHERE `category`.`id` = :CATID ORDER BY `id` DESC");
+        $sth->bindParam(':CATID', $catid);
+        $sth->execute();
+        $resource = $sth->fetchall(PDO::FETCH_ASSOC);
+        $categorytitle = $resource[0]['category'];
+        return $categorytitle;
     }
 }

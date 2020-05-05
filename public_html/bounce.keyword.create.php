@@ -18,23 +18,39 @@ if(isset($_POST)){
         if(isset($_POST['new_keyword'])){
             $keyword = $_POST['new_keyword'];
             $keyword = filter_var($keyword, FILTER_SANITIZE_STRING);
-           // print('<p>'.$keyword.'</p>' );
+            print('<p>'.$keyword.'</p>' );
          }
     }
 
 if($keyword && $userid){
-    if($keyword_create->upload_new_keyword($new_keyword, $userid)==TRUE){
-        $alart="sucess";
+    // first check if keyword already exists
+    if($keyword_create->check_if_exists_keyword($keyword, $userid)==TRUE){
+        $alert="danger";
+        $message="Keyword already exists";
+        header("Location: home.php?page=keywords&message=$message&alert=$alert");  
+    }
+    // if it does not exist, create...
+    if($keyword_create->create_keyword($keyword, $userid)==TRUE){
+        $alert="success";
         $message="Keyword Created";
         header("Location: home.php?page=keywords&message=$message&alert=$alert");
     }else{
-        $alart="danger";
-        $message="There Was A Problem";
+        $alert="danger";
+        $message="Problem with upload";
         header("Location: home.php?page=keywords&message=$message&alert=$alert");      
     }
 }else{
     $alart="danger";
-    $message="There Was A Problem";
+    $message="Problem with values";
     header("Location: home.php?page=keywords&message=$message&alert=$alert");  
 }
+
+/*
+print('<pre>');
+print_r($_POST);
+print('</pre>');
+print('<pre>');
+print_r($_SESSION);
+print('</pre>'); 
+*/   
 ?>

@@ -2,7 +2,7 @@
 class createKeyword extends conn
 {
     
-    function upload_new_keyword($new_keyword, $userid)
+    function check_if_exists_keyword($new_keyword, $userid)
     {
         // first check if keyword exists already
         $stm = $this->conn->prepare("SELECT * FROM `tomato220`.`keywords` WHERE `keywords`.`userid` = :USERID AND `keywords`.`keyword` LIKE :NEWKEYWORD");
@@ -10,9 +10,9 @@ class createKeyword extends conn
         $stm->bindParam(':USERID', $new_keyword);
         $stm->execute();
         if ($stm->rowCount() > 0) {
-            return true;
+            return TRUE;
         } else {
-            return false;
+            return FALSE;
         }
     }
         

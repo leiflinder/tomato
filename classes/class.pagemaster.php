@@ -19,6 +19,7 @@ class pagemaster
                 $week = $date->format("W");
                 print('<h4><span class="badge badge-secondary">Week #'.$week.'</span></h4>');
                 $edit_tomatos = new edittomato;
+                /*
                 if (isset($_GET['tomid'])) {
                     // santitize GET value
                     if (filter_var($_GET['tomid'], FILTER_VALIDATE_INT) === false) {
@@ -30,11 +31,31 @@ class pagemaster
                         $edit_tomatos->edit_single_tomato_form($tomato['id'], $tomato['userid'], $tomato['title'], $tomato['tomdate'], $tomato['tomweek'], $tomato['count'], $tomato['category_title'], $tomato['category_id'], $tomato['notes'], $tomato['url'], $tomato['keywords']);
                     }
                 }
+                */
                 $edit_tomatos->pull_tomatos_by_default_this_week();
                 print('<br/>');
                 print('<h4><span class="badge badge-secondary">Goals</span></h4>');
                 $goals = new setupgoals;
                 $goals->show_goals();
+                break;
+
+
+                case "tomatoedit":
+                    print('<p>Tomato Edit');
+                    /*
+                    $show = new showtomatoes;
+                    $date = $show->todaydate();
+                    $show->toms_by_tomdate($date);
+                    */
+                    $edit = new edittomato;
+                    $tomid = $edit->sanitizeTomID();
+                    if(!(is_null($tomid))){
+                        print('<p>TOMATO ID: '.$tomid.'</p>');
+                        // return tomato from dbase
+                        $tomato = $edit->return_single_tomato_based_on_tomid($tomid);
+                        // make tomato edit form with values preset for tomato id
+                        $edit->edit_single_tomato_form($tomato['id'], $tomato['userid'], $tomato['title'], $tomato['tomdate'], $tomato['tomweek'], $tomato['count'], $tomato['category_title'], $tomato['category_id'], $tomato['notes'], $tomato['url'], $tomato['keywords']);
+                    }
                 break;
 
                 //// ***** KEYWORDS PAGES ***** ////
@@ -66,22 +87,22 @@ class pagemaster
             case "views":
                 message();
 
-                $generic= new viewweek2;
+                $generic= new viewweek;
                 $generic->week_number_only();
                 print('<p>'.$generic->week_formated_like_database.'</p>');
                 $generic->generic_time_view();
                 
-                $generic = new viewweek2;
+               // $generic = new viewweek;
                 $generic->week_number_only(1);
                 print('<p>'.$generic->week_formated_like_database.'</p>');
                 $generic->generic_time_view();
 
-                $generic = new viewweek2;
+               // $generic = new viewweek;
                 $generic->week_number_only(2);
                 print('<p>'.$generic->week_formated_like_database.'</p>');
                 $generic->generic_time_view();
 
-                $generic = new viewweek2;
+               // $generic = new viewweek;
                 $generic->week_number_only(3);
                 print('<p>'.$generic->week_formated_like_database.'</p>');
                 $generic->generic_time_view();
@@ -90,6 +111,8 @@ class pagemaster
 
             case "index":
                 message();
+                print('<p>Home</p>');
+                /*
                 print('<p><a class="btn btn-primary hundred_percent_width" data-toggle="collapse" href="#TomatoMaker" role="button" aria-expanded="false" aria-controls="collapseExample">Create Tomato</a>');
                 print('<div class="collapse" id="TomatoMaker">');
                 $tomato_form = new addtomato;
@@ -115,6 +138,7 @@ class pagemaster
                 print('<h4><span class="badge badge-secondary">Goals</span></h4>');
                 $goals = new setupgoals;
                 $goals->show_goals();
+                */
                 break;
 
     case "categories":
@@ -134,6 +158,8 @@ class pagemaster
                 break;
  */
             case "setup":
+                message();
+                print('<h4>Setup</h4>');
                // $this->setup();
                /*
                if (isset($_GET['function'])) {

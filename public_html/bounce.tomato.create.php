@@ -98,9 +98,9 @@ if (isset($_POST)) {
         $message ="Tomato was not created";
         $alert = "danger";
     }
-    header("Location: home.php?message=$message&alert=$alert");
+    header("Location: home.php?page=tomato&message=$message&alert=$alert");
 } else {
     $message ="There was a problem";
     $alert = "danger";
-    header("Location: home.php?message=$message&alert=$alert");
+    header("Location: home.php?page=tomato&message=$message&alert=$alert");
 }
