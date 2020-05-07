@@ -41,7 +41,7 @@ class pagemaster
 
 
                 case "tomatoedit":
-                    print('<p>Tomato Edit');
+                    print('<a href="home.php?page=tomato" class="btn btn-primary" role="button"><< Back</a>');
                     /*
                     $show = new showtomatoes;
                     $date = $show->todaydate();
