@@ -8,7 +8,11 @@ class showtomatoes extends conn
 
     public function toms_by_tomdate($tomdate)
     {
+        /*
         $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`tomato` WHERE `tomato`.`tomdate` LIKE :TOMDATE");
+        */
+        $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`tomato` WHERE `tomato`.`datestring` LIKE :TOMDATE");
+
         $sth->bindParam(':TOMDATE', $tomdate);
         $sth->execute();
         $resource = $sth->fetchall(PDO::FETCH_ASSOC);

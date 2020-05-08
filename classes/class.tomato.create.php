@@ -57,6 +57,7 @@ function week_value_from_week_table(){
         <small id="dateHelp" class="form-text text-muted">Enter date of tomato.</small>
       </div>';
 
+
      // Week
       echo'<div class="form-group">
       <label for="tomatoWeek_FormElement">Week</label>
@@ -96,6 +97,7 @@ function week_value_from_week_table(){
                 `tomato`.`userid`,
                 `tomato`.`title`,
                 `tomato`.`tomdate`,
+                `tomato`.`datestring`,
                 `tomato`.`tomweek`,
                 `tomato`.`count`,
                 `tomato`.`category`,
@@ -107,6 +109,7 @@ function week_value_from_week_table(){
                     :userid,
                     :title,
                     :tomdate,
+                    :datestring,
                     :week,
                     :count,
                     :category,
@@ -117,6 +120,7 @@ function week_value_from_week_table(){
             $stmt->bindParam(':userid', $userid, PDO::PARAM_STR);
             $stmt->bindParam(':title', $title, PDO::PARAM_STR);
             $stmt->bindParam(':tomdate', $tomdate, PDO::PARAM_STR);
+            $stmt->bindParam(':datestring', $tomdate, PDO::PARAM_STR);
             $stmt->bindParam(':week', $tomweek, PDO::PARAM_STR);
             $stmt->bindParam(':count', $count, PDO::PARAM_INT);
             $stmt->bindParam(':category', $category, PDO::PARAM_INT);

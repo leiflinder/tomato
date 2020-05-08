@@ -21,7 +21,7 @@ class edittomato extends conn
         for ($i=0;$i<sizeof($keywords);$i++) {
             // get keyword name from id
             $keyword = $this->keyword_change_id_to_name($keywords[$i]['keyword_id']);
-            print($keyword.'<br/>');
+            print("<li><a href='home.php?page=views&keyword=$keyword'>".$keyword."</a></li>");
         }
     }
 
@@ -92,16 +92,18 @@ class edittomato extends conn
             $this->return_category_name_from_catid($resource[$i]['category']).'<span class="badge badge-primary badge-pill">' . ($resource[$i]['count'] / 2).' hrs</span></li>
         <div class="collapse margin-bottom" id="collapseExample'.$resource[$i]['id'].'">');
             $tomato = $this->return_single_tomato_based_on_tomid($resource[$i]['id']);
-            print('<table class="table table-bordered">');
+            print('<table class="table table-bordered tomatoedittable">');
             print('<tr>');
-            print('<td>Category:&nbsp;  '.$tomato['category_title'].'</td>');
-            print('<td><a href="home.php?page=tomatoedit&tomid='.$tomato['id'].'"><img src="./images/edit1001.png"/></a></td>');
-            print('<td><a href="" data-toggle="modal" data-target="#delete'.$tomato['id'].'" class="delete_label"><img src="./images/delete1001.png"/></a></td>');
+            print('<td>'.$tomato['category_title'].' ');
+            print('<a href="home.php?page=tomatoedit&tomid='.$tomato['id'].'"><img src="./images/edit1001.png" align="right"/></a>');
+            print('<a href="" data-toggle="modal" data-target="#delete'.$tomato['id'].'" class="delete_label"><img src="./images/delete1001.png" align="right"/></a></td>');
             print('</tr>');
-            print('<tr><td colspan="3"><p>Notes:</p><p>'.$tomato['notes'].'</p></td></tr>');
+            print('<tr><td colspan="3"><p>'.$tomato['notes'].'</p>');
+            print('<ul>');
+            $this->cycle_through_keywords($tomato['keywords']);
+            print('</ul></td></tr>');
             
-            print('<tr><td><p>Keywords:</p></td><td colspan=2>'.$this->cycle_through_keywords($tomato['keywords']).'</td></tr>');
-
+           // print('<tr><td><ul><li>asdfsdf</li><li>aasdfsdf</li></ul></td></tr>');
             // "Are You Sure?" modal
             $this->are_you_sure_delete_modal($resource[$i]['id'], $resource[$i]['title']);
             print('</table>');
