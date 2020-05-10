@@ -5,15 +5,12 @@ class createKeyword extends conn
     function check_if_exists_keyword($new_keyword, $userid)
     {
         // first check if keyword exists already
-        $stm = $this->conn->prepare("SELECT * FROM `tomato220`.`keywords` WHERE `keywords`.`userid` = :USERID AND `keywords`.`keyword` LIKE :NEWKEYWORD");
-        $stm->bindParam(':NEWKEYWORD', $new_keyword);
-        $stm->bindParam(':USERID', $new_keyword);
+        $stm = $this->conn->prepare("SELECT count(*) FROM `tomato220`.`keywords` WHERE `keywords`.`userid` = :USERID AND `keywords`.`keyword` LIKE :NEWKEYWORD LIMIT 1");
+        $stm->bindParam(':NEWKEYWORD', $new_keyword, PDO::PARAM_STR);
+        $stm->bindParam(':USERID', $userid, PDO::PARAM_INT);
         $stm->execute();
-        if ($stm->rowCount() > 0) {
-            return TRUE;
-        } else {
-            return FALSE;
-        }
+        $value = $stm->fetchColumn();
+        return $value;
     }
         
         
