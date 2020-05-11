@@ -2,20 +2,29 @@
 class addtomato extends conn{
 
     public $lastid;
+    public $todaydate;
     private $existing_categories;
     private $defaultWeekNumber;
     private $week_value_from_db;
+    private $datestring;
    // private $todaydate;
 
+   private function datestring(){
+    $this->datestring = date("Y-m-d",$_SERVER['REQUEST_TIME']);
+   }
 private function default_week_setting(){
         $currentWeekNumber = date('Y')."-W".date('W');
         $this->defaultWeekNumber=$currentWeekNumber;
 }
 
-function week_value_from_week_table(){
-	$sth = $this->conn->prepare("SELECT `week`.`week` FROM `tomato220`.`week` WHERE `week`.`id` = 1 LIMIT 1");
-	$sth->execute();
-	$week = $sth->fetchColumn();
+public function today_date(){
+
+}
+
+function week_value_from_week_table(){{
+    $currentWeekNumber = date('Y')."-W".date('W');
+    $this->defaultWeekNumber=$currentWeekNumber;
+}$week = $sth->fetchColumn();
     $this->week_value_from_db = $week;
 }
 
@@ -92,6 +101,7 @@ function week_value_from_week_table(){
     }
 
         function upload_tomato_with_keyword_array($userid,$title,$tomdate,$tomweek,$count,$category,$notes,$url, $keywords){
+            $this->datestring();
             $stmt = $this->conn->prepare("INSERT INTO `tomato220`.`tomato` (
                 `tomato`.`id`,
                 `tomato`.`userid`,
@@ -120,7 +130,7 @@ function week_value_from_week_table(){
             $stmt->bindParam(':userid', $userid, PDO::PARAM_STR);
             $stmt->bindParam(':title', $title, PDO::PARAM_STR);
             $stmt->bindParam(':tomdate', $tomdate, PDO::PARAM_STR);
-            $stmt->bindParam(':datestring', $tomdate, PDO::PARAM_STR);
+            $stmt->bindParam(':datestring', $this->datestring, PDO::PARAM_STR);
             $stmt->bindParam(':week', $tomweek, PDO::PARAM_STR);
             $stmt->bindParam(':count', $count, PDO::PARAM_INT);
             $stmt->bindParam(':category', $category, PDO::PARAM_INT);

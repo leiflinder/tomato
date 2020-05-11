@@ -18,21 +18,12 @@ class pagemaster
                 $date = new DateTime();
                 $week = $date->format("W");
                 print('<h4><span class="badge badge-secondary">Week #'.$week.'</span></h4>');
-                $edit_tomatos = new edittomato;
                 /*
-                if (isset($_GET['tomid'])) {
-                    // santitize GET value
-                    if (filter_var($_GET['tomid'], FILTER_VALIDATE_INT) === false) {
-                        print('<div class="alert alert-danger" role="alert">
-                        Danger. Tomato ID not integer.</div>');
-                    } else {
-                        $tomid = $_GET['tomid'];
-                        $tomato = $edit_tomatos->return_single_tomato_based_on_tomid($tomid);
-                        $edit_tomatos->edit_single_tomato_form($tomato['id'], $tomato['userid'], $tomato['title'], $tomato['tomdate'], $tomato['tomweek'], $tomato['count'], $tomato['category_title'], $tomato['category_id'], $tomato['notes'], $tomato['url'], $tomato['keywords']);
-                    }
-                }
-                */
+                $edit_tomatos = new edittomato;
                 $edit_tomatos->pull_tomatos_by_default_this_week();
+                */
+                $page_display->pull_tomatos_by_default_this_week();
+                
                 print('<br/>');
                 print('<h4><span class="badge badge-secondary">Goals</span></h4>');
                 $goals = new setupgoals;

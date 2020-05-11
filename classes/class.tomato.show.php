@@ -6,7 +6,7 @@ class showtomatoes extends conn
         return date("Y-m-d");
     }
 
-    public function toms_by_tomdate($tomdate)
+    private function toms_by_tomdate($tomdate)
     {
         /*
         $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`tomato` WHERE `tomato`.`tomdate` LIKE :TOMDATE");
