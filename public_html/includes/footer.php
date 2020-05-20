@@ -148,6 +148,25 @@
     <script src="./js/bootstrap.min.js"></script>
 -->
 <script>
+function updateCalendar() {
+    // create initial date object
+    var currentDay = new Date();
+    // convert month to string and add leading zero
+    var currentMonth = currentDay.getMonth() + 1;
+    var currentMonth = currentMonth.toString();
+    var currentMonthLZ = currentMonth.padStart(2, '0');
+    // get date object
+    var currentDate = currentDay.getDate();
+    // get year object
+    var currentYear = currentDay.getFullYear();
+    // get seconds object
+    // var currentSecond = currentDay.getSeconds();
+    var currentDateString =  currentYear + "-" + currentMonthLZ + "-" + currentDate;
+   // document.getElementById("MarchineDate").firstChild.nodeValue = currentDateString;
+   document.getElementById("MachineDate").value = currentDateString;
+}
+</script>
+<script>
         $(document).ready(function(){
             $('[data-toggle="tooltip"]').tooltip(); 
         });

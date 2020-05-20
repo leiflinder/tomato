@@ -18,12 +18,12 @@ class pagemaster
                 $date = new DateTime();
                 $week = $date->format("W");
                 print('<h4><span class="badge badge-secondary">Week #'.$week.'</span></h4>');
-                /*
+                
                 $edit_tomatos = new edittomato;
                 $edit_tomatos->pull_tomatos_by_default_this_week();
-                */
-                $page_display->pull_tomatos_by_default_this_week();
-                
+                print('<hr/>');
+                $page_display->pull_tomatos_this_week();
+
                 print('<br/>');
                 print('<h4><span class="badge badge-secondary">Goals</span></h4>');
                 $goals = new setupgoals;
@@ -79,9 +79,12 @@ class pagemaster
                 message();
 
                 $generic= new viewweek;
+                // week_number_only() sets week number for object, then genreic_time_view() creates all the object properties based on that week number
+
                 $generic->week_number_only();
                 print('<p>'.$generic->week_formated_like_database.'</p>');
                 $generic->generic_time_view();
+        
                 
                // $generic = new viewweek;
                 $generic->week_number_only(1);
@@ -97,6 +100,38 @@ class pagemaster
                 $generic->week_number_only(3);
                 print('<p>'.$generic->week_formated_like_database.'</p>');
                 $generic->generic_time_view();
+
+               // $generic = new viewweek;
+               $generic->week_number_only(4);
+               print('<p>'.$generic->week_formated_like_database.'</p>');
+               $generic->generic_time_view();
+
+               // $generic = new viewweek;
+               $generic->week_number_only(5);
+               print('<p>'.$generic->week_formated_like_database.'</p>');
+               $generic->generic_time_view();
+
+               // $generic = new viewweek;
+               $generic->week_number_only(6);
+               print('<p>'.$generic->week_formated_like_database.'</p>');
+               $generic->generic_time_view();
+
+               // $generic = new viewweek;
+               $generic->week_number_only(7);
+               print('<p>'.$generic->week_formated_like_database.'</p>');
+               $generic->generic_time_view();
+
+               // $generic = new viewweek;
+               $generic->week_number_only(8);
+               print('<p>'.$generic->week_formated_like_database.'</p>');
+               $generic->generic_time_view();
+
+               // $generic = new viewweek;
+               $generic->week_number_only(9);
+               print('<p>'.$generic->week_formated_like_database.'</p>');
+               $generic->generic_time_view();
+
+
 
                 break;
 

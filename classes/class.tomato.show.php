@@ -1,12 +1,37 @@
 <?php
 class showtomatoes extends conn
 {
+    private $defaultWeekNumber;
+    
+    public function default_week_setting()
+    {
+        $currentWeekNumber = date('Y') . "-W" . date('W');
+        $this->defaultWeekNumber = $currentWeekNumber;
+    }
+
     public function todaydate()
     {
         return date("Y-m-d");
     }
 
-    private function toms_by_tomdate($tomdate)
+    public function pull_tomatos_this_week()
+    {
+        $this->default_week_setting();
+        $sth = $this->conn->prepare("SELECT distinct(`tomato`.`datestring`) FROM `tomato220`.`tomato` WHERE `tomato`.`tomweek` LIKE :TOMWEEK ORDER BY(`tomato`.`datestring`) DESC");
+        $sth->bindParam(':TOMWEEK', $this->defaultWeekNumber);
+        $sth->execute();
+        $resource = $sth->fetchall(PDO::FETCH_ASSOC);
+        $size = sizeof($resource);
+        for ($i = 0; $i < $size; $i++) {
+            /*
+            print('<p class="no-padding">' . date('l \t\h\e jS', strtotime($resource[$i]['tomdate'])) . '</p>');
+            $this->toms_by_tomdate($resource[$i]['tomdate']);
+            */
+            print('<p>'.date('l \t\h\e jS', strtotime($resource[$i]['datestring'])) .' </p>');
+            $this->toms_with_same_tomdate($resource[$i]['datestring']);
+        }
+    }
+    private function toms_with_same_tomdate($tomdate)
     {
         /*
         $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`tomato` WHERE `tomato`.`tomdate` LIKE :TOMDATE");
@@ -17,22 +42,40 @@ class showtomatoes extends conn
         $sth->execute();
         $resource = $sth->fetchall(PDO::FETCH_ASSOC);
         $size = sizeof($resource);
-       // print('<pre>Something');
-       // print_r($resource);
-      //  print('</pre>');
-        
+        /*
+        print('<pre>');
+        print_r($resource);
+        print('</pre>');
+        */
         print('<ul class="list-group tomatolist">');
         for ($i = 0; $i < $size; $i++) {
             print('<li class="list-group-item d-flex justify-content-between align-items-center border-0"><a data-toggle="collapse" href="#collapseExample'.$resource[$i]['id'].'" role="button" 
-            aria-expanded="false" aria-controls="collapseExample"><div class="titleBox">'.$resource[$i]['title'].'</div></a>'.$this->return_category_name_from_catid($resource[$i]['category']).'<span class="badge badge-primary badge-pill">' . ($resource[$i]['count'] / 2).' hrs</span></li>
-        <div class="collapse margin-bottom" id="collapseExample'.$resource[$i]['id'].'">
-        <div class="card card-body">');
+            aria-expanded="false" aria-controls="collapseExample"><div class="titleBox">'.$resource[$i]['title'].'</div></a>'.$this->return_category_name_from_catid($resource[$i]['category']).'<span class="badge badge-primary badge-pill">' . ($resource[$i]['count'] / 2).' hrs</span></li>');
+            print('<div class="collapse margin-bottom" id="collapseExample'.$resource[$i]['id'].'">');
+            $tomato = $this->return_single_tomato($resource[$i]['id']);
+            /*
             $tomato = $this->return_single_tomato_based_on_tomid($resource[$i]['id']);
-            $this->edit_single_tomato_form($tomato['id'], $tomato['userid'], $tomato['title'], $tomato['tomdate'], $tomato['tomweek'], $tomato['count'], $tomato['category_title'], $tomato['category_id'], $tomato['notes'], $tomato['url'], $tomato['keywords']);
-        print('</div>');
-      print('</div>');
+            print('<table class="table table-bordered tomatoedittable">');
+            print('<tr>');
+            print('<td>'.$tomato['category_title'].' ');
+            print('<a href="home.php?page=tomatoedit&tomid='.$tomato['id'].'"><img src="./images/edit1001.png" align="right"/></a>');
+            print('<a href="" data-toggle="modal" data-target="#delete'.$tomato['id'].'" class="delete_label"><img src="./images/delete1001.png" align="right"/></a></td>');
+            print('</tr>');
+            print('<tr><td>'.$tomato['title'].'</td></tr>');
+            print('<tr><td colspan="3"><p>'.$tomato['notes'].'</p>');
+            print('<ul>');
+            $this->cycle_through_keywords($tomato['keywords']);
+            print('</ul></td></tr>');
+            
+           // print('<tr><td><ul><li>asdfsdf</li><li>aasdfsdf</li></ul></td></tr>');
+            // "Are You Sure?" modal
+            $this->are_you_sure_delete_modal($resource[$i]['id'], $resource[$i]['title']);
+            print('</table>');
+            */
+            print('<p>Something</p>');
+            print('</div>');
         }
-        print('</ul>'); 
+        print('</ul>');
     }
 
 
@@ -89,5 +132,46 @@ class showtomatoes extends conn
         $resource = $sth->fetchall(PDO::FETCH_ASSOC);
         $categorytitle = $resource[0]['category'];
         return $categorytitle;
+    }
+    public function return_single_tomato($tomid)
+    {
+
+        $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`tomato` WHERE `tomato`.`id` = :TOMID");
+        $sth->bindParam(':TOMID', $tomid);
+        $sth->execute();
+        $resource = $sth->fetchall(PDO::FETCH_ASSOC);
+    
+        $resource_array['id'] = $resource[0]['id'];
+        $resource_array['userid'] = $resource[0]['userid'];
+        $resource_array['title'] = $resource[0]['title'];
+        $resource_array['tomdate'] = $resource[0]['tomdate'];
+        $resource_array['tomweek'] = $resource[0]['tomweek'];
+        $resource_array['count'] = $resource[0]['count'];
+        $resource_array['category_id'] = $resource[0]['category'];
+        $resource_array['category_title'] = $this->return_category_name_by_catid($resource[0]['category']);
+        $resource_array['notes'] = $resource[0]['notes'];
+        $resource_array['url'] = $resource[0]['URL'];
+    
+        $resource_array['keywords'] = $this->return_keywords_on_tomid($resource[0]['id']);
+        return $resource_array;
+    }
+
+    public function return_category_name_by_catid($catid)
+    {
+        $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`category` WHERE `category`.`id` = :CATID ORDER BY `id` DESC");
+        $sth->bindParam(':CATID', $catid);
+        $sth->execute();
+        $resource = $sth->fetchall(PDO::FETCH_ASSOC);
+        $categorytitle = $resource[0]['category'];
+        return $categorytitle;
+    }
+
+    public function return_keywords_on_tomid($tomid)
+    {
+        $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`link_tom_to_keywords` WHERE `link_tom_to_keywords`.`tom_id` = :TOMID ORDER BY `link_tom_to_keywords`.`timestamp` DESC");
+        $sth->bindParam(':TOMID', $tomid);
+        $sth->execute();
+        $resource = $sth->fetchall(PDO::FETCH_ASSOC);
+        return $resource;
     }
 }

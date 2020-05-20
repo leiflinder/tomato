@@ -19,4 +19,4 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
       <![endif]-->
    </head>
-   <body class="modal-open-noscroll">
+   <body class="modal-open-noscroll" onload="updateCalendar(); setInterval('updateCalendar()', 1000 )">

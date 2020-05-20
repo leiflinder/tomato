@@ -2,6 +2,7 @@
 class edittomato extends conn
 {
     private $defaultWeekNumber;
+    
     public function default_week_setting()
     {
         $currentWeekNumber = date('Y') . "-W" . date('W');
@@ -98,6 +99,7 @@ class edittomato extends conn
             print('<a href="home.php?page=tomatoedit&tomid='.$tomato['id'].'"><img src="./images/edit1001.png" align="right"/></a>');
             print('<a href="" data-toggle="modal" data-target="#delete'.$tomato['id'].'" class="delete_label"><img src="./images/delete1001.png" align="right"/></a></td>');
             print('</tr>');
+            print('<tr><td>'.$tomato['title'].'</td></tr>');
             print('<tr><td colspan="3"><p>'.$tomato['notes'].'</p>');
             print('<ul>');
             $this->cycle_through_keywords($tomato['keywords']);

@@ -60,9 +60,12 @@ function week_value_from_week_table(){{
       </div>';
 
     // Date
+    // the initial value is created by Javascript
+    // date value is constantly updating and alway fresh
+    // date value inserted on id="MachineDate"
         echo'<div class="form-group">
         <label for="tomatoDate_FormElement">Date</label>
-        <input type="date" name="date" class="form-control" id="tomatoDate_FormElement" aria-describedby="dateHelp" placeholder="Date" value="'.date('Y-m-d').'">
+        <input type="date" name="date" class="form-control" id="MachineDate" aria-describedby="dateHelp" placeholder="Date">
         <small id="dateHelp" class="form-text text-muted">Enter date of tomato.</small>
       </div>';
 
