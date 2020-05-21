@@ -323,9 +323,6 @@ class edittomato extends conn
         print('<div class="circuit">');
         print('<table>');
         print('<tr><td style="width:150px;">Keywords :</td><td></td></tr>');
-        // list of keywords assciated with category
-        //$this->return_keywords_linked_to_category($category_id);
-        //$keywords = $this->return_keywords_based_on_tomid($tomid);
         for ($i=0;$i<sizeof($keywords);$i++) {
             print('<tr><td></td><td>'.$this->return_keyword_name_by_keword_id($keywords[$i]['keyword_id']).'</td></tr>');
         }
@@ -342,9 +339,37 @@ class edittomato extends conn
     echo '</div>';
         print('<button type="submit" class="btn btn-primary">Submit</button>');
         print('</form><br/<br/>');
+        print('<p><a href="" class="delete_link" data-toggle="modal" data-target="#delete_tomato_'.$tomid.'">[delete]</a></p>');
+        $this->tomato_delete_module($tomid);
     }
 
     /// update queries ///
+
+    private function tomato_delete_module($tomato_id){
+        print('<div class="modal fade" id="delete_tomato_'.$tomato_id.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+             <p><strong>Are you Sure?</strong></p>
+             <p>Delete #'.$tomato_id.'</p>
+            </div>
+            <div class="modal-footer">
+            <form method=POST action="bounce.tomato.delete.php">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <input type="hidden" value="'.$tomato_id.'" name="tomatoid">
+              <button type="submit" class="btn btn-danger">Delete</button>
+              <form>
+            </div>
+          </div>
+        </div>
+      </div>');
+    }
 
     public function update_title($tomid, $userid, $title)
     {

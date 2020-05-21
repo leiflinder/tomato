@@ -33,9 +33,7 @@ class showtomatoes extends conn
     }
     private function toms_with_same_tomdate($tomdate)
     {
-        /*
-        $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`tomato` WHERE `tomato`.`tomdate` LIKE :TOMDATE");
-        */
+
         $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`tomato` WHERE `tomato`.`datestring` LIKE :TOMDATE");
 
         $sth->bindParam(':TOMDATE', $tomdate);
@@ -49,31 +47,7 @@ class showtomatoes extends conn
         */
         print('<ul class="list-group tomatolist">');
         for ($i = 0; $i < $size; $i++) {
-            print('<li class="list-group-item d-flex justify-content-between align-items-center border-0"><a data-toggle="collapse" href="#collapseExample'.$resource[$i]['id'].'" role="button" 
-            aria-expanded="false" aria-controls="collapseExample"><div class="titleBox">'.$resource[$i]['title'].'</div></a>'.$this->return_category_name_from_catid($resource[$i]['category']).'<span class="badge badge-primary badge-pill">' . ($resource[$i]['count'] / 2).' hrs</span></li>');
-            print('<div class="collapse margin-bottom" id="collapseExample'.$resource[$i]['id'].'">');
-            $tomato = $this->return_single_tomato($resource[$i]['id']);
-            /*
-            $tomato = $this->return_single_tomato_based_on_tomid($resource[$i]['id']);
-            print('<table class="table table-bordered tomatoedittable">');
-            print('<tr>');
-            print('<td>'.$tomato['category_title'].' ');
-            print('<a href="home.php?page=tomatoedit&tomid='.$tomato['id'].'"><img src="./images/edit1001.png" align="right"/></a>');
-            print('<a href="" data-toggle="modal" data-target="#delete'.$tomato['id'].'" class="delete_label"><img src="./images/delete1001.png" align="right"/></a></td>');
-            print('</tr>');
-            print('<tr><td>'.$tomato['title'].'</td></tr>');
-            print('<tr><td colspan="3"><p>'.$tomato['notes'].'</p>');
-            print('<ul>');
-            $this->cycle_through_keywords($tomato['keywords']);
-            print('</ul></td></tr>');
-            
-           // print('<tr><td><ul><li>asdfsdf</li><li>aasdfsdf</li></ul></td></tr>');
-            // "Are You Sure?" modal
-            $this->are_you_sure_delete_modal($resource[$i]['id'], $resource[$i]['title']);
-            print('</table>');
-            */
-            print('<p>Something</p>');
-            print('</div>');
+            print('<li class="list-group-item d-flex justify-content-between align-items-center border-0"><a href="home.php?page=tomatoedit&tomid='.$resource[$i]['id'].'"><div class="titleBox">'.$resource[$i]['title'].'</div></a>'.$this->return_category_name_from_catid($resource[$i]['category']).'<span class="badge badge-primary badge-pill">' . ($resource[$i]['count'] / 2).' hrs</span></li>');
         }
         print('</ul>');
     }
