@@ -23,11 +23,17 @@ if (isset($_POST)) {
           //  print('<p>'.$title.'</p>');
         }
 
-        if (isset($_POST['date'])) {
-            $date = $_POST['date'];
+
+
+        // machanism to use default javascript date or manually set date in past
+        if("" == trim($_POST['back_date'])){
+            $date = $_POST['machine_date'];
             $date = filter_var($date, FILTER_SANITIZE_STRING);
-          //  print('<p>'.$tomdate.'</p>');
+        }else{
+            $date = $_POST['back_date'];
+            $date = filter_var($date, FILTER_SANITIZE_STRING);
         }
+
 
         if (isset($_POST['week'])) {
             $week = $_POST['week'];

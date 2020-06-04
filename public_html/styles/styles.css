@@ -433,3 +433,7 @@ body.modal-open-noscroll
 .tomatoedittable img{
 margin-left:14px;
 }
+
+.delete_link {
+ color:red;
+}

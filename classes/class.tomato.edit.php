@@ -339,7 +339,7 @@ class edittomato extends conn
     echo '</div>';
         print('<button type="submit" class="btn btn-primary">Submit</button>');
         print('</form><br/<br/>');
-        print('<p><a href="" class="delete_link" data-toggle="modal" data-target="#delete_tomato_'.$tomid.'">[delete]</a></p>');
+        print('<p>[<a href="" class="delete_link" data-toggle="modal" data-target="#delete_tomato_'.$tomid.'"> delete </a>]</p>');
         $this->tomato_delete_module($tomid);
     }
 
@@ -391,6 +391,16 @@ class edittomato extends conn
         // update tomdate
     }
     
+    public function update_datestring($tomid, $userid, $datestring)
+    {
+        $sth = $this->conn->prepare("UPDATE `tomato220`.`tomato` SET `tomato`.`datestring` = :DATESTRING WHERE `tomato`.`id` = :TOMID AND `tomato`.`userid`=:USERID");
+        $sth->bindParam(':TOMID', $tomid);
+        $sth->bindParam(':USERID', $userid);
+        $sth->bindParam(':DATESTRING', $datestring);
+        $sth->execute();
+        // update datestring
+    }
+
     public function update_tomweek($tomid, $userid, $tomweek)
     {
         $sth = $this->conn->prepare("UPDATE `tomato220`.`tomato` SET `tomato`.`tomweek` = :TOMWEEK WHERE `tomato`.`id` = :TOMID AND `tomato`.`userid`=:USERID");

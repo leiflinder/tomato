@@ -35,6 +35,9 @@ function week_value_from_week_table(){{
         print('<p><a href="home.php">Reset</a></p>');
 
         print('<form method="post" id="upload_form_tomato" action="bounce.tomato.create.php">');
+    
+       // print('<form method="post" id="upload_form_tomato" action="test02.php">');
+
         print('<input type="hidden" name="userid" value="'.$_SESSION['userid'].'">');
         print('<input type="hidden" name="tomato_submit" value="yes">');
 
@@ -63,13 +66,30 @@ function week_value_from_week_table(){{
     // the initial value is created by Javascript
     // date value is constantly updating and alway fresh
     // date value inserted on id="MachineDate"
-        echo'<div class="form-group">
+
+
+    echo '<input type="hidden" name="machine_date" id="MachineDate">';
+            // Count
+            echo'<div class="form-group">
+            <label for="tomatoCount_FormElement">Date</label>
+            <p><span id="DateDisplay"></span></p>
+            <p class="text-muted">Or select date in the past</p>
+           
+          </div>';
+
+          echo '<p>
+          <input type="checkbox" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Date in the past
+        </p>
+        <div class="collapse" id="collapseExample">
+        <div class="form-group">
         <label for="tomatoDate_FormElement">Date</label>
-        <input type="date" name="date" class="form-control" id="MachineDate" aria-describedby="dateHelp" placeholder="Date">
+        <input type="date" name="back_date" class="form-control" aria-describedby="dateHelp" placeholder="Date">
         <small id="dateHelp" class="form-text text-muted">Enter date of tomato.</small>
-      </div>';
+      </div>
+        </div>';
 
-
+       
      // Week
       echo'<div class="form-group">
       <label for="tomatoWeek_FormElement">Week</label>

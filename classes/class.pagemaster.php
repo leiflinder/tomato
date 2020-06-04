@@ -19,9 +19,9 @@ class pagemaster
                 $week = $date->format("W");
                 print('<h4><span class="badge badge-secondary">Week #'.$week.'</span></h4>');
                 
-               $edit_tomatos = new edittomato;
-               $edit_tomatos->pull_tomatos_by_default_this_week();
-                print('<hr/>');
+             //  $edit_tomatos = new edittomato;
+             //  $edit_tomatos->pull_tomatos_by_default_this_week();
+             //   print('<hr/>');
                 $page_display->pull_tomatos_this_week();
 
                 print('<br/>');

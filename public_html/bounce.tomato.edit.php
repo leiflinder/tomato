@@ -47,6 +47,8 @@ if(isset($_POST['tomdate'])){
   $tomdate = $_POST['tomdate'];
   $tomdate = filter_var($tomdate, FILTER_SANITIZE_STRING);
    $edit_tomato->update_tomdate($tomid, $userid, $tomdate);
+   // update both 'tomadate' and 'datestring'
+   $edit_tomato->update_datestring($tomid, $userid, $tomdate);
 }
 
 if(isset($_POST['tomweek'])){

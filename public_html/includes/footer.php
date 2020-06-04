@@ -164,6 +164,7 @@ function updateCalendar() {
     var currentDateString =  currentYear + "-" + currentMonthLZ + "-" + currentDate;
    // document.getElementById("MarchineDate").firstChild.nodeValue = currentDateString;
    document.getElementById("MachineDate").value = currentDateString;
+   document.getElementById("DateDisplay").innerHTML  = currentDateString;
 }
 </script>
 <script>
