@@ -47,7 +47,8 @@ class showtomatoes extends conn
         */
         print('<ul class="list-group tomatolist">');
         for ($i = 0; $i < $size; $i++) {
-            print('<li class="list-group-item d-flex justify-content-between align-items-center border-0"><a href="home.php?page=tomatoedit&tomid='.$resource[$i]['id'].'"><div class="titleBox">'.$resource[$i]['title'].'</div></a>'.$this->return_category_name_from_catid($resource[$i]['category']).'<span class="badge badge-primary badge-pill">' . ($resource[$i]['count'] / 2).' hrs</span></li>');
+            print('<li class="list-group-item d-flex justify-content-between align-items-center border-0"><a href="home.php?page=tomatoedit&tomid=1772'.$resource[$i]['id'].'" role="button" 
+            aria-expanded="false" aria-controls="collapseExample"><div class="titleBox">'.$resource[$i]['title'].'</div></a>'.$this->return_category_name_from_catid($resource[$i]['category']).'<span class="badge badge-primary badge-pill">' . ($resource[$i]['count'] / 2).' hrs</span></li>');
         }
         print('</ul>');
     }
