@@ -2,6 +2,7 @@
 $_SESSION['userid']=1001;
 date_default_timezone_set('Europe/Oslo');
 error_reporting(E_ALL);
+$_SESSION['timer_window']="none";
 ?>
 <?php
 include ("../classes/config/class.conn.php");

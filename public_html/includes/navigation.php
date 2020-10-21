@@ -64,7 +64,7 @@
             print($setup_section_menu->setup_section_menu_achors());
          ?>
          </div>
-
+      </li>
       </li>
     </ul>
   </div>

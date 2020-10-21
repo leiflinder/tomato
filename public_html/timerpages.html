@@ -1,0 +1,32 @@
+https://github.com/bgall/qualtrics_countdown_example
+    
+    https://stackoverflow.com/questions/27726225/how-do-i-create-a-countdown-timer-that-persists-when-i-browse-to-other-pages-of
+    
+    function delayedMessge(callback) {
+        Meteor.setTimeout(function() {
+            callback(null, true)
+        }, 1000)
+    }
+
+    var wrappedDelayedMessage = Async.wrap(delayedMessge);
+
+    Meteor.methods({
+        'abc': function() {
+            var response = wrappedDelayedMessage();
+            return response;
+        }
+    });
+
+    Template.start.events({
+
+    'click .start': function() {
+
+        Meteor.call('abc', function(error, response){
+            var timeup = response
+            //I'm setting this session to true, then in a helper
+            //that isn't shown here, I'm getting the Session and
+            //which displays the template
+            Session.set('done', timeup)
+        });
+      }
+    })
