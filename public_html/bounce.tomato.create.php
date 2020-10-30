@@ -32,6 +32,13 @@ if (isset($_POST)) {
         }else{
             $date = $_POST['back_date'];
             $date = filter_var($date, FILTER_SANITIZE_STRING);
+            // if date in past, change week number!!!
+            $ddate = $date;
+            // backdate year
+            $backdateYear = substr($ddate, 0, -6); 
+            $dateObject = new DateTime($ddate);
+            // build up tomweek value
+            $_POST['week'] = $backdateYear."-W".$dateObject->format("W");
         }
 
 

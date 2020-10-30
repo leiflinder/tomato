@@ -1,3 +1,5 @@
-Display tomatoes by string date (problem with showing tomatoes on wrong day)
-Tomato Edt Keyword ajax does not work
-Keywords on keyword page make alphabetical
+Enter week number based on selected date, if selected date is in past.
+Problem with tomato having current week number even if tomato was intended to be from previous week.
+
+Make tile value also be descrition value by default.
+

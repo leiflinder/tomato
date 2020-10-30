@@ -22,12 +22,14 @@ public function today_date(){
 
 }
 
+/*
 function week_value_from_week_table(){{
     $currentWeekNumber = date('Y')."-W".date('W');
     $this->defaultWeekNumber=$currentWeekNumber;
 }$week = $sth->fetchColumn();
     $this->week_value_from_db = $week;
 }
+*/
 
     public function upload_form_tomato(){
         // set default "week" and send upstairs
