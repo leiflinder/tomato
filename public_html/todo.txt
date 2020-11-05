@@ -1,5 +1,13 @@
-Enter week number based on selected date, if selected date is in past.
-Problem with tomato having current week number even if tomato was intended to be from previous week.
-
 Make tile value also be descrition value by default.
+
+When modifying tomato value the leading zero missing from date
+
+Make days display by day-of-week
+
+Ajax keywords do not appear when modifying tomato category
+
+Fix category delete
+
+Daily hour count. Success color at eight hours.
+
 

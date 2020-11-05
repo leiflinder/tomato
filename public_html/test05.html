@@ -1,0 +1,27 @@
+
+
+I have a button, when I click on it a form is shown, It has and input field name, I am trying to display input field value in a another div after submitting the form. But I am unable to do it. What I am doing wrong?.
+
+<!DOCTYPE html>
+<html>
+  <head>
+   <script>
+        function showDiv() {
+            document.getElementById('hello').style.display = "block";
+        }
+        function showValue(){
+            var name = document.getElementById('name').value;
+            document.getElementById('ans').innerHTML = name;
+        }
+   </script>
+  </head>
+  <body>
+    <input type="button" onclick="showDiv()" value="click on me"/>  
+    <form id="hello"  style="display:none;">
+        <label>Enter Name: </label><br>
+        <input type="text" id="name" required>
+        <input type="submit" value="submit" onclick="showValue()">
+    </form>
+    <div id="ans"></div>
+  </body>
+</html>
