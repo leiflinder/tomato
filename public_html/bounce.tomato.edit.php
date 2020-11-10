@@ -39,8 +39,7 @@ if(isset($_POST['userid'])){
 if(isset($_POST['title'])){
    $title = $_POST['title'];
    $title = filter_var($title, FILTER_SANITIZE_STRING);
-  // print('<p>'.$title.'</p>' );
-    $edit_tomato->update_title($tomid, $userid, $title);
+   $edit_tomato->update_title($tomid, $userid, $title);
 }
 
 if(isset($_POST['tomdate'])){
@@ -106,11 +105,10 @@ if(isset($_POST['keywords'])){
        // do nothing
 }
  header("Location: home.php?page=tomato&message=$message&alert=$alert");
-/*
-print('<pre>');
-print_r($_POST);
-print('</pre>');
-*/
+ 
+// print('<pre>');
+// print_r($_POST);
+// print('</pre>');
 ?>
 
 

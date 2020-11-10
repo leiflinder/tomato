@@ -18,6 +18,12 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
       <![endif]-->
    </head>
+   <script>
+function Populate_Description_Function() {
+  var x = document.getElementById("tomatoTitle_FormElement").value;
+  document.getElementById("tomatoDescription_FormElement").innerHTML = x;
+}
+</script>
 <!--
    <script>
    function tomato_timer(){

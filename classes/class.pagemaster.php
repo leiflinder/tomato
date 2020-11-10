@@ -28,6 +28,10 @@ class pagemaster
                 print('<h4><span class="badge badge-secondary">Goals</span></h4>');
                 $goals = new setupgoals;
                 $goals->show_goals();
+
+                // try this new functon
+                $page_display->show_days_of_week();
+
                 break;
 
 

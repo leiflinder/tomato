@@ -22,15 +22,6 @@ public function today_date(){
 
 }
 
-/*
-function week_value_from_week_table(){{
-    $currentWeekNumber = date('Y')."-W".date('W');
-    $this->defaultWeekNumber=$currentWeekNumber;
-}$week = $sth->fetchColumn();
-    $this->week_value_from_db = $week;
-}
-*/
-
     public function upload_form_tomato(){
         // set default "week" and send upstairs
         $this->default_week_setting();
@@ -47,7 +38,7 @@ function week_value_from_week_table(){{
     // Title
        echo'<div class="form-group">
         <label for="tomatoTitle_FormElement">Title</label>
-        <input type="text" name="title" class="form-control" id="tomatoTitle_FormElement" aria-describedby="titleHelp" placeholder="Tomato Title">
+        <input type="text" name="title" class="form-control" id="tomatoTitle_FormElement" aria-describedby="titleHelp" placeholder="Tomato Title" oninput=Populate_Description_Function()>
         <small id="titleHelp" class="form-text text-muted">Keep it short and sweet.</small>
       </div>';
 
@@ -127,6 +118,10 @@ function week_value_from_week_table(){{
     }
 
         function upload_tomato_with_keyword_array($userid,$title,$tomdate,$tomweek,$count,$category,$notes,$url, $keywords){
+            // create string date with leading zero
+            $split_date = explode('-', $tomdate);
+            // format with sprintf
+            $date_string = sprintf("%04d-%02d-%02d", $split_date[0], $split_date[1], $split_date[2]);
            // $this->datestring();
             $stmt = $this->conn->prepare("INSERT INTO `tomato220`.`tomato` (
                 `tomato`.`id`,
@@ -157,7 +152,7 @@ function week_value_from_week_table(){{
             $stmt->bindParam(':title', $title, PDO::PARAM_STR);
             $stmt->bindParam(':tomdate', $tomdate, PDO::PARAM_STR);
            // $stmt->bindParam(':datestring', $this->datestring, PDO::PARAM_STR);
-           $stmt->bindParam(':datestring', $tomdate, PDO::PARAM_STR);
+           $stmt->bindParam(':datestring', $date_string, PDO::PARAM_STR);
             $stmt->bindParam(':week', $tomweek, PDO::PARAM_STR);
             $stmt->bindParam(':count', $count, PDO::PARAM_INT);
             $stmt->bindParam(':category', $category, PDO::PARAM_INT);

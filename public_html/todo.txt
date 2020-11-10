@@ -1,7 +1,3 @@
-Make tile value also be descrition value by default.
-
-When modifying tomato value the leading zero missing from date
-
 Make days display by day-of-week
 
 Ajax keywords do not appear when modifying tomato category

@@ -149,4 +149,18 @@ class showtomatoes extends conn
         $resource = $sth->fetchall(PDO::FETCH_ASSOC);
         return $resource;
     }
+
+    public function show_days_of_week(){
+        $this->default_week_setting();
+        $day_of_week = date('N', strtotime('Monday'));
+        print('<h3>'.$day_of_week.'</h3>');
+        print('<h3>Week Number: '.$this->defaultWeekNumber.'</h3>');
+        print('<h3>Monday</h3>');
+        print('<h3>Tuesday</h3>');
+        print('<h3>Wednesday</h3>');
+        print('<h3>Thursday</h3>');
+        print('<h3>Friday</h3>');
+        print('<h3>Saturday</h3>');
+        print('<h3>Sunday</h3>');
+    }
 }
