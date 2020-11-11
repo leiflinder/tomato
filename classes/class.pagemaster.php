@@ -184,27 +184,9 @@ class pagemaster
             case "setup":
                 message();
                 print('<h4>Setup</h4>');
-               // $this->setup();
-               /*
-               if (isset($_GET['function'])) {
-                   print('<p>Function used in URL parameter</p>');
-                   print('<p>'.$_GET['function'].'</p>');
-                   if ($_GET['function']=="setupweeklygoals") {
-                       $setup = new setupgoals;
-                       // $setup->form_set_weekly_goals();
-                       // $goals_array = $setup->make_goals_array();
-                       // print('<pre>');
-                       //  print_r($goals_array);
-                       // print('</pre>');
-                       $setup->make_goals_array();
-                   } else {
-                       print('<p>function not defined</p>');
-                   }
-               }
-               */
                 break;
             default:
-                echo "page has not been defined";
+                echo "<p>page has not been defined</p>";
                 // $this->index_page();
         }
     }

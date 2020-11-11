@@ -156,6 +156,12 @@ class showtomatoes extends conn
         print('<h3>'.$day_of_week.'</h3>');
         print('<h3>Week Number: '.$this->defaultWeekNumber.'</h3>');
         print('<h3>Monday</h3>');
+       //
+        $integer = 0;
+        //$integer = idate('w', $timestamp);
+       // $integer = idate('w', "2020-11-09");
+       // $timestamp = strtotime('2020-11-09'); //107291520
+        print('<p>'.$timestamp.'</p>');
         print('<h3>Tuesday</h3>');
         print('<h3>Wednesday</h3>');
         print('<h3>Thursday</h3>');

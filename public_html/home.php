@@ -41,6 +41,7 @@ include ('../classes/class.tomato.delete.php');
 include ('../classes/class.view.day.php');
 include ('../classes/class.view.week.php');
 // include ('../classes/class.view.week2.php');
+include ('../classes/class.setup.setup.php');
 
 include ('./includes/header.php');
 include ('./includes/navigation2.php');
