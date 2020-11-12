@@ -2,6 +2,7 @@
 class showtomatoes extends conn
 {
     private $defaultWeekNumber;
+    private $daynumber = array(1=>'Monday',2=>'Tuesday',3=>'Wednesday',4=>'Thursday',5=>'Friday',6=>'Saturday',7=>'Sunday');
     
     public function default_week_setting()
     {
@@ -150,23 +151,88 @@ class showtomatoes extends conn
         return $resource;
     }
 
+    private function get_toms_by_DOW_and_weekno($DOW, $weekno){
+        /*
+        $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`tomato` WHERE `tomato`.`tomweek` LIKE :TOMWEEK AND `tomato`.`weekdayno` like :WEEKDAYNO LIMIT 1");
+        */
+        /*
+        $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`tomato` WHERE `tomato`.`weekdayno` = :WEEKDAYNO AND `tomato`.`tomweek` LIKE :TOMWEEK ORDER BY `id` DESC");
+        */
+        $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`tomato` WHERE `tomato`.`weekdayno` = :WEEKDAYNO AND `tomato`.`tomweek` LIKE :TOMWEEK ORDER BY `id` DESC");
+
+        $sth->bindParam(':TOMWEEK', $weekno);
+        $sth->bindParam(':WEEKDAYNO', $DOW);
+        $sth->execute();
+        $resource = $sth->fetchall(PDO::FETCH_ASSOC);
+        $size = sizeof($resource);
+        print('<div class="days">');
+        print('<table class="table">');
+        for($i = 0; $i < $size; $i++) {
+            $title = $resource[$i]['title'];
+            $category = $resource[$i]['category'];
+            $count = $resource[$i]['count'];
+           print('<tr>');
+          print('<td><span>'.$title.'</span></td>');
+           print('<td><span>'.$this->return_category_name_by_catid($category).'</span></td>');
+           print('<td><span>'.$resource[$i]['count'].'</span></td>');
+           print('</tr>');
+        }
+           print('<tr><td>&nbsp;</td><td><span>Hours</span></td><td><span>'.$this->day_totals($DOW, $weekno).'<span></td></tr>');
+           print('</table>');
+           print('</div>');   ;
+    }
+
     public function show_days_of_week(){
         $this->default_week_setting();
-        $day_of_week = date('N', strtotime('Monday'));
-        print('<h3>'.$day_of_week.'</h3>');
-        print('<h3>Week Number: '.$this->defaultWeekNumber.'</h3>');
-        print('<h3>Monday</h3>');
-       //
-        $integer = 0;
-        //$integer = idate('w', $timestamp);
-       // $integer = idate('w', "2020-11-09");
-       // $timestamp = strtotime('2020-11-09'); //107291520
-        print('<p>'.$timestamp.'</p>');
-        print('<h3>Tuesday</h3>');
-        print('<h3>Wednesday</h3>');
-        print('<h3>Thursday</h3>');
-        print('<h3>Friday</h3>');
-        print('<h3>Saturday</h3>');
-        print('<h3>Sunday</h3>');
+        $size = sizeof($this->daynumber);
+        for($i=1;$i<=$size;$i++){
+            $daynumber = $this->daynumber[$i];
+            $thisweek = $this->defaultWeekNumber;
+            print('<h3>'.$daynumber.'</h3>');
+            $this->get_toms_by_DOW_and_weekno($i, $thisweek);
+        }
+    }
+
+    private function day_totals($DOW, $weekno){
+        $sth = $this->conn->prepare("SELECT SUM(`tomato`.`count`) FROM `tomato220`.`tomato` WHERE `tomato`.`weekdayno` = :WEEKDAYNO AND `tomato`.`tomweek` LIKE :TOMWEEK");
+        $sth->bindParam(':TOMWEEK', $weekno);
+        $sth->bindParam(':WEEKDAYNO', $DOW);
+        $sth->execute();
+        $resource = $sth->fetch();
+        return $resource[0];
+    }
+
+    private function today_totals($datestring){
+        $sth = $this->conn->prepare("SELECT SUM(`tomato`.`count`) FROM `tomato220`.`tomato` WHERE `tomato`.`datestring` = '2020-11-11'");
+        $sth->bindParam(':DATESTRING', $datestring);
+        $sth->execute();
+        $resource = $sth->fetch();
+        return $resource[0];
+    }
+
+    public function today_values($datestring){
+        $datestring = $this->todaydate();
+        $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`tomato` WHERE `tomato`.`datestring` LIKE '2020-11-11' ORDER BY `id` DESC");
+        $sth->bindParam(':DATESTRING', $datestring);
+        $sth->execute();
+        $resource = $sth->fetchall(PDO::FETCH_ASSOC);
+        $size = sizeof($resource);
+        $totaltoms = $this->today_totals($datestring);
+        print('<h3>Today</h3>');
+        print('<div class="days">');
+        print('<table class="table">');
+        for($i = 0; $i < $size; $i++) {
+            $title = $resource[$i]['title'];
+            $category = $resource[$i]['category'];
+            $count = $resource[$i]['count'];
+           print('<tr>');
+          print('<td><span>'.$title.'</span></td>');
+           print('<td><span>'.$this->return_category_name_by_catid($category).'</span></td>');
+           print('<td><span>'.$resource[$i]['count'].'</span></td>');
+           print('</tr>');
+        }
+           print('<tr><td>&nbsp;</td><td><span>Hours</span></td><td><span>'.$totaltoms.'<span></td></tr>');
+           print('</table>');
+           print('</div>');   ;
     }
 }

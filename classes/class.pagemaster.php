@@ -15,10 +15,13 @@ class pagemaster
                 print('</div>');
                 print('<hr/>');
                 $page_display = new showtomatoes;
+                $page_display->today_values('2020-11-11');
                 $date = new DateTime();
                 $week = $date->format("W");
                 print('<h4><span class="badge badge-secondary">Week #'.$week.'</span></h4>');
-                
+                // try this new functon
+                $page_display->show_days_of_week();  
+
              //  $edit_tomatos = new edittomato;
              //  $edit_tomatos->pull_tomatos_by_default_this_week();
              //   print('<hr/>');
@@ -28,9 +31,6 @@ class pagemaster
                 print('<h4><span class="badge badge-secondary">Goals</span></h4>');
                 $goals = new setupgoals;
                 $goals->show_goals();
-
-                // try this new functon
-                $page_display->show_days_of_week();
 
                 break;
 
@@ -184,6 +184,8 @@ class pagemaster
             case "setup":
                 message();
                 print('<h4>Setup</h4>');
+                $set = new setup;
+                $set->set_timestamp_by_datestring();
                 break;
             default:
                 echo "<p>page has not been defined</p>";

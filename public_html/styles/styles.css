@@ -437,3 +437,18 @@ margin-left:14px;
 .delete_link {
  color:red;
 }
+
+.days {
+  margin-bottom: 30px;
+}
+.days .table tr td {
+  border:dashed;
+  color:#ccc;
+  width:1px;
+}
+.days .table tr td span {
+  color:black;
+  font-size:100%;
+}
+
+

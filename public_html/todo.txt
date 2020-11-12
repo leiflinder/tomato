@@ -6,4 +6,6 @@ Fix category delete
 
 Daily hour count. Success color at eight hours.
 
+Delete Tomato bounce page
+
 

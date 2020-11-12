@@ -118,15 +118,16 @@ if (isset($_POST)) {
             $message ="Tomato was not created";
             $alert = "danger";
         }
-      //  header("Location: home.php?page=tomato&message=$message&alert=$alert");
+        header("Location: home.php?page=tomato&message=$message&alert=$alert");
     } else {
         $message ="There was a problem";
         $alert = "danger";
-      //  header("Location: home.php?page=tomato&message=$message&alert=$alert");
+        header("Location: home.php?page=tomato&message=$message&alert=$alert");
     }
 
 }
 
+/*
 $split_date = explode('-', $date);
 print('<pre>');
 print_r($split_date);
@@ -142,4 +143,7 @@ print('<h2>Spintf Date: '.$date_string.'</h2>');
 print('<pre>');
 print_r($_POST);
 print('</pre>');
+*/
+
+
 ?>

@@ -2,7 +2,7 @@
 class setup extends conn{
 
 function set_timestamp_by_datestring(){
-    $sth = $this->conn->prepare("SELECT `tomato`.`id`,`tomato`.`datestring` FROM `tomato220`.`tomato`");
+    $sth = $this->conn->prepare("SELECT `tomato`.`id`,`tomato`.`datestring` FROM `tomato220`.`tomato` ORDER BY `tomato`.`id` DESC LIMIT 1");
     $sth->execute();
     $resource = $sth->fetchall(PDO::FETCH_ASSOC);
     $size = sizeof($resource);

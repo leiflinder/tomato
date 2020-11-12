@@ -122,25 +122,34 @@ public function today_date(){
             $split_date = explode('-', $tomdate);
             // format with sprintf
             $date_string = sprintf("%04d-%02d-%02d", $split_date[0], $split_date[1], $split_date[2]);
+            // create timestamp from $datestring
+            $timestamp = strtotime($date_string);
            // $this->datestring();
+           // day of week number
+           $weekdayno = idate('w', $timestamp);
+
             $stmt = $this->conn->prepare("INSERT INTO `tomato220`.`tomato` (
                 `tomato`.`id`,
                 `tomato`.`userid`,
                 `tomato`.`title`,
                 `tomato`.`tomdate`,
                 `tomato`.`datestring`,
+                `tomato`.`timestamp`,
+                `tomato`.`weekdayno`,
                 `tomato`.`tomweek`,
                 `tomato`.`count`,
                 `tomato`.`category`,
                 `tomato`.`notes`,
                 `tomato`.`URL`,
-                `tomato`.`timestamp`
+                `tomato`.`nowstamp`
                 )VALUES (
                     NULL,
                     :userid,
                     :title,
                     :tomdate,
                     :datestring,
+                    :timestamp,
+                    :weekdayno,
                     :week,
                     :count,
                     :category,
@@ -153,6 +162,8 @@ public function today_date(){
             $stmt->bindParam(':tomdate', $tomdate, PDO::PARAM_STR);
            // $stmt->bindParam(':datestring', $this->datestring, PDO::PARAM_STR);
            $stmt->bindParam(':datestring', $date_string, PDO::PARAM_STR);
+           $stmt->bindParam(':timestamp', $timestamp, PDO::PARAM_STR);
+           $stmt->bindParam(':weekdayno', $weekdayno, PDO::PARAM_STR);
             $stmt->bindParam(':week', $tomweek, PDO::PARAM_STR);
             $stmt->bindParam(':count', $count, PDO::PARAM_INT);
             $stmt->bindParam(':category', $category, PDO::PARAM_INT);
