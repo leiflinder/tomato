@@ -8,7 +8,10 @@ class pagemaster
             //// ***** TOMATO PAGES ***** ////
             case "tomato":
                 message();
+                /*
                 print('<p><a class="btn btn-primary hundred_percent_width" data-toggle="collapse" href="#TomatoMaker" role="button" aria-expanded="false" aria-controls="collapseExample">Create Tomato</a>');
+                */
+                print('<p align="right"><a href="#TomatoMaker" aria-controls="collapseExample" data-toggle="collapse">+ Add Tomato</a></p>');
                 print('<div class="collapse" id="TomatoMaker">');
                 $tomato_form = new addtomato;
                 $tomato_form->upload_form_tomato();
@@ -84,7 +87,8 @@ class pagemaster
 
                 $generic= new viewweek;
                 // week_number_only() sets week number for object, then genreic_time_view() creates all the object properties based on that week number
-
+                $generic->testsvg(200);
+                $generic->sixtytoms();
                 $generic->week_number_only();
                 print('<p>'.$generic->week_formated_like_database.'</p>');
                 $generic->generic_time_view();
@@ -135,40 +139,11 @@ class pagemaster
                print('<p>'.$generic->week_formated_like_database.'</p>');
                $generic->generic_time_view();
 
-
-
                 break;
 
             case "index":
                 message();
                 print('<p>Home</p>');
-                /*
-                print('<p><a class="btn btn-primary hundred_percent_width" data-toggle="collapse" href="#TomatoMaker" role="button" aria-expanded="false" aria-controls="collapseExample">Create Tomato</a>');
-                print('<div class="collapse" id="TomatoMaker">');
-                $tomato_form = new addtomato;
-                $tomato_form->upload_form_tomato();
-                print('</div>');
-                print('<hr/>');
-                $page_display = new showtomatoes;
-                $date = new DateTime();
-                $week = $date->format("W");
-                print('<h4><span class="badge badge-secondary">Week #'.$week.'</span></h4>');
-                $edit_tomatos = new edittomato;
-                if (isset($_GET['tomid'])) {
-                    if (filter_var($_GET['tomid'], FILTER_VALIDATE_INT) === false) {
-                        print('<div class="alert alert-danger" role="alert">
-                        Danger. Tomato ID not integer.</div>');
-                    } else {
-                        $tomato = $edit_tomatos->return_single_tomato_based_on_tomid($_GET['tomid']);
-                        $edit_tomatos->edit_single_tomato_form($tomato['id'], $tomato['userid'], $tomato['title'], $tomato['tomdate'], $tomato['tomweek'], $tomato['count'], $tomato['category_title'], $tomato['category_id'], $tomato['notes'], $tomato['url'], $tomato['keywords']);
-                    }
-                }
-                $edit_tomatos->pull_tomatos_by_default_this_week();
-                print('<br/>');
-                print('<h4><span class="badge badge-secondary">Goals</span></h4>');
-                $goals = new setupgoals;
-                $goals->show_goals();
-                */
                 break;
 
     case "categories":

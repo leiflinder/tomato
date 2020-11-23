@@ -152,14 +152,7 @@ class showtomatoes extends conn
     }
 
     private function get_toms_by_DOW_and_weekno($DOW, $weekno){
-        /*
-        $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`tomato` WHERE `tomato`.`tomweek` LIKE :TOMWEEK AND `tomato`.`weekdayno` like :WEEKDAYNO LIMIT 1");
-        */
-        /*
         $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`tomato` WHERE `tomato`.`weekdayno` = :WEEKDAYNO AND `tomato`.`tomweek` LIKE :TOMWEEK ORDER BY `id` DESC");
-        */
-        $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`tomato` WHERE `tomato`.`weekdayno` = :WEEKDAYNO AND `tomato`.`tomweek` LIKE :TOMWEEK ORDER BY `id` DESC");
-
         $sth->bindParam(':TOMWEEK', $weekno);
         $sth->bindParam(':WEEKDAYNO', $DOW);
         $sth->execute();
@@ -171,13 +164,15 @@ class showtomatoes extends conn
             $title = $resource[$i]['title'];
             $category = $resource[$i]['category'];
             $count = $resource[$i]['count'];
+            $id = $resource[$i]['id'];
            print('<tr>');
-          print('<td><span>'.$title.'</span></td>');
-           print('<td><span>'.$this->return_category_name_by_catid($category).'</span></td>');
-           print('<td><span>'.$resource[$i]['count'].'</span></td>');
+          print('<td><span><a href="home.php?page=tomatoedit&tomid='.$id.'">'.$title.'</a></span></td>');
+           print('<td class="category_td"><span>'.$this->return_category_name_by_catid($category).'</span></td>');
+           print('<td class="tomcount_td"><span>'.$resource[$i]['count'].'</span></td>');
            print('</tr>');
         }
-           print('<tr><td>&nbsp;</td><td><span>Hours</span></td><td><span>'.$this->day_totals($DOW, $weekno).'<span></td></tr>');
+          $total_in_hours = .5*$this->day_totals($DOW, $weekno);
+           print('<tr><td>&nbsp;</td><td class="category_td"><span>Hours</span></td><td class="tomcount_td"><span>'.$total_in_hours.'<span></td></tr>');
            print('</table>');
            print('</div>');   ;
     }
@@ -203,36 +198,41 @@ class showtomatoes extends conn
     }
 
     private function today_totals($datestring){
-        $sth = $this->conn->prepare("SELECT SUM(`tomato`.`count`) FROM `tomato220`.`tomato` WHERE `tomato`.`datestring` = '2020-11-11'");
+        $sth = $this->conn->prepare("SELECT SUM(`tomato`.`count`) FROM `tomato220`.`tomato` WHERE `tomato`.`datestring` = :DATESTRING");
         $sth->bindParam(':DATESTRING', $datestring);
         $sth->execute();
         $resource = $sth->fetch();
         return $resource[0];
     }
 
-    public function today_values($datestring){
-        $datestring = $this->todaydate();
-        $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`tomato` WHERE `tomato`.`datestring` LIKE '2020-11-11' ORDER BY `id` DESC");
+    public function today_values(){
+       // $datestring = $this->todaydate();
+       $datestring = $this->todaydate();
+        $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`tomato` WHERE `tomato`.`datestring` LIKE :DATESTRING ORDER BY `id` DESC");
         $sth->bindParam(':DATESTRING', $datestring);
         $sth->execute();
         $resource = $sth->fetchall(PDO::FETCH_ASSOC);
         $size = sizeof($resource);
+        // run seperate query to get total toms
         $totaltoms = $this->today_totals($datestring);
-        print('<h3>Today</h3>');
+        print('<h3>Today '.$this->todaydate().'</h3>');
         print('<div class="days">');
         print('<table class="table">');
         for($i = 0; $i < $size; $i++) {
             $title = $resource[$i]['title'];
             $category = $resource[$i]['category'];
             $count = $resource[$i]['count'];
+            $id = $resource[$i]['id'];
            print('<tr>');
-          print('<td><span>'.$title.'</span></td>');
-           print('<td><span>'.$this->return_category_name_by_catid($category).'</span></td>');
-           print('<td><span>'.$resource[$i]['count'].'</span></td>');
+          print('<td><span><a href="home.php?page=tomatoedit&tomid='.$id.'">'.$title.'</a></span></td>');
+           print('<td class="category_td"><span>'.$this->return_category_name_by_catid($category).'</span></td>');
+           print('<td class="tomcount_td"><span>'.$resource[$i]['count'].'</span></td>');
            print('</tr>');
         }
-           print('<tr><td>&nbsp;</td><td><span>Hours</span></td><td><span>'.$totaltoms.'<span></td></tr>');
+            //$total_in_hours = .5*$this->day_totals($DOW, $weekno);
+           $toms_in_hours = (.5)*($totaltoms);
+           print('<tr><td>&nbsp;</td><td class="category_td"><span>Hours</span></td><td class="tomcount_td"><span>'.$toms_in_hours.'<span></td></tr>');
            print('</table>');
-           print('</div>');   ;
+           print('</div>'); 
     }
 }

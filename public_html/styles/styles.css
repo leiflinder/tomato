@@ -444,11 +444,18 @@ margin-left:14px;
 .days .table tr td {
   border:dashed;
   color:#ccc;
-  width:1px;
 }
 .days .table tr td span {
   color:black;
   font-size:100%;
 }
 
+.days .table tr .tomcount_td {
+  width:50px;
+  text-align:center;
+}
 
+.days .table tr .category_td {
+  width:90px;
+  text-align:center;
+}

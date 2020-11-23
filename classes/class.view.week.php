@@ -13,6 +13,9 @@ class viewweek extends conn
     private $distinct_categories;
     private $goal_categories_array;
     private $goals_achieved_this_week;
+    private $today_date;
+    private $four_weeks_ago;
+    private $twelves_weeks_ago;
 
     private function set_userid(){
         if (isset($_SESSION['userid'])) {
@@ -20,6 +23,9 @@ class viewweek extends conn
         }
     }
 
+    private function set_today_date(){
+        print('<p>Hex</p>');
+    }
     public function week_number_only($alter=0)
     {
         $WeekNumber = date('W');
@@ -125,6 +131,42 @@ class viewweek extends conn
         print_r($this->total_goals_in_hours);
         print('</pre>');
         */
+    }
+
+    // list of last 4 weeks
+    // list of last 12 weeks
+    // graph of last 4 weeks date->toms
+    // graph of last 12 weeks date->toms
+
+    public function list_last_weeks($no_of_weeks, $userid){
+        $today = "value";
+        $date_four_weeks_ago = "value";
+        $date_twelve_weeks_ago = "value";
+        $date_ago = "value";
+        /*
+        $stmt = $this->conn->prepare("SELECT `goals`.`categoryid` AS 'catid', `goals`.`hours` AS 'hours', `goals`.`catname` AS 'catname' FROM `tomato220`.`goals` WHERE `goals`.`userid` = :USERID AND `goals`.`timeperiod` LIKE :TIMEPERIOD");
+        */
+        $stmt = $this->conn->prepare("SELECT `goals`.`categoryid` AS 'catid', `goals`.`hours` AS 'hours', `goals`.`catname` AS 'catname' FROM `tomato220`.`goals` WHERE `goals`.`userid` = :USERID AND `goals`.`timeperiod` LIKE :TIMEPERIOD");
+
+        $stmt->bindParam(':DATEAGO', $date_ago, PDO::PARAM_STR);
+        $stmt->bindParam(':USERID', $this->userid, PDO::PARAM_INT);
+        $stmt->execute(); 
+        $value = $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function testsvg($svgwidth=100){
+        ?>
+          <svg xmlns="http://www.w3.org/2000/svg">
+            <g>
+            <rect x="0" y="0" width="<?php print($svgwidth)?>" height="100" fill="red"></rect>
+            <text x="0" y="50" font-family="Verdana" font-size="35" fill="blue">Hello</text>
+            </g>
+        </svg>
+        <?php
+    }
+
+    public function sixtytoms(){
+        include('../public_html/SVG/sixtytoms.svg');
     }
 }
 
