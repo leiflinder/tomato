@@ -1,4 +1,10 @@
-Make days display by day-of-week
+Differentiate today from the rest of the week
+
+Date edit does not work
+
+Put date on day like "Tuesday, Nov. 24"
+
+Footer div Keyword edit page
 
 Ajax keywords do not appear when modifying tomato category
 
@@ -8,4 +14,5 @@ Daily hour count. Success color at eight hours.
 
 Delete Tomato bounce page
 
+Don't show days that haven't happened yet
 
