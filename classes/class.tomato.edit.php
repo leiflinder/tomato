@@ -401,6 +401,28 @@ class edittomato extends conn
         // update datestring
     }
 
+
+    public function update_day_of_week($tomid, $userid, $datestring)
+    {
+        $timestamp = strtotime($datestring);
+        // day of week number
+        $weekdayno = idate('w', $timestamp);
+        $sth = $this->conn->prepare("UPDATE `tomato220`.`tomato` SET `tomato`.`weekdayno`= :WEEKDAYNO WHERE `tomato`.`id`= :TOMID AND `tomato`.`userid`= :USERID");
+        $sth->bindParam(':TOMID', $tomid);
+        $sth->bindParam(':USERID', $userid);
+        $sth->bindParam(':WEEKDAYNO', $weekdayno);
+        $sth->execute();
+        // update datestring
+        /*
+        print('<h1>TOMID: '.$tomid.'</h1>');
+        print('<h1>USERID: '.$userid.'</h1>');
+        print('<h1>WEEKDAYNO: '.$weekdayno .'</h1>');
+        print('<h1>TIMESTAMP: '.$timestamp.'</h1>');
+        print('<h1>DATESTRING: '.$datestring.'</h1>');
+        exit();
+        */
+    }
+
     public function update_tomweek($tomid, $userid, $tomweek)
     {
         $sth = $this->conn->prepare("UPDATE `tomato220`.`tomato` SET `tomato`.`tomweek` = :TOMWEEK WHERE `tomato`.`id` = :TOMID AND `tomato`.`userid`=:USERID");

@@ -48,6 +48,7 @@ if(isset($_POST['tomdate'])){
    $edit_tomato->update_tomdate($tomid, $userid, $tomdate);
    // update both 'tomadate' and 'datestring'
    $edit_tomato->update_datestring($tomid, $userid, $tomdate);
+   $edit_tomato->update_day_of_week($tomid, $userid, $tomdate);
 }
 
 if(isset($_POST['tomweek'])){

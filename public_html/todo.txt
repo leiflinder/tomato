@@ -16,3 +16,9 @@ Delete Tomato bounce page
 
 Don't show days that haven't happened yet
 
+Change edit tomato date to "date"
+
+Add cherry picker date function to date edit tomato
+
+Give links to previous week open in drop down div
+
