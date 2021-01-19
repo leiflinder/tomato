@@ -189,18 +189,19 @@ function showKeywords(str) {
         xmlhttp.send();
     }
 }
-function showKeywordsEdit(str, tomidkeywords=3) {
+//showKeywordsEdit
+function showKeywords2(str) {
     if (str.length == 0) { 
-        document.getElementById("ajaxKeywordsEdit").innerHTML = "";
+        document.getElementById("ajaxKeywords").innerHTML = "";
         return;
     } else {
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("ajaxKeywordsEdit").innerHTML = this.responseText;
+                document.getElementById("ajaxKeywords").innerHTML = this.responseText;
             }
         }
-        xmlhttp.open("GET", "ajax.tomato.edit.keywords.php?categoryid="+str, true);
+        xmlhttp.open("GET", "ajaxkeywords.php?categoryid="+str, true);
         xmlhttp.send();
     }
 }

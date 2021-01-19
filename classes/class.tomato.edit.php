@@ -223,7 +223,8 @@ class edittomato extends conn
     {
         print('<div class="form-group">');
         print('<label for="new_category">Categories</label>');
-        print('<select class="form-control" name="new_category" id="new_category" onchange="showKeywordsEdit(this.value)">');
+        print('<select class="form-control" name="new_category" id="new_category" onchange="showKeywords2(this.value)">');
+        print('<option>Change is going come</option>');
         $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`category` ORDER BY `category`.`category` ASC");
         $sth->execute();
         $table = $sth->fetchAll();
@@ -307,11 +308,6 @@ class edittomato extends conn
         <label for="notes">Notes</label>
         <textarea name="notes" class="form-control" id="notes">' . $notes . '
         </textarea>
-        </div>');
-        // URL
-        print('<div class="form-group">
-        <label for="url">URL</label>
-        <input type="text" name="url" class="form-control" id="url" value="' . $url . '"/>
         </div>');
 
         print('<div class="circuit">');

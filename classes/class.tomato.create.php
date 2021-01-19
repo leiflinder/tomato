@@ -85,14 +85,7 @@ class addtomato extends conn
       <input type="text" name="week" class="form-control" id="tomatoWeek_FormElement" aria-describedby="weekHelp" placeholder="Tomato Week" value="' . $this->defaultWeekNumber . '">
       <small id="weekHelp" class="form-text text-muted">Automatically created by default.</small>
     </div>';
-        
-        // URL
-        echo '<div class="form-group">
-         <label for="tomatoUrl_FormElement">URL</label>
-         <input type="url" name="url" class="form-control" id="tomatoUrl_FormElement" aria-describedby="urlHelp" placeholder="Tomato URL">
-         <small id="urlHelp" class="form-text text-muted">Nice but not necessary.</small>
-       </div>';
-        
+                
         // Categories
         $this->categories();
         
