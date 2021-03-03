@@ -459,3 +459,8 @@ margin-left:14px;
   width:90px;
   text-align:center;
 }
+
+.today_day .table td {
+  background:#e5e5e5;
+ /* background:red;*/
+}

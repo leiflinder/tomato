@@ -198,7 +198,7 @@ function showKeywords2(str) {
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("ajaxKeywords").innerHTML = this.responseText;
+                document.getElementById("ajaxKeywordsEdit").innerHTML = this.responseText;
             }
         }
         xmlhttp.open("GET", "ajaxkeywords.php?categoryid="+str, true);

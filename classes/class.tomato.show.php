@@ -24,10 +24,6 @@ class showtomatoes extends conn
         $resource = $sth->fetchall(PDO::FETCH_ASSOC);
         $size = sizeof($resource);
         for ($i = 0; $i < $size; $i++) {
-            /*
-            print('<p class="no-padding">' . date('l \t\h\e jS', strtotime($resource[$i]['tomdate'])) . '</p>');
-            $this->toms_by_tomdate($resource[$i]['tomdate']);
-            */
             print('<p>'.date('l \t\h\e jS', strtotime($resource[$i]['datestring'])) .' </p>');
             $this->toms_with_same_tomdate($resource[$i]['datestring']);
         }
@@ -216,7 +212,7 @@ class showtomatoes extends conn
         // run seperate query to get total toms
         $totaltoms = $this->today_totals($datestring);
         print('<h3>Today '.$this->todaydate().'</h3>');
-        print('<div class="days">');
+        print('<div class="days today_day">');
         print('<table class="table">');
         for($i = 0; $i < $size; $i++) {
             $title = $resource[$i]['title'];
