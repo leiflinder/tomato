@@ -16,18 +16,14 @@ class pagemaster
                 print('<hr/>');
                 $page_display = new showtomatoes;
                 $page_display->today_values();
+
+                $page_display->job_search_daily_goal();
+                print('<p class="'.$page_display->jobsearch_goal_div_class.'">Jobsearch: &nbsp;'.$page_display->jobsearch_day_hours.' Hours</p>');
+
                 $date = new DateTime();
                 $week = $date->format("W");
                 print('<h4><span class="badge badge-secondary">Week #'.$week.'</span></h4>');
-                // try this new functon
                 $page_display->show_days_of_week();  
-
-             //  $edit_tomatos = new edittomato;
-             //  $edit_tomatos->pull_tomatos_by_default_this_week();
-             //   print('<hr/>');
-              //  $page_display->pull_tomatos_this_week();
-
-                print('<br/>');
                 print('<h4><span class="badge badge-secondary">Goals</span></h4>');
                 $goals = new setupgoals;
                 $goals->show_goals();
@@ -72,7 +68,7 @@ class pagemaster
                     print('<h2>'.$link_to_cat->keyword_title.'</h2><br/>');
                     $cat_list = new link_to_category;
                     // create object array
-                    $cat_list->all_cats_associated_with_keyid($keywordid);
+                   $cat_list->all_cats_associated_with_keyid($keywordid);
                     // show the list of checkboxes
                     $cat_list->category_form($cat_list->array_of_categories_with_catid_as_index, $cat_list->category_titles_linked_to_this_keyword, $keywordid);
                 }

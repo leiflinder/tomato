@@ -9,7 +9,7 @@ class link_to_category extends conn
     public $array_of_categories_indexes_with_catid_as_value = array();
     public $array_of_category_names_assosciated_with_keyword = array();
     public $category_titles_linked_to_this_keyword = array();
-    public $keyword_title;
+    public $keyword_title = "Empty value";
     
     
     // helper function to get all keywords associated with a single category
@@ -90,7 +90,8 @@ class link_to_category extends conn
     
     //get the name of the keyword by its ID
     public function return_name_of_keyword_id($keyword_id){
-        $stm = $this->conn->prepare("SELECT keywords.keyword FROM tomato220.keywords WHERE keywords.id = :KEYID");
+       // $stm = $this->conn->prepare("SELECT keywords.keyword FROM tomato220.keywords WHERE keywords.id = :KEYID");
+        $stm = $this->conn->prepare("SELECT * FROM `tomato220`.`keywords` WHERE `keywords`.`id` = :KEYID");
         $stm->bindParam(':KEYID', $keyword_id, PDO::PARAM_INT);
         $stm->execute();
         $value = $stm->fetch(PDO::FETCH_ASSOC);
@@ -99,7 +100,6 @@ class link_to_category extends conn
     }
     
     
-    ///// ***** Again? Is this a repeat????
    public function all_cats_associated_with_keyid($keyid)
     {
         $this_is_the_keyword_id = $keyid;
@@ -107,25 +107,24 @@ class link_to_category extends conn
         $sth->bindParam(':id', $keyid, PDO::PARAM_INT);
         $sth->execute();
         $resource = $sth->fetchall(PDO::FETCH_ASSOC);
+
         // first build array of categories associated with this keyword  
 
         for ($i = 0; $i < (sizeof($resource)); $i++) {
             $this->category_titles_linked_to_this_keyword[] = $this->name_of_category($resource[$i]['cat_id']);
         }
 
-        //// **** Problem? Some IDs repeating so the accordion for some items does not work.
-        print('<div id="'. $keyid .'" class="collapse"><form action="" name="keyword_associations" method="POST"/>
-        <input type="hidden" name="keyid" value="' . $keyid . '"/>');
         $this->array_of_categories_with_catid_as_index();
         // make short variable name
+
         $cats = $this->array_of_categories_with_catid_as_index;
-        
         // just iterate over simple array with categoy titles (as value)
         // and category ids (as index)
         // make $cats array aphabetical
         asort($cats);
+        /*
         foreach ($cats AS $cat_id => $value) {
-            if (in_array($cats[$cat_id], $category_titles_linked_to_this_keyword)) {
+            if (in_array($cats[$cat_id], $this->category_titles_linked_to_this_keyword)) {
                 print('<div id="collapseOne">
                     <input type="checkbox" checked name="cats[]" value="' . $cat_id . '"> <label>' . $value . '</label>
                 </div>');
@@ -137,6 +136,7 @@ class link_to_category extends conn
             }
         }
         print('<input type="submit" value="Update" class="btn btn-dark" name="submit"/></form><br/></div>');
+        */
     }
     
     function array_of_categories()

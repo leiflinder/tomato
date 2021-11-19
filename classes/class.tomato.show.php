@@ -1,9 +1,27 @@
 <?php
 class showtomatoes extends conn
 {
+    public $jobsearch_day_hours = 0;
+    public $jobsearch_goal_div_class = 'Undefined';
     private $defaultWeekNumber;
     private $daynumber = array(1=>'Monday',2=>'Tuesday',3=>'Wednesday',4=>'Thursday',5=>'Friday',6=>'Saturday',7=>'Sunday');
     
+    public function job_search_daily_goal(){
+        $today = date("Y-m-d");
+        $sth = $this->conn->prepare("SELECT sum(count) FROM `tomato220`.`tomato` WHERE `tomato`.`tomdate` = '".$today."' AND `category` = 14");
+        $sth->execute();
+        if($resource = $sth->fetchColumn()){
+            $resource = $resource*.5;
+            if($resource > 4.9){
+                $this->jobsearch_day_hours = $resource;
+                $this->jobsearch_goal_div_class = "jobsearch_success";
+            }else{
+                $this->jobsearch_day_hours = $resource;
+                $this->jobsearch_goal_div_class = "jobsearch_not_yet";
+            }
+        }    
+    }
+
     public function default_week_setting()
     {
         $currentWeekNumber = date('Y') . "-W" . date('W');
@@ -28,11 +46,8 @@ class showtomatoes extends conn
             $this->toms_with_same_tomdate($resource[$i]['datestring']);
         }
     }
-    private function toms_with_same_tomdate($tomdate)
-    {
-
+    private function toms_with_same_tomdate($tomdate){
         $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`tomato` WHERE `tomato`.`datestring` LIKE :TOMDATE");
-
         $sth->bindParam(':TOMDATE', $tomdate);
         $sth->execute();
         $resource = $sth->fetchall(PDO::FETCH_ASSOC);

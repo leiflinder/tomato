@@ -14,12 +14,7 @@ class addtomato extends conn
         $currentWeekNumber       = date('Y') . "-W" . date('W');
         $this->defaultWeekNumber = $currentWeekNumber;
     }
-    
-    public function today_date()
-    {
-        
-    }
-    
+
     public function upload_form_tomato()
     {
         // set default "week" and send upstairs
