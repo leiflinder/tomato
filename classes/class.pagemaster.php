@@ -23,13 +23,31 @@ class pagemaster
                 $date = new DateTime();
                 $week = $date->format("W");
                 print('<h4><span class="badge badge-secondary">Week #'.$week.'</span></h4>');
-                $page_display->show_days_of_week();  
+                $page_display->show_days_of_week(); 
+
                 print('<h4><span class="badge badge-secondary">Goals</span></h4>');
                 $goals = new setupgoals;
+                //  uses class.goals.show.php
                 $goals->show_goals();
 
+                // create all the member properties
+                // to fill in goals table
+                // (1) creat goals_total_hours member property
+                $goals->goals_total_hours();
+                $param01 = $goals->goals_total_hours;
+                // (2) creat goals_so_far_this_week memeber property
+                $goals->goals_so_far_this_week();
+                $param02 = $goals->goals_so_far_this_week;
+                // (3) difference between toms done and toms needed memeber property
+                $goals->goals_toms_needed_this_week($param02, $param01);
+                $param03 = $goals->toms_needed;
+                // (4) Number of toms needed per day, dynamic
+                $goals->goals_toms_per_day_needed($param02, $param01);
+                $param04 = $goals->toms_needed_per_day;
+                // show html print out of goals_total_hours memnber property
+                $goals->goals_info_table($param01, $param02,$param03,$param04);
+              
                 break;
-
 
                 case "tomatoedit":
                     print('<a href="home.php?page=tomato" class="btn btn-primary" role="button"><< Back</a>');

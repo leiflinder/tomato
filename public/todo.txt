@@ -1,14 +1,10 @@
-
-Fix keyword linking system
-
-Make goals alphabetical
+Figure out why timezone is wrong. Week starts on Sunday.
 
 Change all goals with one submit button
 
 land on homepage when : change goal : create keyword
 
-Goals: show total weeks hour of goals.
-Should not excede 40 hours.
+alphabetize keywords and categories
 
 
 

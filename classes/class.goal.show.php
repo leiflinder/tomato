@@ -1,6 +1,13 @@
 <?PHP
 class setupgoals extends conn{
 
+  var $category_goals2 = array();
+  var $goals_total_hours=0;
+  var $week_number_current = 0;
+  var $goals_so_far_this_week = 0;
+  var $toms_needed = 0;
+  var $toms_needed_per_day = 0;
+
   function ifActive($active){
     if($active==0){
      print("");
@@ -12,7 +19,6 @@ class setupgoals extends conn{
 
   }
 
-  
   function get_catid_by_catname($catname){
     $sth = $this->conn->prepare("SELECT `category`.`id` FROM `tomato220`.`category` WHERE `category`.`category` LIKE :CATNAME LIMIT 1");
     $sth->bindParam(':CATNAME',$catname);
@@ -56,7 +62,9 @@ class setupgoals extends conn{
      // $category_goals[$value[$i]]=array($value[$i]['catname'], $value[$i]['categoryid']);
      $lastest_hours = $this->get_latest_goal_from_catid($value[$i]['categoryid']);
      $category_goals[]= array($value[$i]['categoryid'],$value[$i]['catname'],$lastest_hours);
+     $this->category_goals2[] = $category_goals;
     }
+    
     // Now take the $category_goals array and print out as a form
     for($i=0;$i<sizeof($category_goals);$i++){
       print('<form method="post" action="refresh.goals.edit.php" id="update_goal">');
@@ -77,7 +85,7 @@ class setupgoals extends conn{
 
   // helper function
   private function array_of_latest_goals(){
-    $sth = $this->conn->prepare("SELECT DISTINCT(`tomato220`.`goals`.`catname`) FROM `tomato220`.`goals`");
+    $sth = $this->conn->prepare("SELECT DISTINCT(`tomato220`.`goals`.`catname`) FROM `tomato220`.`goals` ORDER BY(`catname`) ASC");
     $sth->execute();
     $value = $sth->fetchall(PDO::FETCH_ASSOC);
     $category_goals = array();
@@ -122,7 +130,7 @@ class setupgoals extends conn{
 }
 
     function form_set_weekly_goals(){
-        print('<form action="refresh.goals.edit.php" method="post">');
+        print('<form action="bounce.goals.edit.php" method="post">');
         print('<div class="form-group">');
         print('<input type="hidden" value="updategoals" id="updategoals" name="updategoals"/>');
         $sth = $this->conn->prepare("SELECT * FROM `tomato220`.`goals`");
@@ -161,6 +169,75 @@ class setupgoals extends conn{
     $sth->bindParam(':ACTIVE',$active);
     $sth->bindParam(':TIMEPERIOD',$timeperiod);
     $sth->execute();
+   }
+
+   function goals_total_hours(){
+     // this function 'sets' the total
+     // hours worth of goals and create member 
+     // property $goals_total_hours
+      try {
+        $sth = $this->conn->prepare("SELECT sum(hours) FROM tomato220.goals where active = 1");
+        $sth->execute();
+        $result = $sth->fetchColumn();
+        // send upstairs
+        $this->goals_total_hours = $result;
+
+      } catch (Exception $e){
+        echo 'Caught exception:', $e->getMessage(), '/n';
+      }
+   }
+
+   public function goals_so_far_this_week(){
+     // (1) build up this week week number
+    $date = new DateTime();
+    $week_no = $date->format("W");
+    $year = date("Y");
+    $week = $year.'-W'.$week_no;
+    // send upstairs
+    $this->week_number_current = $week;
+    // (2) query dbase for toms by weeknunmber
+    $sth = $this->conn->prepare("SELECT sum(count) FROM tomato220.tomato WHERE tomato.tomweek like :WEEKNO");
+    $sth->bindParam(':WEEKNO',$this->week_number_current);
+    $sth->execute();
+    $hours = $sth->fetchColumn();
+    // send upstairs
+    $this->goals_so_far_this_week = $hours*(.5);
+   }
+
+   public function goals_toms_needed_this_week($toms_achieved=0, $toms_goal=0){
+    $toms_needed = $toms_goal - $toms_achieved;
+    $this->toms_needed = $toms_needed;
+   }
+
+   public function goals_toms_per_day_needed($toms_achieved=0, $toms_goal=0){
+    $toms_needed = $toms_goal - $toms_achieved;
+    // this code find nunmber of days left in week
+    $days_left_in_week = 7-(date('w'));
+    // divide toms needed by number of remaining days in week
+    $needed_per_day2 = $toms_needed/($days_left_in_week);
+    // send upstares
+    $this->toms_needed_per_day = round($needed_per_day2);
+   }
+
+   public function goals_info_table($goals_total_hours=0, $goals_so_far_this_week=0, $toms_needed=0, $per_day=0){
+      print('<table class="table table-bordered" id="goals_table">
+      <thead>
+        <tr>
+          <th scope="col">Target</th>
+          <th scope="col">So Far</th>
+          <th scope="col">Left</th>
+          <th scope="col">Per Day</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>'.$goals_total_hours.'</th>
+          <td>'.$goals_so_far_this_week.'</td>
+          <td>'.$toms_needed.'</td>
+          <td>'.$per_day.'</td>
+        </tr>
+      </tbody>
+    </table>');
    }
 }
 
